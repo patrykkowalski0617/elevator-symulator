@@ -4,12 +4,15 @@ export const BuildingContext = createContext();
 
 const BuildingContextProvider = props => {
     const [numberOfFloors, setNumberOfFloors] = useState(8);
+    const [numberOfElevators, setNnmberOfElevators] = useState(2);
 
     return (
         <BuildingContext.Provider
             value={{
                 numberOfFloors,
-                setNumberOfFloors
+                setNumberOfFloors,
+                numberOfElevators,
+                setNnmberOfElevators
             }}
         >
             {props.children}

@@ -1,15 +1,20 @@
 import React from "react";
-import Floor from "./Floor";
+import styled from "styled-components";
 
-export default function Floors({ buildingHeight, numberOfFloors }) {
-    const renderFloors = numberOfFloors => {
+const Floor = styled.div`
+    border-bottom: 4px solid;
+`;
+
+export default function Floors({ floorHeight, numberOfFloors }) {
+    const renderFloors = () => {
         const arr = [];
         for (let i = 0; i < numberOfFloors; i++) {
             arr.push(
                 <Floor
                     key={i}
-                    buildingHeight={buildingHeight}
+                    floorHeight={floorHeight}
                     numberOfFloors={numberOfFloors}
+                    style={{ height: floorHeight + "px" }}
                 ></Floor>
             );
         }
@@ -17,5 +22,5 @@ export default function Floors({ buildingHeight, numberOfFloors }) {
         return arr;
     };
 
-    return <>{renderFloors(numberOfFloors)}</>;
+    return <>{renderFloors()}</>;
 }
