@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const ElevatorShaft = styled.div`
     background: #777;
-    width: 10%;
+    width: ${props => props.elevatorWidth}%;
     border-width: 0 1px 4px 1px;
     border-style: solid;
     position: relative;
@@ -19,12 +19,12 @@ const Elevator = styled.div`
     border-style: solid;
 `;
 
-const Elevators = ({ floorHeight, numberOfElevators }) => {
+const Elevators = ({ floorHeight, numberOfElevators, elevatorWidth }) => {
     const renderElevators = () => {
         const arr = [];
         for (let i = 0; i < numberOfElevators; i++) {
             arr.push(
-                <ElevatorShaft key={i}>
+                <ElevatorShaft key={i} elevatorWidth={elevatorWidth}>
                     <Elevator floorHeight={floorHeight} />
                 </ElevatorShaft>
             );

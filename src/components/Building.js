@@ -39,25 +39,24 @@ const Roof = styled.div`
     }
 `;
 
-const FloorsCommonCss = css`
-    width: 40%;
+const FloorsCommonCss = floorWidth => css`
+    width: ${floorWidth}%;
+    border-style: solid;
 `;
 
 const EnterFloors = styled.div`
-    ${FloorsCommonCss}
+    ${props => FloorsCommonCss(props.floorWidth)}
     border-width: 0 1px 0 2px;
-    border-style: solid;
 `;
 const ExitFloors = styled.div`
-    ${FloorsCommonCss}
+    ${props => FloorsCommonCss(props.floorWidth)}
     border-width: 0 2px 0 1px;
-    border-style: solid;
 `;
 
 export default function Building() {
     const { numberOfFloors, numberOfElevators } = useContext(BuildingContext);
     const [buildingDOM, setBuildingDOM] = useState();
-    const [width, buildingHeight] = useElementSizeOnResize(buildingDOM);
+    const [buildingWidth, buildingHeight] = useElementSizeOnResize(buildingDOM);
 
     const buildingRef = useRef();
 
@@ -67,24 +66,29 @@ export default function Building() {
     }, []);
 
     const floorHeight = buildingHeight / numberOfFloors;
+    const elevatorWidth = 10;
+    const floorWidth = (100 - elevatorWidth * numberOfElevators) / 2;
 
     return (
         <BuildingStyled ref={buildingRef}>
-            <Roof text={`Building size: ${width} x ${buildingHeight}`}></Roof>
-            <EnterFloors>
+            <Roof
+                text={`Building size: ${buildingWidth} x ${buildingHeight}`}
+            ></Roof>
+            <EnterFloors floorWidth={floorWidth}>
                 <Floors
-                    floorHeight={floorHeight}
                     numberOfFloors={numberOfFloors}
+                    floorHeight={floorHeight}
                 ></Floors>
             </EnterFloors>
             <Elevators
                 floorHeight={floorHeight}
                 numberOfElevators={numberOfElevators}
+                elevatorWidth={elevatorWidth}
             ></Elevators>
-            <ExitFloors>
+            <ExitFloors floorWidth={floorWidth}>
                 <Floors
-                    floorHeight={floorHeight}
                     numberOfFloors={numberOfFloors}
+                    floorHeight={floorHeight}
                 ></Floors>
             </ExitFloors>
         </BuildingStyled>
