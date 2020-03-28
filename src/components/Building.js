@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { BuildingContext } from "../context/BuildingContext";
 import Floors from "./Floors";
 import styled from "styled-components";
-import Elevators from "./Elevators";
+import ElevatorShaft from "./ElevatorShaft";
 import useElementSizeOnResize from "../customHooks/useElementSizeOnResize";
 
 const BuildingStyled = styled.div`
@@ -65,11 +65,11 @@ export default function Building() {
                 floorHeight={floorHeight}
                 floorWidth={floorWidth}
             ></Floors>
-            <Elevators
+            <ElevatorShaft
                 floorHeight={floorHeight}
                 numberOfElevators={numberOfElevators}
                 elevatorWidth={elevatorWidth}
-            ></Elevators>
+            ></ElevatorShaft>
             <Floors
                 role={"exit-floor"}
                 floorHeight={floorHeight}
