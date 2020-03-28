@@ -2,36 +2,34 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const ElevatorStyled = styled.div`
-    height: ${props => props.floorHeight}px;
+    height: ${props => props.floorHeight + 4}px;
     background: #999;
     position: absolute;
-    bottom: -1px;
+    bottom: -4px;
     width: 100%;
-    border-width: 1px 0;
+    border-width: 4px 0;
     border-style: solid;
-    transition: 5s linear;
-    ${props => (props.moveMode === 1 ? "bottom: 100%" : "")}
 `;
 
 const Elevator = ({ floorHeight }) => {
     const [moveMode, setMoveMode] = useState(0); // 0 - no move, 1 - speed up, 2 - speed constans, 3 - slow down
-
-    const moveManager = () => {
-        let _moveMode = moveMode;
-        if (_moveMode < 3) {
-            _moveMode++;
-        } else {
-            _moveMode = 0;
-        }
-
-        setMoveMode(_moveMode);
-    };
+    const [currentFloor, setCurrentFloor] = useState(0);
 
     return (
         <ElevatorStyled floorHeight={floorHeight} moveMode={moveMode}>
             <button
-                onClick={e => {
-                    moveManager();
+                style={{ background: "transparent", border: "none" }}
+                onClick={() => {
+                    let y = 1;
+                    setMoveMode(y);
+                    const x = setInterval(() => {
+                        y++;
+                        setMoveMode(y);
+                        if (y === 4) {
+                            clearInterval(x);
+                            setMoveMode(0);
+                        }
+                    }, 650);
                 }}
             >
                 move mode: {moveMode}
