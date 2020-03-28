@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { BuildingContext } from "../context/BuildingContext";
 import Floors from "./Floors";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Elevators from "./Elevators";
 import useElementSizeOnResize from "../customHooks/useElementSizeOnResize";
 
@@ -39,34 +39,20 @@ const Roof = styled.div`
     }
 `;
 
-const FloorsCommonCss = floorWidth => css`
-    width: ${floorWidth}%;
-    border-style: solid;
-`;
-
-const EnterFloors = styled.div`
-    ${props => FloorsCommonCss(props.floorWidth)}
-    border-width: 0 1px 0 2px;
-`;
-const ExitFloors = styled.div`
-    ${props => FloorsCommonCss(props.floorWidth)}
-    border-width: 0 2px 0 1px;
-`;
-
 export default function Building() {
     const { numberOfFloors, numberOfElevators } = useContext(BuildingContext);
     const [buildingDOM, setBuildingDOM] = useState();
     const [buildingWidth, buildingHeight] = useElementSizeOnResize(buildingDOM);
 
     const buildingRef = useRef();
-
     useEffect(() => {
         const ref = buildingRef.current;
         setBuildingDOM(ref);
     }, []);
 
-    const floorHeight = buildingHeight / numberOfFloors;
+    // Sizes
     const elevatorWidth = 10;
+    const floorHeight = buildingHeight / numberOfFloors;
     const floorWidth = (100 - elevatorWidth * numberOfElevators) / 2;
 
     return (
@@ -74,23 +60,21 @@ export default function Building() {
             <Roof
                 text={`Building size: ${buildingWidth} x ${buildingHeight}`}
             ></Roof>
-            <EnterFloors floorWidth={floorWidth}>
-                <Floors
-                    numberOfFloors={numberOfFloors}
-                    floorHeight={floorHeight}
-                ></Floors>
-            </EnterFloors>
+            <Floors
+                role={"enter-floor"}
+                floorHeight={floorHeight}
+                floorWidth={floorWidth}
+            ></Floors>
             <Elevators
                 floorHeight={floorHeight}
                 numberOfElevators={numberOfElevators}
                 elevatorWidth={elevatorWidth}
             ></Elevators>
-            <ExitFloors floorWidth={floorWidth}>
-                <Floors
-                    numberOfFloors={numberOfFloors}
-                    floorHeight={floorHeight}
-                ></Floors>
-            </ExitFloors>
+            <Floors
+                role={"exit-floor"}
+                floorHeight={floorHeight}
+                floorWidth={floorWidth}
+            ></Floors>
         </BuildingStyled>
     );
 }
