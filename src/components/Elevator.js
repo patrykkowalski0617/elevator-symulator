@@ -25,34 +25,38 @@ const Elevator = ({ floorHeight }) => {
 
     useEffect(() => {
         const move = () => {
-            const easeIn = Easing(100, "quadratic");
-            const easeOut = Easing(100, "sinusoidal");
-            console.log(easeIn, easeOut);
+            const easingAmountOfFrames = 100;
+            const easeIn = Easing(easingAmountOfFrames, "quadratic");
+            const easeOut = Easing(easingAmountOfFrames, "sinusoidal");
 
             let pos = -4;
+            let easingEndPos = 0;
             let id;
             let i = 0;
             let j = 0;
-            const destination = 500;
+            const destination = 200;
             const frame = () => {
                 if (pos < destination) {
                     if (easeIn[i] < 1) {
                         pos += 1 * easeIn[i];
                         i++;
-                    } else if (pos < 450) {
+                        easingEndPos = pos;
+                    } else if (pos < destination - easingEndPos) {
                         pos += 1;
                     } else {
                         pos += 1 * (1 - easeOut[j]);
+                        console.log(j);
                         j++;
                     }
-                    elevatorDOM.style.bottom = pos + "px";
                 } else {
                     pos = destination;
                     clearInterval(id);
                     i = 0;
                 }
+                elevatorDOM.style.bottom = pos + "px";
             };
-            id = setInterval(frame, 10);
+
+            id = setInterval(frame, 15);
         };
 
         if (moveMode === 1) {
