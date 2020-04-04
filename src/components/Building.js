@@ -69,6 +69,7 @@ export default function Building() {
                 floorHeight={floorHeight}
                 numberOfElevators={numberOfElevators}
                 elevatorWidth={elevatorWidth}
+                numberOfFloors={numberOfFloors}
             ></ElevatorShaft>
             <Floors
                 role={"exit-floor"}

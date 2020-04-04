@@ -3,19 +3,36 @@ import styled from "styled-components";
 import Easing from "easing";
 
 const ElevatorStyled = styled.div`
-    height: ${props => props.floorHeight + 4}px;
+    height: ${props => props.floorHeight - props.positionOnLoad}px;
     background: #999;
     position: absolute;
-    bottom: -4px;
+    bottom: ${props => props.positionOnLoad}px;
     width: 100%;
     border-width: 4px 0;
     border-style: solid;
 `;
 
-const Elevator = ({ floorHeight }) => {
-    const [moveMode, setMoveMode] = useState(0); // 0 - no move, 1 - speed up, 2 - speed constans, 3 - slow down
+const SpeedControl = styled.div`
+    position: relative;
+    height: 3px;
+    background-image: linear-gradient(to right, green, yellow, red);
+`;
+
+const SpeedMarkChanger = styled.div`
+    width: ${props => 100 - 100 * props.speed}%;
+    background: #999;
+    position: absolute;
+    z-index: 1000;
+    right: 0;
+    top: -0.5px;
+    height: 5px;
+`;
+
+const Elevator = ({ floorHeight, elevatorNumber, numberOfFloors }) => {
+    const [isMoving, setIsMoving] = useState(false);
+    const [elevatorDOM, setElevatorDOM] = useState(null);
     const [currentFloor, setCurrentFloor] = useState(0);
-    const [elevatorDOM, setElevatorDOM] = useState();
+    const [speed, setSpeed] = useState(0);
 
     const buildingRef = useRef();
     useEffect(() => {
@@ -23,70 +40,81 @@ const Elevator = ({ floorHeight }) => {
         setElevatorDOM(ref);
     }, []);
 
+    const positionOnLoad = -4;
+
     useEffect(() => {
         const move = () => {
+            console.log("move");
             const easingAmountOfFrames = 100;
             const easeIn = Easing(easingAmountOfFrames, "quadratic");
             const easeOut = Easing(easingAmountOfFrames, "sinusoidal");
 
-            let pos = -4;
-            let easingEndPos = 0;
+            let pos = 0;
+            let easingInEndPos = 0;
             let id;
             let i = 0;
             let j = 0;
-            const destination = 200;
+            let _currentFloor = 0;
+            const destination = floorHeight * 2;
             const frame = () => {
                 if (pos < destination) {
                     if (easeIn[i] < 1) {
                         pos += 1 * easeIn[i];
                         i++;
-                        easingEndPos = pos;
-                    } else if (pos < destination - easingEndPos) {
+                        easingInEndPos = pos;
+                        setSpeed(easeIn[i]);
+                    } else if (pos < destination - easingInEndPos - 4) {
                         pos += 1;
                     } else {
                         pos += 1 * (1 - easeOut[j]);
-                        console.log(j);
                         j++;
+                        setSpeed(1 - easeOut[j]);
                     }
                 } else {
                     pos = destination;
                     clearInterval(id);
                     i = 0;
+                    setSpeed(easeIn[i]);
                 }
-                elevatorDOM.style.bottom = pos + "px";
+
+                if (floorHeight * _currentFloor < pos - 1) {
+                    _currentFloor++;
+                    setCurrentFloor(_currentFloor);
+                }
+                elevatorDOM.style.transform = `translateY(-${pos}px)`;
             };
 
             id = setInterval(frame, 15);
         };
 
-        if (moveMode === 1) {
+        if (isMoving) {
+            setIsMoving(false);
             move();
         }
-    }, [elevatorDOM, moveMode]);
+    }, [currentFloor, elevatorDOM, floorHeight, isMoving]);
 
     return (
         <ElevatorStyled
             ref={buildingRef}
             floorHeight={floorHeight}
-            moveMode={moveMode}
+            positionOnLoad={positionOnLoad}
         >
+            <SpeedControl>
+                <SpeedMarkChanger speed={speed} />
+            </SpeedControl>
             <button
-                style={{ background: "transparent", border: "none" }}
+                style={{
+                    background: "transparent",
+                    border: "none",
+                    width: "100%"
+                }}
                 onClick={() => {
-                    let y = 1;
-                    setMoveMode(y);
-                    const x = setInterval(() => {
-                        y++;
-                        setMoveMode(y);
-                        if (y === 4) {
-                            clearInterval(x);
-                            setMoveMode(0);
-                        }
-                    }, 1500);
+                    setIsMoving(true);
                 }}
             >
-                move mode: {moveMode}
+                move
             </button>
+            <p style={{ textAlign: "center" }}>{currentFloor}</p>
         </ElevatorStyled>
     );
 };

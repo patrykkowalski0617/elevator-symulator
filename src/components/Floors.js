@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { BuildingContext } from "../context/BuildingContext";
 import styled from "styled-components";
+import Floor from "./Floor";
 
 const FloorWrapper = styled.div`
     width: ${props => props.floorWidth}%;
@@ -13,18 +14,20 @@ const FloorWrapper = styled.div`
             : ""};
 `;
 
-const Floor = styled.div`
-    border-bottom: 4px solid;
-    height: ${props => props.floorHeight}px;
-`;
-
 export default function Floors({ role, floorHeight, floorWidth }) {
     const { numberOfFloors } = useContext(BuildingContext);
 
     const renderFloors = () => {
         const arr = [];
         for (let i = 0; i < numberOfFloors; i++) {
-            arr.push(<Floor key={i} floorHeight={floorHeight}></Floor>);
+            arr.push(
+                <Floor
+                    key={i}
+                    role={role}
+                    floorHeight={floorHeight}
+                    floorNumber={numberOfFloors - i - 1}
+                ></Floor>
+            );
         }
 
         return arr;

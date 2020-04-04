@@ -10,13 +10,22 @@ const ElevatorShaftStyled = styled.div`
     position: relative;
 `;
 
-const ElevatorShaft = ({ floorHeight, numberOfElevators, elevatorWidth }) => {
+const ElevatorShaft = ({
+    floorHeight,
+    numberOfElevators,
+    elevatorWidth,
+    numberOfFloors
+}) => {
     const renderElevators = () => {
         const arr = [];
         for (let i = 0; i < numberOfElevators; i++) {
             arr.push(
                 <ElevatorShaftStyled key={i} elevatorWidth={elevatorWidth}>
-                    <Elevator floorHeight={floorHeight} />
+                    <Elevator
+                        floorHeight={floorHeight}
+                        elevatorNumber={i}
+                        numberOfFloors={numberOfFloors}
+                    />
                 </ElevatorShaftStyled>
             );
         }
