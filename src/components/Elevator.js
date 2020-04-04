@@ -14,8 +14,9 @@ const ElevatorStyled = styled.div`
 
 const SpeedControl = styled.div`
     position: relative;
-    height: 3px;
-    background-image: linear-gradient(to right, green, yellow, red);
+    height: 2px;
+    background-image: linear-gradient(to right, green, #009966, #ff9900, red);
+    opacity: ${props => (props.speed < 0.5 ? 0.5 : props.speed)};
 `;
 
 const SpeedMarkChanger = styled.div`
@@ -25,7 +26,7 @@ const SpeedMarkChanger = styled.div`
     z-index: 1000;
     right: 0;
     top: -0.5px;
-    height: 5px;
+    height: 3px;
 `;
 
 const Elevator = ({ floorHeight, elevatorNumber, numberOfFloors }) => {
@@ -99,7 +100,7 @@ const Elevator = ({ floorHeight, elevatorNumber, numberOfFloors }) => {
             floorHeight={floorHeight}
             positionOnLoad={positionOnLoad}
         >
-            <SpeedControl>
+            <SpeedControl speed={speed}>
                 <SpeedMarkChanger speed={speed} />
             </SpeedControl>
             <button
