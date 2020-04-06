@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Easing from "easing";
+import { ElevatorShaftContext } from "../context/ElevatorShaftContext";
 
 const ElevatorStyled = styled.div`
     height: ${props => props.floorHeight - props.positionOnLoad}px;
@@ -14,8 +15,9 @@ const ElevatorStyled = styled.div`
 
 const SpeedControl = styled.div`
     position: relative;
-    height: 2px;
-    background-image: linear-gradient(to right, green, #009966, #ff9900, red);
+    height: 4px;
+    background-image: linear-gradient(to right, green, #999900, #ff9900, red);
+    border-bottom: 1px solid;
     opacity: ${props => (props.speed < 0.5 ? 0.5 : props.speed)};
 `;
 
@@ -26,13 +28,17 @@ const SpeedMarkChanger = styled.div`
     z-index: 1000;
     right: 0;
     top: -0.5px;
-    height: 3px;
+    height: 5px;
 `;
 
-const Elevator = ({ floorHeight, elevatorNumber, numberOfFloors }) => {
+const Elevator = ({ floorHeight, elevatorNumber }) => {
+    const { elevatorCurrenFloorCon, setElevatorCurrenFloorCon } = useContext(
+        ElevatorShaftContext
+    );
+    const [elevatorCurrenFloor, setElevatorCurrenFloor] = useState(0);
+
     const [isMoving, setIsMoving] = useState(false);
     const [elevatorDOM, setElevatorDOM] = useState(null);
-    const [currentFloor, setCurrentFloor] = useState(0);
     const [speed, setSpeed] = useState(0);
 
     const buildingRef = useRef();
@@ -42,6 +48,15 @@ const Elevator = ({ floorHeight, elevatorNumber, numberOfFloors }) => {
     }, []);
 
     const positionOnLoad = -4;
+
+    useEffect(() => {
+        const _elevatorCurrenFloorCon = elevatorCurrenFloorCon;
+        _elevatorCurrenFloorCon.splice(elevatorNumber, 1, elevatorCurrenFloor);
+
+        setElevatorCurrenFloorCon([..._elevatorCurrenFloorCon]);
+        // }, [elevatorCurrenFloor, elevatorCurrenFloorCon, elevatorNumber, setElevatorCurrenFloorCon]);
+        // at the moment I cannot find better solution. elevatorCurrenFloorCon cannot be included below
+    }, [elevatorCurrenFloor, elevatorNumber, setElevatorCurrenFloorCon]);
 
     useEffect(() => {
         const move = () => {
@@ -56,7 +71,7 @@ const Elevator = ({ floorHeight, elevatorNumber, numberOfFloors }) => {
             let i = 0;
             let j = 0;
             let _currentFloor = 0;
-            const destination = floorHeight * 2;
+            const destination = floorHeight * 7;
             const frame = () => {
                 if (pos < destination) {
                     if (easeIn[i] < 1) {
@@ -64,12 +79,19 @@ const Elevator = ({ floorHeight, elevatorNumber, numberOfFloors }) => {
                         i++;
                         easingInEndPos = pos;
                         setSpeed(easeIn[i]);
+                        // "4" is temporary work around
                     } else if (pos < destination - easingInEndPos - 4) {
                         pos += 1;
                     } else {
                         pos += 1 * (1 - easeOut[j]);
                         j++;
                         setSpeed(1 - easeOut[j]);
+                    }
+
+                    if (floorHeight * _currentFloor < pos - 1) {
+                        _currentFloor++;
+
+                        setElevatorCurrenFloor(_currentFloor);
                     }
                 } else {
                     pos = destination;
@@ -78,10 +100,6 @@ const Elevator = ({ floorHeight, elevatorNumber, numberOfFloors }) => {
                     setSpeed(easeIn[i]);
                 }
 
-                if (floorHeight * _currentFloor < pos - 1) {
-                    _currentFloor++;
-                    setCurrentFloor(_currentFloor);
-                }
                 elevatorDOM.style.transform = `translateY(-${pos}px)`;
             };
 
@@ -92,7 +110,14 @@ const Elevator = ({ floorHeight, elevatorNumber, numberOfFloors }) => {
             setIsMoving(false);
             move();
         }
-    }, [currentFloor, elevatorDOM, floorHeight, isMoving]);
+    }, [
+        elevatorCurrenFloor,
+        elevatorDOM,
+        elevatorNumber,
+        floorHeight,
+        isMoving,
+        setElevatorCurrenFloor
+    ]);
 
     return (
         <ElevatorStyled
@@ -115,7 +140,9 @@ const Elevator = ({ floorHeight, elevatorNumber, numberOfFloors }) => {
             >
                 move
             </button>
-            <p style={{ textAlign: "center" }}>{currentFloor}</p>
+            <p style={{ textAlign: "center" }}>
+                {elevatorCurrenFloorCon[elevatorNumber]}
+            </p>
         </ElevatorStyled>
     );
 };
