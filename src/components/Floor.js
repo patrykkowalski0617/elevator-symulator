@@ -26,10 +26,10 @@ export default function Floor({ floorHeight, floorNumber, role }) {
 
         for (let i = 0; i < arrData.length; i++) {
             let distanceToFloor = arrData[i].distanceToFloor;
-            let carNumber = arrData[i].carNumber;
+            let carId = arrData[i].carId;
 
             if (distanceToFloor < min) {
-                theNearestCarNum = carNumber;
+                theNearestCarNum = carId;
             }
             min = distanceToFloor < min ? distanceToFloor : min;
         }
@@ -42,7 +42,7 @@ export default function Floor({ floorHeight, floorNumber, role }) {
             setWaitingForCar(true);
             const distancesToCars = carCurrenFloorCon.map((item, index) => {
                 return {
-                    carNumber: index,
+                    carId: index,
                     distanceToFloor: Math.abs(floorNumber - item)
                 };
             });

@@ -18,7 +18,7 @@ const Shaft = ({ floorHeight, numberOfCars, carWidth, numberOfFloors }) => {
                 <CarShaftStyled key={i} carWidth={carWidth}>
                     <Car
                         floorHeight={floorHeight}
-                        carNumber={i}
+                        carId={i}
                         numberOfFloors={numberOfFloors}
                     />
                 </CarShaftStyled>

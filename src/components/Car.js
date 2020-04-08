@@ -31,7 +31,7 @@ const SpeedMarkChanger = styled.div`
     height: 5px;
 `;
 
-const Car = ({ floorHeight, carNumber }) => {
+const Car = ({ floorHeight, carId }) => {
     const { carCurrenFloorCon, setCarCurrenFloorCon } = useContext(
         ShaftContext
     );
@@ -51,12 +51,12 @@ const Car = ({ floorHeight, carNumber }) => {
 
     useEffect(() => {
         const _carCurrenFloorCon = carCurrenFloorCon;
-        _carCurrenFloorCon.splice(carNumber, 1, carCurrenFloor);
+        _carCurrenFloorCon.splice(carId, 1, carCurrenFloor);
 
         setCarCurrenFloorCon([..._carCurrenFloorCon]);
-        // }, [carCurrenFloor, carCurrenFloorCon, carNumber, setCarCurrenFloorCon]);
+        // }, [carCurrenFloor, carCurrenFloorCon, carId, setCarCurrenFloorCon]);
         // at the moment I cannot find better solution. carCurrenFloorCon cannot be included below
-    }, [carCurrenFloor, carNumber, setCarCurrenFloorCon]);
+    }, [carCurrenFloor, carId, setCarCurrenFloorCon]);
 
     useEffect(() => {
         const move = targetFloor => {
@@ -94,7 +94,7 @@ const Car = ({ floorHeight, carNumber }) => {
                         // THIS MAKES NUMBERS CRAZY
                         // const _carCurrenFloorCon = carCurrenFloorCon;
                         // _carCurrenFloorCon.splice(
-                        //     carNumber,
+                        //     carId,
                         //     1,
                         //     _currentFloor
                         // );
@@ -123,7 +123,7 @@ const Car = ({ floorHeight, carNumber }) => {
     }, [
         carCurrenFloor,
         carDOM,
-        carNumber,
+        carId,
         floorHeight,
         isMoving,
         setCarCurrenFloor
@@ -150,9 +150,7 @@ const Car = ({ floorHeight, carNumber }) => {
             >
                 move
             </button>
-            <p style={{ textAlign: "center" }}>
-                {carCurrenFloorCon[carNumber]}
-            </p>
+            <p style={{ textAlign: "center" }}>{carCurrenFloorCon[carId]}</p>
         </CarStyled>
     );
 };
