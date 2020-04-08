@@ -11,6 +11,8 @@ const ElevatorShaftContextProvider = props => {
         initArr(0)
     ); // next floor on way or floor that has been just reached, but not floor which has been just left
 
+    // console.log(elevatorCurrenFloorCon);
+
     return (
         <ElevatorShaftContext.Provider
             value={{

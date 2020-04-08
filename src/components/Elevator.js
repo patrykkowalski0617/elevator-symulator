@@ -59,7 +59,7 @@ const Elevator = ({ floorHeight, elevatorNumber }) => {
     }, [elevatorCurrenFloor, elevatorNumber, setElevatorCurrenFloorCon]);
 
     useEffect(() => {
-        const move = () => {
+        const move = targetFloor => {
             console.log("move");
             const easingAmountOfFrames = 100;
             const easeIn = Easing(easingAmountOfFrames, "quadratic");
@@ -71,7 +71,7 @@ const Elevator = ({ floorHeight, elevatorNumber }) => {
             let i = 0;
             let j = 0;
             let _currentFloor = 0;
-            const destination = floorHeight * 7;
+            const destination = floorHeight * targetFloor;
             const frame = () => {
                 if (pos < destination) {
                     if (easeIn[i] < 1) {
@@ -91,6 +91,16 @@ const Elevator = ({ floorHeight, elevatorNumber }) => {
                     if (floorHeight * _currentFloor < pos - 1) {
                         _currentFloor++;
 
+                        // THIS MAKES NUMBERS CRAZY
+                        // const _elevatorCurrenFloorCon = elevatorCurrenFloorCon;
+                        // _elevatorCurrenFloorCon.splice(
+                        //     elevatorNumber,
+                        //     1,
+                        //     _currentFloor
+                        // );
+
+                        // setElevatorCurrenFloorCon([..._elevatorCurrenFloorCon]);
+
                         setElevatorCurrenFloor(_currentFloor);
                     }
                 } else {
@@ -108,7 +118,7 @@ const Elevator = ({ floorHeight, elevatorNumber }) => {
 
         if (isMoving) {
             setIsMoving(false);
-            move();
+            move(2);
         }
     }, [
         elevatorCurrenFloor,

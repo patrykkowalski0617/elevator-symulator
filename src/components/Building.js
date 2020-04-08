@@ -37,6 +37,7 @@ const Roof = styled.div`
         position: absolute;
         bottom: 100%;
     }
+    display: none;
 `;
 
 export default function Building() {
