@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { BuildingContext } from "../context/BuildingContext";
 import Floors from "./Floors";
 import styled from "styled-components";
-import ElevatorShaft from "./ElevatorShaft";
+import Shaft from "./Shaft";
 import useElementSizeOnResize from "../customHooks/useElementSizeOnResize";
 
 const BuildingStyled = styled.div`
@@ -41,7 +41,7 @@ const Roof = styled.div`
 `;
 
 export default function Building() {
-    const { numberOfFloors, numberOfElevators } = useContext(BuildingContext);
+    const { numberOfFloors, numberOfCars } = useContext(BuildingContext);
     const [buildingDOM, setBuildingDOM] = useState();
     const [buildingWidth, buildingHeight] = useElementSizeOnResize(buildingDOM);
 
@@ -52,9 +52,9 @@ export default function Building() {
     }, []);
 
     // Sizes
-    const elevatorWidth = 10;
+    const carWidth = 10;
     const floorHeight = buildingHeight / numberOfFloors;
-    const floorWidth = (100 - elevatorWidth * numberOfElevators) / 2;
+    const floorWidth = (100 - carWidth * numberOfCars) / 2;
 
     return (
         <BuildingStyled ref={buildingRef}>
@@ -66,12 +66,12 @@ export default function Building() {
                 floorHeight={floorHeight}
                 floorWidth={floorWidth}
             ></Floors>
-            <ElevatorShaft
+            <Shaft
                 floorHeight={floorHeight}
-                numberOfElevators={numberOfElevators}
-                elevatorWidth={elevatorWidth}
+                numberOfCars={numberOfCars}
+                carWidth={carWidth}
                 numberOfFloors={numberOfFloors}
-            ></ElevatorShaft>
+            ></Shaft>
             <Floors
                 role={"exit-floor"}
                 floorHeight={floorHeight}

@@ -1,15 +1,15 @@
 import React from "react";
 import Building from "./components/Building";
 import BuildingContext from "./context/BuildingContext";
-import ElevatorShaftContext from "./context/ElevatorShaftContext";
+import ShaftContext from "./context/ShaftContext";
 
 function App() {
     return (
         <>
             <BuildingContext>
-                <ElevatorShaftContext>
+                <ShaftContext>
                     <Building></Building>
-                </ElevatorShaftContext>
+                </ShaftContext>
             </BuildingContext>
         </>
     );

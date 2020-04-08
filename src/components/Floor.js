@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { ElevatorShaftContext } from "../context/ElevatorShaftContext";
+import { ShaftContext } from "../context/ShaftContext";
 
 const FloorStyled = styled.div`
     border-bottom: 4px solid;
     height: ${props => props.floorHeight}px;
 `;
 
-const ElevatorLight = styled.div`
+const CarLight = styled.div`
     background: orange;
     width: 7px;
     height: 7px;
@@ -17,42 +17,43 @@ const ElevatorLight = styled.div`
 `;
 
 export default function Floor({ floorHeight, floorNumber, role }) {
-    const [waitingForElevator, setWaitingForElevator] = useState(false);
-    const { elevatorCurrenFloorCon } = useContext(ElevatorShaftContext);
+    const [waitingForCar, setWaitingForCar] = useState(false);
+    const { carCurrenFloorCon } = useContext(ShaftContext);
 
-    const theNearestElevatorNum = arrData => {
+    const theNearestCarNum = arrData => {
         let min = Number.POSITIVE_INFINITY;
-        let theNearestElevatorNum = null;
+        let theNearestCarNum = null;
 
         for (let i = 0; i < arrData.length; i++) {
             let distanceToFloor = arrData[i].distanceToFloor;
-            let elevatorNumber = arrData[i].elevatorNumber;
+            let carNumber = arrData[i].carNumber;
 
             if (distanceToFloor < min) {
-                theNearestElevatorNum = elevatorNumber;
+                theNearestCarNum = carNumber;
             }
             min = distanceToFloor < min ? distanceToFloor : min;
         }
 
-        return theNearestElevatorNum;
+        return theNearestCarNum;
     };
 
     const onClickHandler = e => {
-        if (!waitingForElevator) {
-            setWaitingForElevator(true);
-            // find the nearest Elevator
-            // console.log(floorNumber, elevatorCurrenFloorCon);
-            // create arr of objects {elNum, elDistance}
-            const distancesToElevators = elevatorCurrenFloorCon.map(
-                (item, index) => {
-                    return {
-                        elevatorNumber: index,
-                        distanceToFloor: Math.abs(floorNumber - item)
-                    };
-                }
-            );
+        if (!waitingForCar) {
+            setWaitingForCar(true);
+            const distancesToCars = carCurrenFloorCon.map((item, index) => {
+                return {
+                    carNumber: index,
+                    distanceToFloor: Math.abs(floorNumber - item)
+                };
+            });
 
-            console.log(theNearestElevatorNum(distancesToElevators));
+            // DONE:
+            // find the nearest Car
+            console.log(theNearestCarNum(distancesToCars));
+
+            // TO OD:
+            //  get elevators with correct direction
+            // get elevator whitch is not busy or is less bussy than other
         }
     };
 
@@ -65,12 +66,12 @@ export default function Floor({ floorHeight, floorNumber, role }) {
                         onClickHandler(e);
                     }}
                 >
-                    Call elevator
+                    Call car
                 </button>
             ) : (
                 ""
             )}
-            {waitingForElevator ? <ElevatorLight></ElevatorLight> : ""}
+            {waitingForCar ? <CarLight></CarLight> : ""}
         </FloorStyled>
     );
 }

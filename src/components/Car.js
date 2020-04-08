@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Easing from "easing";
-import { ElevatorShaftContext } from "../context/ElevatorShaftContext";
+import { ShaftContext } from "../context/ShaftContext";
 
-const ElevatorStyled = styled.div`
+const CarStyled = styled.div`
     height: ${props => props.floorHeight - props.positionOnLoad}px;
     background: #999;
     position: absolute;
@@ -31,32 +31,32 @@ const SpeedMarkChanger = styled.div`
     height: 5px;
 `;
 
-const Elevator = ({ floorHeight, elevatorNumber }) => {
-    const { elevatorCurrenFloorCon, setElevatorCurrenFloorCon } = useContext(
-        ElevatorShaftContext
+const Car = ({ floorHeight, carNumber }) => {
+    const { carCurrenFloorCon, setCarCurrenFloorCon } = useContext(
+        ShaftContext
     );
-    const [elevatorCurrenFloor, setElevatorCurrenFloor] = useState(0);
+    const [carCurrenFloor, setCarCurrenFloor] = useState(0);
 
     const [isMoving, setIsMoving] = useState(false);
-    const [elevatorDOM, setElevatorDOM] = useState(null);
+    const [carDOM, setCarDOM] = useState(null);
     const [speed, setSpeed] = useState(0);
 
     const buildingRef = useRef();
     useEffect(() => {
         const ref = buildingRef.current;
-        setElevatorDOM(ref);
+        setCarDOM(ref);
     }, []);
 
     const positionOnLoad = -4;
 
     useEffect(() => {
-        const _elevatorCurrenFloorCon = elevatorCurrenFloorCon;
-        _elevatorCurrenFloorCon.splice(elevatorNumber, 1, elevatorCurrenFloor);
+        const _carCurrenFloorCon = carCurrenFloorCon;
+        _carCurrenFloorCon.splice(carNumber, 1, carCurrenFloor);
 
-        setElevatorCurrenFloorCon([..._elevatorCurrenFloorCon]);
-        // }, [elevatorCurrenFloor, elevatorCurrenFloorCon, elevatorNumber, setElevatorCurrenFloorCon]);
-        // at the moment I cannot find better solution. elevatorCurrenFloorCon cannot be included below
-    }, [elevatorCurrenFloor, elevatorNumber, setElevatorCurrenFloorCon]);
+        setCarCurrenFloorCon([..._carCurrenFloorCon]);
+        // }, [carCurrenFloor, carCurrenFloorCon, carNumber, setCarCurrenFloorCon]);
+        // at the moment I cannot find better solution. carCurrenFloorCon cannot be included below
+    }, [carCurrenFloor, carNumber, setCarCurrenFloorCon]);
 
     useEffect(() => {
         const move = targetFloor => {
@@ -92,16 +92,16 @@ const Elevator = ({ floorHeight, elevatorNumber }) => {
                         _currentFloor++;
 
                         // THIS MAKES NUMBERS CRAZY
-                        // const _elevatorCurrenFloorCon = elevatorCurrenFloorCon;
-                        // _elevatorCurrenFloorCon.splice(
-                        //     elevatorNumber,
+                        // const _carCurrenFloorCon = carCurrenFloorCon;
+                        // _carCurrenFloorCon.splice(
+                        //     carNumber,
                         //     1,
                         //     _currentFloor
                         // );
 
-                        // setElevatorCurrenFloorCon([..._elevatorCurrenFloorCon]);
+                        // setCarCurrenFloorCon([..._carCurrenFloorCon]);
 
-                        setElevatorCurrenFloor(_currentFloor);
+                        setCarCurrenFloor(_currentFloor);
                     }
                 } else {
                     pos = destination;
@@ -110,7 +110,7 @@ const Elevator = ({ floorHeight, elevatorNumber }) => {
                     setSpeed(easeIn[i]);
                 }
 
-                elevatorDOM.style.transform = `translateY(-${pos}px)`;
+                carDOM.style.transform = `translateY(-${pos}px)`;
             };
 
             id = setInterval(frame, 15);
@@ -121,16 +121,16 @@ const Elevator = ({ floorHeight, elevatorNumber }) => {
             move(2);
         }
     }, [
-        elevatorCurrenFloor,
-        elevatorDOM,
-        elevatorNumber,
+        carCurrenFloor,
+        carDOM,
+        carNumber,
         floorHeight,
         isMoving,
-        setElevatorCurrenFloor
+        setCarCurrenFloor
     ]);
 
     return (
-        <ElevatorStyled
+        <CarStyled
             ref={buildingRef}
             floorHeight={floorHeight}
             positionOnLoad={positionOnLoad}
@@ -151,10 +151,10 @@ const Elevator = ({ floorHeight, elevatorNumber }) => {
                 move
             </button>
             <p style={{ textAlign: "center" }}>
-                {elevatorCurrenFloorCon[elevatorNumber]}
+                {carCurrenFloorCon[carNumber]}
             </p>
-        </ElevatorStyled>
+        </CarStyled>
     );
 };
 
-export default Elevator;
+export default Car;
