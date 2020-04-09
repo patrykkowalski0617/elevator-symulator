@@ -18,7 +18,7 @@ const CarLight = styled.div`
 
 export default function Floor({ floorHeight, floorNumber, role }) {
     const [waitingForCar, setWaitingForCar] = useState(false);
-    const { carCurrenFloorCon } = useContext(ShaftContext);
+    const { allCarsCurrentFloor } = useContext(ShaftContext);
 
     const theNearestCarNum = arrData => {
         let min = Number.POSITIVE_INFINITY;
@@ -40,7 +40,7 @@ export default function Floor({ floorHeight, floorNumber, role }) {
     const onClickHandler = e => {
         if (!waitingForCar) {
             setWaitingForCar(true);
-            const distancesToCars = carCurrenFloorCon.map((item, index) => {
+            const distancesToCars = allCarsCurrentFloor.map((item, index) => {
                 return {
                     carId: index,
                     distanceToFloor: Math.abs(floorNumber - item)
@@ -52,8 +52,8 @@ export default function Floor({ floorHeight, floorNumber, role }) {
             console.log(theNearestCarNum(distancesToCars));
 
             // TO OD:
-            //  get elevators with correct direction
-            // get elevator whitch is not busy or is less bussy than other
+            // get cars with correct direction
+            // get car whitch is not busy or is less bussy than other
         }
     };
 
