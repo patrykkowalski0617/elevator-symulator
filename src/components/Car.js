@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components";
-import Easing from "easing";
 import { ShaftContext } from "../context/ShaftContext";
+import move from "../logic/move";
 
 const CarStyled = styled.div`
     height: ${props => props.floorHeight - props.positionOnLoad}px;
@@ -48,8 +48,6 @@ const Car = ({ floorHeight, carId }) => {
         setCarDOM(ref);
     }, []);
 
-    const positionOnLoad = -4;
-
     useEffect(() => {
         const _allCarsCurrentFloor = allCarsCurrentFloor;
         _allCarsCurrentFloor.splice(carId, 1, carCurrentFloor);
@@ -58,112 +56,26 @@ const Car = ({ floorHeight, carId }) => {
     }, [carCurrentFloor, carId, setCarCurrentFloorCon]);
     // console.log(direction);
     useEffect(() => {
-        const move = targetFloor => {
-            const easingAmountOfFrames = 100;
-            const easeIn = Easing(easingAmountOfFrames, "quadratic");
-            const easeOut = Easing(easingAmountOfFrames, "sinusoidal");
-
-            let pos = floorHeight * carCurrentFloor;
-            let easingInEndPos = 0;
-            let id;
-            let i = 0;
-            let j = 0;
-            let _currentFloor = carCurrentFloor;
-            const destination = floorHeight * targetFloor;
-
-            const _direction =
-                carCurrentFloor < targetFloor
-                    ? "up"
-                    : carCurrentFloor > targetFloor
-                    ? "down"
-                    : null;
-            setDirection(_direction);
-
-            const frame = () => {
-                if (_direction === "up") {
-                    if (pos < destination) {
-                        if (easeIn[i] < 1) {
-                            pos += 1 * easeIn[i];
-                            i++;
-                            easingInEndPos = pos;
-                            setSpeed(easeIn[i]);
-                            // "4" is temporary work around
-                        } else if (pos < destination - easingInEndPos - 4) {
-                            pos += 1;
-                        } else {
-                            pos += 1 * (1 - easeOut[j]);
-                            j++;
-                            setSpeed(1 - easeOut[j]);
-                        }
-
-                        // "1" is temporary work around
-                        if (floorHeight * _currentFloor < pos - 1) {
-                            _currentFloor++;
-                            setCarCurrentFloor(_currentFloor);
-                        }
-                    } else {
-                        pos = destination;
-                        clearInterval(id);
-                        i = 0;
-                        setSpeed(easeIn[i]);
-                        setDirection(null);
-                        setTargetFloor(0);
-                    }
-                } else if (_direction === "down") {
-                    if (pos > destination) {
-                        if (easeIn[i] < 1) {
-                            pos -= 1 * easeIn[i];
-                            i++;
-                            easingInEndPos =
-                                carCurrentFloor * floorHeight - pos;
-                            setSpeed(easeIn[i]);
-                        } else if (pos > destination + easingInEndPos + 4) {
-                            pos -= 1;
-                        } else {
-                            pos -= 1 * (1 - easeOut[j]);
-                            j++;
-                            setSpeed(1 - easeOut[j]);
-                        }
-
-                        // "1" is temporary work around
-                        if (floorHeight * _currentFloor > pos + 1) {
-                            _currentFloor--;
-                            setCarCurrentFloor(_currentFloor);
-                        }
-                    } else {
-                        pos = destination;
-                        clearInterval(id);
-                        i = 0;
-                        setSpeed(easeIn[i]);
-                        setDirection(null);
-                        setTargetFloor(0);
-                    }
-                }
-                // console.log(pos);
-                carDOM.style.transform = `translateY(-${pos}px)`;
-            };
-
-            id = setInterval(frame, 15);
-        };
-
         if (startMove) {
             setStartMove(false);
-            move(targetFloor);
+            move(
+                targetFloor,
+                floorHeight,
+                setDirection,
+                setTargetFloor,
+                setSpeed,
+                carCurrentFloor,
+                setCarCurrentFloor,
+                carDOM
+            );
         }
-    }, [
-        carCurrentFloor,
-        carDOM,
-        carId,
-        floorHeight,
-        startMove,
-        setCarCurrentFloor
-    ]);
+    }, [startMove]);
 
     return (
         <CarStyled
             ref={buildingRef}
             floorHeight={floorHeight}
-            positionOnLoad={positionOnLoad}
+            positionOnLoad={-4}
         >
             <SpeedControl speed={speed}>
                 <SpeedMarkChanger speed={speed} />

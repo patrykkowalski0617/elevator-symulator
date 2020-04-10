@@ -54,6 +54,7 @@ export default function Floor({ floorHeight, floorNumber, role }) {
             // TO OD:
             // get cars with correct direction
             // get car whitch is not busy or is less bussy than other
+            // start car move from floor component
         }
     };
 
