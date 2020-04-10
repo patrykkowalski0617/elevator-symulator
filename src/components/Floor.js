@@ -18,15 +18,41 @@ const CarLight = styled.div`
 
 export default function Floor({ floorHeight, floorNumber, role }) {
     const [waitingForCar, setWaitingForCar] = useState(false);
-    const { allCarsCurrentFloor } = useContext(ShaftContext);
+    const { allCarsCurrentFloor, allDirections } = useContext(ShaftContext);
 
-    const theNearestCarNum = arrData => {
+    const carsWithCorrectDirection = () => {
+        let carIds = [];
+
+        for (let i = 0; i < allDirections.length; i++) {
+            const direction = allDirections[i];
+            const currentFloor = allCarsCurrentFloor[i];
+
+            if (
+                direction === null ||
+                (direction === "up" && currentFloor < floorNumber) ||
+                (direction === "down" && currentFloor > floorNumber)
+            ) {
+                carIds.push(i);
+            }
+        }
+
+        return carIds;
+    };
+
+    const theNearestCarNum = () => {
+        const distancesToCars = allCarsCurrentFloor.map((item, index) => {
+            return {
+                carId: index,
+                distanceToFloor: Math.abs(floorNumber - item)
+            };
+        });
+
         let min = Number.POSITIVE_INFINITY;
         let theNearestCarNum = null;
 
-        for (let i = 0; i < arrData.length; i++) {
-            let distanceToFloor = arrData[i].distanceToFloor;
-            let carId = arrData[i].carId;
+        for (let i = 0; i < distancesToCars.length; i++) {
+            let distanceToFloor = distancesToCars[i].distanceToFloor;
+            let carId = distancesToCars[i].carId;
 
             if (distanceToFloor < min) {
                 theNearestCarNum = carId;
@@ -37,22 +63,16 @@ export default function Floor({ floorHeight, floorNumber, role }) {
         return theNearestCarNum;
     };
 
-    const onClickHandler = e => {
+    const onClickHandler = () => {
         if (!waitingForCar) {
             setWaitingForCar(true);
-            const distancesToCars = allCarsCurrentFloor.map((item, index) => {
-                return {
-                    carId: index,
-                    distanceToFloor: Math.abs(floorNumber - item)
-                };
-            });
 
             // DONE:
-            // find the nearest Car
-            console.log(theNearestCarNum(distancesToCars));
+            console.log(carsWithCorrectDirection());
+            console.log(theNearestCarNum());
 
             // TO OD:
-            // get cars with correct direction
+            // theNearestCarNum searching only carsWithCorrectDirection
             // get car whitch is not busy or is less bussy than other
             // start car move from floor component
         }

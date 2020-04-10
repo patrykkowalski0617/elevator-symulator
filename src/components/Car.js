@@ -32,12 +32,15 @@ const SpeedMarkChanger = styled.div`
 `;
 
 const Car = ({ floorHeight, carId }) => {
-    const { allCarsCurrentFloor, setCarCurrentFloorCon } = useContext(
-        ShaftContext
-    );
+    const {
+        allCarsCurrentFloor,
+        setCarCurrentFloorCon,
+        allDirections,
+        setAllDirections
+    } = useContext(ShaftContext);
     const [carCurrentFloor, setCarCurrentFloor] = useState(0);
     const [direction, setDirection] = useState(null);
-    const [targetFloor, setTargetFloor] = useState(3);
+    const [targetFloor, setTargetFloor] = useState(5);
     const [startMove, setStartMove] = useState(false);
     const [carDOM, setCarDOM] = useState(null);
     const [speed, setSpeed] = useState(0);
@@ -53,8 +56,15 @@ const Car = ({ floorHeight, carId }) => {
         _allCarsCurrentFloor.splice(carId, 1, carCurrentFloor);
 
         setCarCurrentFloorCon([..._allCarsCurrentFloor]);
-    }, [carCurrentFloor, carId, setCarCurrentFloorCon]);
-    // console.log(direction);
+    }, [carCurrentFloor]);
+
+    useEffect(() => {
+        const _allDirections = allDirections;
+        _allDirections.splice(carId, 1, direction);
+
+        setAllDirections([..._allDirections]);
+    }, [direction]);
+
     useEffect(() => {
         if (startMove) {
             setStartMove(false);
