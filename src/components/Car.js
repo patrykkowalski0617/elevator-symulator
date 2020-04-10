@@ -56,7 +56,7 @@ const Car = ({ floorHeight, carId }) => {
 
         setCarCurrentFloorCon([..._allCarsCurrentFloor]);
     }, [carCurrentFloor, carId, setCarCurrentFloorCon]);
-    console.log(direction);
+    // console.log(direction);
     useEffect(() => {
         const move = targetFloor => {
             const easingAmountOfFrames = 100;
@@ -115,11 +115,8 @@ const Car = ({ floorHeight, carId }) => {
                             pos -= 1 * easeIn[i];
                             i++;
                             easingInEndPos =
-                                (allCarsCurrentFloor[carId] * floorHeight -
-                                    pos) *
-                                -1;
+                                carCurrentFloor * floorHeight - pos;
                             setSpeed(easeIn[i]);
-                            // "4" is temporary work around
                         } else if (pos > destination + easingInEndPos + 4) {
                             pos -= 1;
                         } else {
@@ -142,7 +139,7 @@ const Car = ({ floorHeight, carId }) => {
                         setTargetFloor(0);
                     }
                 }
-
+                // console.log(pos);
                 carDOM.style.transform = `translateY(-${pos}px)`;
             };
 
