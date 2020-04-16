@@ -19,15 +19,26 @@ const CarLight = styled.div`
 
 export default function Floor({ floorHeight, floorNumber, role }) {
     const [waitingForCar, setWaitingForCar] = useState(false);
-    const { allCarsCurrentFloor, allDirections } = useContext(ShaftContext);
+    const {
+        allCarsCurrentFloor,
+        allDirections,
+        floorAssignments,
+        setFloorAssignments
+    } = useContext(ShaftContext);
 
     const onClickHandler = () => {
         if (!waitingForCar) {
             setWaitingForCar(true);
-
-            console.log(
-                theNearestCar(allDirections, allCarsCurrentFloor, floorNumber)
+            const carId = theNearestCar(
+                allDirections,
+                allCarsCurrentFloor,
+                floorNumber
             );
+
+            const _floorAssignments = floorAssignments;
+            _floorAssignments.splice(carId, 1, floorNumber);
+
+            setFloorAssignments([..._floorAssignments]);
         }
     };
 

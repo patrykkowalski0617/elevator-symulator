@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { ShaftContext } from "../context/ShaftContext";
-import move from "../logic/move";
+import carAnimation from "../logic/carAnimation";
 
 const CarStyled = styled.div`
     height: ${props => props.floorHeight - props.positionOnLoad}px;
@@ -31,19 +31,38 @@ const SpeedMarkChanger = styled.div`
     height: 5px;
 `;
 
-const Car = ({ floorHeight, carId }) => {
+const Car = ({ floorHeight, carId, floorAssignment }) => {
     const {
         allCarsCurrentFloor,
-        setCarCurrentFloorCon,
+        setAllCarsCurrentFloor,
         allDirections,
-        setAllDirections
+        setAllDirections,
+        floorAssignments,
+        setFloorAssignments
     } = useContext(ShaftContext);
     const [carCurrentFloor, setCarCurrentFloor] = useState(0);
     const [direction, setDirection] = useState(null);
-    const [targetFloor, setTargetFloor] = useState(5);
     const [startMove, setStartMove] = useState(false);
     const [carDOM, setCarDOM] = useState(null);
     const [speed, setSpeed] = useState(0);
+
+    const callback = () => {
+        const _floorAssignments = floorAssignments;
+        _floorAssignments.splice(carId, 1, null);
+
+        setFloorAssignments([..._floorAssignments]);
+    };
+
+    const move = carAnimation(
+        floorAssignment,
+        floorHeight,
+        setDirection,
+        setSpeed,
+        carCurrentFloor,
+        setCarCurrentFloor,
+        carDOM,
+        callback
+    );
 
     const buildingRef = useRef();
     useEffect(() => {
@@ -55,7 +74,7 @@ const Car = ({ floorHeight, carId }) => {
         const _allCarsCurrentFloor = allCarsCurrentFloor;
         _allCarsCurrentFloor.splice(carId, 1, carCurrentFloor);
 
-        setCarCurrentFloorCon([..._allCarsCurrentFloor]);
+        setAllCarsCurrentFloor([..._allCarsCurrentFloor]);
     }, [carCurrentFloor]);
 
     useEffect(() => {
@@ -68,41 +87,28 @@ const Car = ({ floorHeight, carId }) => {
     useEffect(() => {
         if (startMove) {
             setStartMove(false);
-            move(
-                targetFloor,
-                floorHeight,
-                setDirection,
-                setTargetFloor,
-                setSpeed,
-                carCurrentFloor,
-                setCarCurrentFloor,
-                carDOM
-            );
+            move();
         }
     }, [startMove]);
+
+    useEffect(() => {
+        if (floorAssignments[carId] !== null) {
+            setStartMove(true);
+        }
+    }, [floorAssignments[carId]]);
 
     return (
         <CarStyled
             ref={buildingRef}
             floorHeight={floorHeight}
             positionOnLoad={-4}
+            style={{ textAlign: "center" }}
         >
             <SpeedControl speed={speed}>
                 <SpeedMarkChanger speed={speed} />
             </SpeedControl>
-            <button
-                style={{
-                    background: "transparent",
-                    border: "none",
-                    width: "100%"
-                }}
-                onClick={() => {
-                    setStartMove(true);
-                }}
-            >
-                move
-            </button>
-            <p style={{ textAlign: "center" }}>{allCarsCurrentFloor[carId]}</p>
+            <p>{floorAssignment || "null"}</p>
+            <p>{allCarsCurrentFloor[carId]}</p>
         </CarStyled>
     );
 };
