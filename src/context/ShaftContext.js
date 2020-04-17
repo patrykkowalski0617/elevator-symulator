@@ -9,7 +9,7 @@ const ShaftContextProvider = props => {
 
     const [allCarsCurrentFloor, setAllCarsCurrentFloor] = useState(initArr(0)); // next floor on way or floor that has been just reached, but not floor which has been just left
     const [allDirections, setAllDirections] = useState(initArr(0));
-    const [floorAssignments, setFloorAssignments] = useState(initArr(null));
+    const [floorAssignments, setFloorAssignments] = useState(initArr([]));
 
     return (
         <ShaftContext.Provider

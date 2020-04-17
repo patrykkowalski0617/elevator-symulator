@@ -46,15 +46,17 @@ const Car = ({ floorHeight, carId, floorAssignment }) => {
     const [carDOM, setCarDOM] = useState(null);
     const [speed, setSpeed] = useState(0);
 
+    const targetFloor = floorAssignment[0];
+
     const callback = () => {
         const _floorAssignments = floorAssignments;
-        _floorAssignments.splice(carId, 1, null);
+        _floorAssignments.splice(carId, 1, []);
 
         setFloorAssignments([..._floorAssignments]);
     };
 
     const move = carAnimation(
-        floorAssignment,
+        targetFloor,
         floorHeight,
         setDirection,
         setSpeed,
@@ -92,10 +94,13 @@ const Car = ({ floorHeight, carId, floorAssignment }) => {
     }, [startMove]);
 
     useEffect(() => {
-        if (floorAssignments[carId] !== null) {
+        if (
+            floorAssignments[carId][0] !== undefined ||
+            floorAssignments[carId][0] !== null
+        ) {
             setStartMove(true);
         }
-    }, [floorAssignments[carId]]);
+    }, [floorAssignments[carId][0]]);
 
     return (
         <CarStyled
@@ -107,8 +112,8 @@ const Car = ({ floorHeight, carId, floorAssignment }) => {
             <SpeedControl speed={speed}>
                 <SpeedMarkChanger speed={speed} />
             </SpeedControl>
-            <p>{floorAssignment || "null"}</p>
-            <p>{allCarsCurrentFloor[carId]}</p>
+            <p>Tar: {targetFloor || "-"}</p>
+            <p>Now: {allCarsCurrentFloor[carId]}</p>
         </CarStyled>
     );
 };

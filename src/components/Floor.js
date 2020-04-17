@@ -38,7 +38,26 @@ export default function Floor({ floorHeight, floorNumber, role }) {
             // dont assing floor to car, if there is no available cars
             if (carId !== null) {
                 const _floorAssignments = floorAssignments;
-                _floorAssignments.splice(carId, 1, floorNumber);
+
+                const floorAssignmentsOfTheNearestCar =
+                    _floorAssignments[carId];
+
+                const floorAssignmentsOfTheNearestCarUpdated = [
+                    ...floorAssignmentsOfTheNearestCar,
+                    floorNumber
+                ].sort();
+
+                _floorAssignments.splice(
+                    carId,
+                    1,
+                    floorAssignmentsOfTheNearestCarUpdated
+                );
+
+                console.log(
+                    _floorAssignments,
+                    floorAssignmentsOfTheNearestCar,
+                    floorAssignmentsOfTheNearestCarUpdated
+                );
 
                 setFloorAssignments([..._floorAssignments]);
             } else {
