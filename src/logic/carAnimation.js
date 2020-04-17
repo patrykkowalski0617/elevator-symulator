@@ -7,8 +7,7 @@ const carAnimation = (
     setSpeed,
     carCurrentFloor,
     setCarCurrentFloor,
-    carDOM,
-    callback
+    carDOM
 ) => {
     return () => {
         const easingNumberOfFrames = 100;
@@ -38,8 +37,6 @@ const carAnimation = (
             i = 0;
             setSpeed(easeIn[i]);
             setDirection(null);
-
-            callback();
         };
 
         const frame = () => {

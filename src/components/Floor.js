@@ -53,15 +53,9 @@ export default function Floor({ floorHeight, floorNumber, role }) {
                     floorAssignmentsOfTheNearestCarUpdated
                 );
 
-                console.log(
-                    _floorAssignments,
-                    floorAssignmentsOfTheNearestCar,
-                    floorAssignmentsOfTheNearestCarUpdated
-                );
-
                 setFloorAssignments([..._floorAssignments]);
             } else {
-                console.log("There is no available car.");
+                console.warn("There is no available car.");
             }
         }
     };
