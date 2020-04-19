@@ -1,23 +1,23 @@
-// returns id of the nearest car with correct direction or null if there is no available cars
+// returns id of the nearest car with correct carState or null if there is no available cars
 
-const theNearestCar = (allDirections, allCarsCurrentFloor, floorNumber) => {
-    // Step 1 - get id of cars with correct direction and calculate distance from them
-    let distanceOfCarsWithCorrectDirection = [];
-    let direction, currentFloor, distanceToFloor;
+const theNearestCar = (allCarStates, allCarsCurrentFloor, floorNumber) => {
+    // Step 1 - get id of cars with correct carState and calculate distance from them
+    let distanceOfCarsWithCorrectCarState = [];
+    let carState, currentFloor, distanceToFloor;
 
-    for (let carId = 0; carId < allDirections.length; carId++) {
-        direction = allDirections[carId];
+    for (let carId = 0; carId < allCarStates.length; carId++) {
+        carState = allCarStates[carId];
         currentFloor = allCarsCurrentFloor[carId];
         distanceToFloor = Math.abs(floorNumber - currentFloor); // Math.abs - make number positive
 
         if (
-            direction === null ||
-            (direction === "up" && currentFloor < floorNumber) ||
-            (direction === "down" && currentFloor > floorNumber)
+            carState === null ||
+            (carState === "go-up" && currentFloor < floorNumber) ||
+            (carState === "go-down" && currentFloor > floorNumber)
         ) {
-            distanceOfCarsWithCorrectDirection.push({
+            distanceOfCarsWithCorrectCarState.push({
                 carId,
-                distanceToFloor
+                distanceToFloor,
             });
         }
     }
@@ -26,10 +26,10 @@ const theNearestCar = (allDirections, allCarsCurrentFloor, floorNumber) => {
     let min = Number.POSITIVE_INFINITY;
     let theNearestCarNum = null;
 
-    for (let i = 0; i < distanceOfCarsWithCorrectDirection.length; i++) {
-        let carId = distanceOfCarsWithCorrectDirection[i].carId;
+    for (let i = 0; i < distanceOfCarsWithCorrectCarState.length; i++) {
+        let carId = distanceOfCarsWithCorrectCarState[i].carId;
         let distanceToFloor =
-            distanceOfCarsWithCorrectDirection[i].distanceToFloor;
+            distanceOfCarsWithCorrectCarState[i].distanceToFloor;
 
         if (distanceToFloor < min) {
             theNearestCarNum = carId;

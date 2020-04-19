@@ -1,15 +1,15 @@
 import Easing from "easing";
 
 const carAnimation = (
-    targetFloor,
+    target,
     floorHeight,
-    setDirection,
+    // setDirection,
     setSpeed,
     carCurrentFloor,
-    setCarCurrentFloor,
+    // setCarCurrentFloor,
     carDOM
 ) => {
-    return () => {
+    if (target !== null) {
         const easingNumberOfFrames = 100;
         const easeIn = Easing(easingNumberOfFrames, "quadratic");
         const easeOut = Easing(easingNumberOfFrames, "sinusoidal");
@@ -21,27 +21,27 @@ const carAnimation = (
         let i = 0;
         let j = 0;
         let _currentFloor = carCurrentFloor;
-        const destination = floorHeight * targetFloor;
+        const destination = floorHeight * target;
 
-        const _direction =
-            carCurrentFloor < targetFloor
-                ? "up"
-                : carCurrentFloor > targetFloor
-                ? "down"
+        const _carState =
+            carCurrentFloor < target
+                ? "go-up"
+                : carCurrentFloor > target
+                ? "go-down"
                 : null;
-        setDirection(_direction);
+        // setDirection(_carState);
 
         const clearFrame = () => {
             posLet = destination;
             clearInterval(id);
             i = 0;
             setSpeed(easeIn[i]);
-            setDirection(null);
+            // setDirection("door-open");
         };
 
         const frame = () => {
             // if it is move to the up
-            if (_direction === "up" && posLet < destination) {
+            if (_carState === "go-up" && posLet < destination) {
                 // speed up
                 if (easeIn[i] < 1) {
                     posLet += 1 * easeIn[i];
@@ -61,10 +61,10 @@ const carAnimation = (
 
                 if (floorHeight * _currentFloor < posLet - 1) {
                     _currentFloor++;
-                    setCarCurrentFloor(_currentFloor);
+                    // setCarCurrentFloor(_currentFloor);
                 }
                 // if it is move to the down
-            } else if (_direction === "down" && posLet > destination) {
+            } else if (_carState === "go-down" && posLet > destination) {
                 // speed up
                 if (easeIn[i] < 1) {
                     posLet -= 1 * easeIn[i];
@@ -83,7 +83,7 @@ const carAnimation = (
 
                 if (floorHeight * _currentFloor > posLet + 1) {
                     _currentFloor--;
-                    setCarCurrentFloor(_currentFloor);
+                    // setCarCurrentFloor(_currentFloor);
                 }
             } else {
                 clearFrame();
@@ -92,7 +92,7 @@ const carAnimation = (
         };
 
         id = setInterval(frame, 15);
-    };
+    }
 };
 
 export default carAnimation;

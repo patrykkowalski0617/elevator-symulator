@@ -5,7 +5,7 @@ import theNearestCar from "../logic/theNearestCar";
 
 const FloorStyled = styled.div`
     border-bottom: 4px solid;
-    height: ${props => props.floorHeight}px;
+    height: ${(props) => props.floorHeight}px;
 `;
 
 const CarLight = styled.div`
@@ -21,39 +21,39 @@ export default function Floor({ floorHeight, floorNumber, role }) {
     const [waitingForCar, setWaitingForCar] = useState(false);
     const {
         allCarsCurrentFloor,
-        allDirections,
-        floorAssignments,
-        setFloorAssignments
+        allCarStates,
+        allCarsFloorAssignments,
+        setAllCarsFloorAssignments,
     } = useContext(ShaftContext);
 
     const onClickHandler = () => {
         if (!waitingForCar) {
             setWaitingForCar(true);
             const carId = theNearestCar(
-                allDirections,
+                allCarStates,
                 allCarsCurrentFloor,
                 floorNumber
             );
 
             // dont assing floor to car, if there is no available cars
             if (carId !== null) {
-                const _floorAssignments = floorAssignments;
+                const _allCarsFloorAssignments = allCarsFloorAssignments;
 
-                const floorAssignmentsOfTheNearestCar =
-                    _floorAssignments[carId];
+                const allCarsFloorAssignmentsOfTheNearestCar =
+                    _allCarsFloorAssignments[carId];
 
-                const floorAssignmentsOfTheNearestCarUpdated = [
-                    ...floorAssignmentsOfTheNearestCar,
-                    floorNumber
-                ].sort();
+                const allCarsFloorAssignmentsOfTheNearestCarUpdated = [
+                    ...allCarsFloorAssignmentsOfTheNearestCar,
+                    floorNumber,
+                ]; //.sort();
 
-                _floorAssignments.splice(
+                _allCarsFloorAssignments.splice(
                     carId,
                     1,
-                    floorAssignmentsOfTheNearestCarUpdated
+                    allCarsFloorAssignmentsOfTheNearestCarUpdated
                 );
 
-                setFloorAssignments([..._floorAssignments]);
+                setAllCarsFloorAssignments([..._allCarsFloorAssignments]);
             } else {
                 console.warn("There is no available car.");
             }
@@ -65,7 +65,7 @@ export default function Floor({ floorHeight, floorNumber, role }) {
             {role === "enter-floor" ? (
                 <button
                     data-floor-number={floorNumber}
-                    onClick={e => {
+                    onClick={(e) => {
                         onClickHandler(e);
                     }}
                 >
