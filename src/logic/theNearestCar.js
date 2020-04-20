@@ -17,7 +17,7 @@ const theNearestCar = (allCarStates, allCarsCurrentFloor, floorNumber) => {
         ) {
             distanceOfCarsWithCorrectCarState.push({
                 carId,
-                distanceToFloor,
+                distanceToFloor
             });
         }
     }

@@ -3,45 +3,59 @@ import Easing from "easing";
 const carAnimation = (
     target,
     floorHeight,
-    // setDirection,
+    allCarStates,
+    setAllCarStates,
     setSpeed,
-    carCurrentFloor,
-    // setCarCurrentFloor,
-    carDOM
+    allCarsCurrentFloor,
+    setAllCarsCurrentFloor,
+    carDOM,
+    carId
 ) => {
-    if (target !== null) {
+    // console.log(allCarStates[carId], allCarsCurrentFloor[carId], target);
+    if (target !== null && allCarStates[carId] !== "go-up") {
         const easingNumberOfFrames = 100;
         const easeIn = Easing(easingNumberOfFrames, "quadratic");
         const easeOut = Easing(easingNumberOfFrames, "sinusoidal");
 
-        const posConst = floorHeight * carCurrentFloor;
+        const posConst = floorHeight * allCarsCurrentFloor[carId];
         let posLet = posConst;
         let easingInEndPos = 0;
         let id;
         let i = 0;
         let j = 0;
-        let _currentFloor = carCurrentFloor;
+        let currentFloor = allCarsCurrentFloor[carId];
         const destination = floorHeight * target;
 
-        const _carState =
-            carCurrentFloor < target
+        const carState =
+            allCarsCurrentFloor[carId] < target
                 ? "go-up"
-                : carCurrentFloor > target
+                : allCarsCurrentFloor[carId] > target
                 ? "go-down"
                 : null;
-        // setDirection(_carState);
+        const _allCarStates = allCarStates;
+        _allCarStates.splice(carId, 1, carState);
+        setAllCarStates(_allCarStates);
 
         const clearFrame = () => {
             posLet = destination;
             clearInterval(id);
             i = 0;
             setSpeed(easeIn[i]);
-            // setDirection("door-open");
+
+            // const _allCarStates = allCarStates;
+            // _allCarStates.splice(carId, 1, "door-open");
+            // setAllCarStates(_allCarStates);
+
+            // setTimeout(() => {
+            const _allCarStates = allCarStates;
+            _allCarStates.splice(carId, 1, null);
+            setAllCarStates(_allCarStates);
+            // }, 500);
         };
 
         const frame = () => {
             // if it is move to the up
-            if (_carState === "go-up" && posLet < destination) {
+            if (carState === "go-up" && posLet < destination) {
                 // speed up
                 if (easeIn[i] < 1) {
                     posLet += 1 * easeIn[i];
@@ -59,12 +73,15 @@ const carAnimation = (
                     setSpeed(1 - easeOut[j]);
                 }
 
-                if (floorHeight * _currentFloor < posLet - 1) {
-                    _currentFloor++;
-                    // setCarCurrentFloor(_currentFloor);
+                if (floorHeight * currentFloor < posLet - 1) {
+                    currentFloor++;
+
+                    const _allCarsCurrentFloor = allCarsCurrentFloor;
+                    _allCarsCurrentFloor.splice(carId, 1, currentFloor);
+                    setAllCarsCurrentFloor(_allCarsCurrentFloor);
                 }
                 // if it is move to the down
-            } else if (_carState === "go-down" && posLet > destination) {
+            } else if (carState === "go-down" && posLet > destination) {
                 // speed up
                 if (easeIn[i] < 1) {
                     posLet -= 1 * easeIn[i];
@@ -81,9 +98,12 @@ const carAnimation = (
                     setSpeed(1 - easeOut[j]);
                 }
 
-                if (floorHeight * _currentFloor > posLet + 1) {
-                    _currentFloor--;
-                    // setCarCurrentFloor(_currentFloor);
+                if (floorHeight * currentFloor > posLet + 1) {
+                    currentFloor--;
+
+                    const _allCarsCurrentFloor = allCarsCurrentFloor;
+                    _allCarsCurrentFloor.splice(carId, 1, currentFloor);
+                    setAllCarsCurrentFloor(_allCarsCurrentFloor);
                 }
             } else {
                 clearFrame();
