@@ -96,7 +96,7 @@ export default function Building() {
                     }}
                     style={{ width: "500px", height: "30px" }}
                 >
-                    0
+                    BOTTOM
                 </button>
                 <button
                     onClick={() => {
@@ -104,7 +104,7 @@ export default function Building() {
                     }}
                     style={{ width: "500px", height: "30px" }}
                 >
-                    7
+                    TOP
                 </button>
             </div>
         </>

@@ -42,7 +42,7 @@ const Car = ({ floorHeight, carId }) => {
     const [speed, setSpeed] = useState(0);
     const [target, setTarget] = useState([]);
     const [intervalId, setIntervalId] = useState(null);
-    const [dataContinuation, setPosForContinuation] = useState(null);
+    const [dataContinuation, setDataContinuation] = useState(null);
     const [startPosition, setStartPosition] = useState(null);
 
     useEffect(() => {
@@ -63,14 +63,6 @@ const Car = ({ floorHeight, carId }) => {
     // 4. do auto remove reached floor (after time needed to open and close doors)
 
     useEffect(() => {
-        console.log(
-            "state",
-            allCarStates[carId],
-            "| floor",
-            allCarsCurrentFloor[carId],
-            "| target",
-            target
-        );
         if (target[0] !== null) {
             const easingNumberOfFrames = 100;
             const easeIn = Easing(easingNumberOfFrames, "quadratic");
@@ -133,6 +125,9 @@ const Car = ({ floorHeight, carId }) => {
                     if (easeIn[speedUpIncrem] < 1) {
                         posLet -= 1 * easeIn[speedUpIncrem];
                         speedUpIncrem++;
+                        easingInEndPos = continuation
+                            ? startPosition - posLet
+                            : posConst - posLet;
                         setSpeed(easeIn[speedUpIncrem]);
                         // speed constance
                     } else if (posLet > destination + easingInEndPos + 4) {
@@ -154,7 +149,7 @@ const Car = ({ floorHeight, carId }) => {
                 } else {
                     clearFrame();
                 }
-                setPosForContinuation({
+                setDataContinuation({
                     posLet,
                     speedUpIncrem,
                     slowDownIncrem
@@ -162,7 +157,6 @@ const Car = ({ floorHeight, carId }) => {
             };
 
             if (allCarStates[carId] === "go-up") {
-                console.log("1");
                 clearInterval(intervalId);
                 posLet = dataContinuation.posLet;
                 speedUpIncrem = dataContinuation.speedUpIncrem;
@@ -170,8 +164,7 @@ const Car = ({ floorHeight, carId }) => {
                     frame("go-up", true);
                 }, 15);
                 setIntervalId(id);
-            } else if (allCarStates[carId] !== "go-down") {
-                console.log("2");
+            } else if (allCarStates[carId] === null) {
                 posLet = posConst;
                 const carState =
                     allCarsCurrentFloor[carId] < target[0]
@@ -186,11 +179,24 @@ const Car = ({ floorHeight, carId }) => {
                     frame(carState);
                 }, 15);
                 setIntervalId(id);
+            } else if (allCarStates[carId] === "go-down") {
+                console.log("GO DOWN");
+                clearInterval(intervalId);
+                posLet = dataContinuation.posLet;
+                speedUpIncrem = dataContinuation.speedUpIncrem;
+                id = setInterval(() => {
+                    frame("go-down", true);
+                }, 15);
+                setIntervalId(id);
             } else {
                 console.log("CHECK EXCEPTION HERE");
             }
         }
     }, [allCarsCurrentFloor, carId, floorHeight, target]);
+
+    useEffect(() => {
+        console.log("target is changed", target);
+    }, [target]);
 
     return (
         <CarStyled
@@ -201,7 +207,9 @@ const Car = ({ floorHeight, carId }) => {
                 transform: `translateY(-${
                     dataContinuation
                         ? dataContinuation.posLet
-                        : floorHeight * allCarsCurrentFloor[carId]
+                            ? dataContinuation.posLet
+                            : floorHeight * allCarsCurrentFloor[carId]
+                        : null
                 }px)`
             }}
         >
