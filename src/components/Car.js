@@ -4,10 +4,10 @@ import { ShaftContext } from "../context/ShaftContext";
 import Easing from "easing";
 
 const CarStyled = styled.div`
-    height: ${(props) => props.floorHeight - props.positionOnLoad}px;
+    height: ${props => props.floorHeight - props.positionOnLoad}px;
     background: #999;
     position: absolute;
-    bottom: ${(props) => props.positionOnLoad}px;
+    bottom: ${props => props.positionOnLoad}px;
     width: 100%;
     border-width: 4px 0;
     border-style: solid;
@@ -18,11 +18,11 @@ const SpeedControl = styled.div`
     height: 4px;
     background-image: linear-gradient(to right, green, #999900, #ff9900, red);
     border-bottom: 1px solid;
-    opacity: ${(props) => (props.speed < 0.5 ? 0.5 : props.speed)};
+    opacity: ${props => (props.speed < 0.5 ? 0.5 : props.speed)};
 `;
 
 const SpeedMarkChanger = styled.div`
-    width: ${(props) => 100 - 100 * props.speed}%;
+    width: ${props => 100 - 100 * props.speed}%;
     background: #999;
     position: absolute;
     z-index: 1000;
@@ -34,10 +34,10 @@ const SpeedMarkChanger = styled.div`
 const Car = ({ floorHeight, carId }) => {
     const {
         allCarsCurrentFloor,
-        setAllCarsCurrentFloor,
+        updateCarCurrentFloor,
         allCarsFloorAssignments,
         allCarStates,
-        setAllCarStates,
+        updateCarState
     } = useContext(ShaftContext);
     const [speed, setSpeed] = useState(0);
     const [target, setTarget] = useState([]);
@@ -84,10 +84,7 @@ const Car = ({ floorHeight, carId }) => {
                 clearInterval(id);
                 speedUpIncrem = 0;
                 setSpeed(easeIn[speedUpIncrem]);
-
-                const _allCarStates = allCarStates;
-                _allCarStates.splice(carId, 1, null);
-                setAllCarStates(_allCarStates);
+                updateCarState(carId, null);
             };
 
             const frame = (carState, target, continuation = false) => {
@@ -114,10 +111,7 @@ const Car = ({ floorHeight, carId }) => {
 
                     if (floorHeight * currentFloor < posLet - 1) {
                         currentFloor++;
-
-                        const _allCarsCurrentFloor = allCarsCurrentFloor;
-                        _allCarsCurrentFloor.splice(carId, 1, currentFloor);
-                        setAllCarsCurrentFloor(_allCarsCurrentFloor);
+                        updateCarCurrentFloor(carId, currentFloor);
                     }
                     // if it is move to the down
                 } else if (carState === "go-down" && posLet > destination) {
@@ -141,10 +135,7 @@ const Car = ({ floorHeight, carId }) => {
 
                     if (floorHeight * currentFloor > posLet + 1) {
                         currentFloor--;
-
-                        const _allCarsCurrentFloor = allCarsCurrentFloor;
-                        _allCarsCurrentFloor.splice(carId, 1, currentFloor);
-                        setAllCarsCurrentFloor(_allCarsCurrentFloor);
+                        updateCarCurrentFloor(carId, currentFloor);
                     }
                 } else {
                     clearFrame();
@@ -152,7 +143,7 @@ const Car = ({ floorHeight, carId }) => {
                 setDataContinuation({
                     posLet,
                     speedUpIncrem,
-                    slowDownIncrem,
+                    slowDownIncrem
                 });
             };
 
@@ -174,9 +165,7 @@ const Car = ({ floorHeight, carId }) => {
                         : allCarsCurrentFloor[carId] > target[0]
                         ? "go-down"
                         : null;
-                const _allCarStates = allCarStates;
-                _allCarStates.splice(carId, 1, carState);
-                setAllCarStates(_allCarStates);
+                updateCarState(carId, carState);
 
                 const _target =
                     carState === "go-up"
@@ -220,7 +209,7 @@ const Car = ({ floorHeight, carId }) => {
                             ? dataContinuation.posLet
                             : floorHeight * allCarsCurrentFloor[carId]
                         : null
-                }px)`,
+                }px)`
             }}
         >
             <SpeedControl speed={speed}>

@@ -5,7 +5,7 @@ import theNearestCar from "../logic/theNearestCar";
 
 const FloorStyled = styled.div`
     border-bottom: 4px solid;
-    height: ${(props) => props.floorHeight}px;
+    height: ${props => props.floorHeight}px;
 `;
 
 const CarLight = styled.div`
@@ -22,8 +22,7 @@ export default function Floor({ floorHeight, floorNumber, role }) {
     const {
         allCarsCurrentFloor,
         allCarStates,
-        allCarsFloorAssignments,
-        setAllCarsFloorAssignments,
+        updateCarFloorAssignments
     } = useContext(ShaftContext);
 
     const onClickHandler = () => {
@@ -37,23 +36,7 @@ export default function Floor({ floorHeight, floorNumber, role }) {
 
             // dont assing floor to car, if there is no available cars
             if (carId !== null) {
-                const _allCarsFloorAssignments = allCarsFloorAssignments;
-
-                const allCarsFloorAssignmentsOfTheNearestCar =
-                    _allCarsFloorAssignments[carId];
-
-                const allCarsFloorAssignmentsOfTheNearestCarUpdated = [
-                    ...allCarsFloorAssignmentsOfTheNearestCar,
-                    floorNumber,
-                ]; //.sort();
-
-                _allCarsFloorAssignments.splice(
-                    carId,
-                    1,
-                    allCarsFloorAssignmentsOfTheNearestCarUpdated
-                );
-
-                setAllCarsFloorAssignments([..._allCarsFloorAssignments]);
+                updateCarFloorAssignments(carId, floorNumber);
             } else {
                 console.warn("There is no available car.");
             }
@@ -65,7 +48,7 @@ export default function Floor({ floorHeight, floorNumber, role }) {
             {role === "enter-floor" ? (
                 <button
                     data-floor-number={floorNumber}
-                    onClick={(e) => {
+                    onClick={e => {
                         onClickHandler(e);
                     }}
                 >
