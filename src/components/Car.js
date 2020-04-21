@@ -31,11 +31,6 @@ const SpeedMarkChanger = styled.div`
     height: 5px;
 `;
 
-const DoorOpen = styled.div`
-    height: 3px;
-    background-color: yellow;
-`;
-
 const Car = ({ floorHeight, carId }) => {
     const {
         allCarsCurrentFloor,
@@ -44,18 +39,21 @@ const Car = ({ floorHeight, carId }) => {
         allCarStates,
         setAllCarStates
     } = useContext(ShaftContext);
-    const [carDOM, setCarDOM] = useState(null);
     const [speed, setSpeed] = useState(0);
-    const [target, setTarget] = useState(null);
+    const [target, setTarget] = useState([]);
     const [intervalId, setIntervalId] = useState(null);
     const [dataContinuation, setPosForContinuation] = useState(null);
     const [startPosition, setStartPosition] = useState(null);
 
     useEffect(() => {
-        const target = allCarsFloorAssignments[carId].length
+        const max = allCarsFloorAssignments[carId].length
+            ? Math.max.apply(Math, allCarsFloorAssignments[carId])
+            : null;
+        const min = allCarsFloorAssignments[carId].length
             ? Math.min.apply(Math, allCarsFloorAssignments[carId])
             : null;
-        setTarget(target);
+        const target = [min, max];
+        setTarget([...target]);
     }, [allCarsFloorAssignments, carId]);
 
     // TO DO:
@@ -65,8 +63,15 @@ const Car = ({ floorHeight, carId }) => {
     // 4. do auto remove reached floor (after time needed to open and close doors)
 
     useEffect(() => {
-        console.log(allCarStates[carId], allCarsCurrentFloor[carId], target);
-        if (target !== null) {
+        console.log(
+            "state",
+            allCarStates[carId],
+            "| floor",
+            allCarsCurrentFloor[carId],
+            "| target",
+            target
+        );
+        if (target[0] !== null) {
             const easingNumberOfFrames = 100;
             const easeIn = Easing(easingNumberOfFrames, "quadratic");
             const easeOut = Easing(easingNumberOfFrames, "sinusoidal");
@@ -80,7 +85,7 @@ const Car = ({ floorHeight, carId }) => {
             let speedUpIncrem = 0;
             let slowDownIncrem = 0;
             let currentFloor = allCarsCurrentFloor[carId];
-            const destination = floorHeight * target;
+            const destination = floorHeight * target[0];
 
             const clearFrame = () => {
                 posLet = destination;
@@ -107,11 +112,9 @@ const Car = ({ floorHeight, carId }) => {
                         // speed constance
                     } else if (posLet < destination - easingInEndPos - 4) {
                         // "4" is temporary work around
-                        console.log(posLet, posConst);
                         posLet += 1;
                         // slow down
                     } else {
-                        console.log("slow down");
                         posLet += 1 * (1 - easeOut[slowDownIncrem]);
                         slowDownIncrem++;
                         setSpeed(1 - easeOut[slowDownIncrem]);
@@ -158,9 +161,8 @@ const Car = ({ floorHeight, carId }) => {
                 });
             };
 
-            if (allCarStates[carId] === "go-down") {
-                console.log("CHECK THIS EXCEPTION HERE");
-            } else if (allCarStates[carId] === "go-up") {
+            if (allCarStates[carId] === "go-up") {
+                console.log("1");
                 clearInterval(intervalId);
                 posLet = dataContinuation.posLet;
                 speedUpIncrem = dataContinuation.speedUpIncrem;
@@ -168,12 +170,13 @@ const Car = ({ floorHeight, carId }) => {
                     frame("go-up", true);
                 }, 15);
                 setIntervalId(id);
-            } else {
+            } else if (allCarStates[carId] !== "go-down") {
+                console.log("2");
                 posLet = posConst;
                 const carState =
-                    allCarsCurrentFloor[carId] < target
+                    allCarsCurrentFloor[carId] < target[0]
                         ? "go-up"
-                        : allCarsCurrentFloor[carId] > target
+                        : allCarsCurrentFloor[carId] > target[0]
                         ? "go-down"
                         : null;
                 const _allCarStates = allCarStates;
@@ -183,9 +186,11 @@ const Car = ({ floorHeight, carId }) => {
                     frame(carState);
                 }, 15);
                 setIntervalId(id);
+            } else {
+                console.log("CHECK EXCEPTION HERE");
             }
         }
-    }, [allCarsCurrentFloor, carDOM, carId, floorHeight, target]);
+    }, [allCarsCurrentFloor, carId, floorHeight, target]);
 
     return (
         <CarStyled
@@ -194,7 +199,9 @@ const Car = ({ floorHeight, carId }) => {
             style={{
                 textAlign: "center",
                 transform: `translateY(-${
-                    dataContinuation ? dataContinuation.posLet : 0
+                    dataContinuation
+                        ? dataContinuation.posLet
+                        : floorHeight * allCarsCurrentFloor[carId]
                 }px)`
             }}
         >
@@ -202,9 +209,8 @@ const Car = ({ floorHeight, carId }) => {
                 <SpeedMarkChanger speed={speed} />
             </SpeedControl>
             {/* <button onClick={removeReachedFloor}>removeReachedFloor</button> */}
-            <p>Tar: {String(target)}</p>
+            <p>T: {String(target)}</p>
             <p>Now: {allCarsCurrentFloor[carId]}</p>
-            {allCarStates[carId] === "door-open" ? <DoorOpen></DoorOpen> : null}
         </CarStyled>
     );
 };

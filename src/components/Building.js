@@ -4,6 +4,7 @@ import Floors from "./Floors";
 import styled from "styled-components";
 import Shaft from "./Shaft";
 import useElementSizeOnResize from "../customHooks/useElementSizeOnResize";
+import { ShaftContext } from "../context/ShaftContext";
 
 const BuildingStyled = styled.div`
     height: 70vh;
@@ -56,27 +57,56 @@ export default function Building() {
     const floorHeight = buildingHeight / numberOfFloors;
     const floorWidth = (100 - carWidth * numberOfCars) / 2;
 
+    const { setAllCarsCurrentFloor } = useContext(ShaftContext);
+
     return (
-        <BuildingStyled ref={buildingRef}>
-            <Roof
-                text={`Building size: ${buildingWidth} x ${buildingHeight}`}
-            ></Roof>
-            <Floors
-                role={"enter-floor"}
-                floorHeight={floorHeight}
-                floorWidth={floorWidth}
-            ></Floors>
-            <Shaft
-                floorHeight={floorHeight}
-                numberOfCars={numberOfCars}
-                carWidth={carWidth}
-                numberOfFloors={numberOfFloors}
-            ></Shaft>
-            <Floors
-                role={"exit-floor"}
-                floorHeight={floorHeight}
-                floorWidth={floorWidth}
-            ></Floors>
-        </BuildingStyled>
+        <>
+            <BuildingStyled ref={buildingRef}>
+                <Roof
+                    text={`Building size: ${buildingWidth} x ${buildingHeight}`}
+                ></Roof>
+
+                <Floors
+                    role={"enter-floor"}
+                    floorHeight={floorHeight}
+                    floorWidth={floorWidth}
+                ></Floors>
+                <Shaft
+                    floorHeight={floorHeight}
+                    numberOfCars={numberOfCars}
+                    carWidth={carWidth}
+                    numberOfFloors={numberOfFloors}
+                ></Shaft>
+                <Floors
+                    role={"exit-floor"}
+                    floorHeight={floorHeight}
+                    floorWidth={floorWidth}
+                ></Floors>
+            </BuildingStyled>
+            <div
+                style={{
+                    textAlign: "center",
+                    position: "fixed",
+                    bottom: "10px"
+                }}
+            >
+                <button
+                    onClick={() => {
+                        setAllCarsCurrentFloor([0, 0]);
+                    }}
+                    style={{ width: "500px", height: "30px" }}
+                >
+                    0
+                </button>
+                <button
+                    onClick={() => {
+                        setAllCarsCurrentFloor([7, 7]);
+                    }}
+                    style={{ width: "500px", height: "30px" }}
+                >
+                    7
+                </button>
+            </div>
+        </>
     );
 }
