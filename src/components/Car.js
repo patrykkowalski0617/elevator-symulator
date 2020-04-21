@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { ShaftContext } from "../context/ShaftContext";
 import Easing from "easing";
@@ -50,12 +50,6 @@ const Car = ({ floorHeight, carId }) => {
     const [intervalId, setIntervalId] = useState(null);
     const [dataContinuation, setPosForContinuation] = useState(null);
     const [startPosition, setStartPosition] = useState(null);
-
-    const buildingRef = useRef();
-    useEffect(() => {
-        const ref = buildingRef.current;
-        setCarDOM(ref);
-    }, []);
 
     useEffect(() => {
         const target = allCarsFloorAssignments[carId].length
@@ -157,7 +151,6 @@ const Car = ({ floorHeight, carId }) => {
                 } else {
                     clearFrame();
                 }
-                carDOM.style.transform = `translateY(-${posLet}px)`;
                 setPosForContinuation({
                     posLet,
                     speedUpIncrem,
@@ -196,10 +189,14 @@ const Car = ({ floorHeight, carId }) => {
 
     return (
         <CarStyled
-            ref={buildingRef}
             floorHeight={floorHeight}
             positionOnLoad={-4}
-            style={{ textAlign: "center" }}
+            style={{
+                textAlign: "center",
+                transform: `translateY(-${
+                    dataContinuation ? dataContinuation.posLet : 0
+                }px)`
+            }}
         >
             <SpeedControl speed={speed}>
                 <SpeedMarkChanger speed={speed} />
