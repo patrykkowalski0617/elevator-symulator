@@ -4,10 +4,10 @@ import { ShaftContext } from "../context/ShaftContext";
 import Easing from "easing";
 
 const CarStyled = styled.div`
-    height: ${(props) => props.floorHeight - props.positionOnLoad}px;
+    height: ${props => props.floorHeight - props.positionOnLoad}px;
     background: #999;
     position: absolute;
-    bottom: ${(props) => props.positionOnLoad}px;
+    bottom: ${props => props.positionOnLoad}px;
     width: 100%;
     border-width: 4px 0;
     border-style: solid;
@@ -18,11 +18,11 @@ const SpeedControl = styled.div`
     height: 4px;
     background-image: linear-gradient(to right, green, #999900, #ff9900, red);
     border-bottom: 1px solid;
-    opacity: ${(props) => (props.speed < 0.5 ? 0.5 : props.speed)};
+    opacity: ${props => (props.speed < 0.5 ? 0.5 : props.speed)};
 `;
 
 const SpeedMarkChanger = styled.div`
-    width: ${(props) => 100 - 100 * props.speed}%;
+    width: ${props => 100 - 100 * props.speed}%;
     background: #999;
     position: absolute;
     z-index: 1000;
@@ -42,13 +42,14 @@ const Car = ({ floorHeight, carId }) => {
         setAllCarsCurrentFloor,
         allCarsFloorAssignments,
         allCarStates,
-        setAllCarStates,
+        setAllCarStates
     } = useContext(ShaftContext);
     const [carDOM, setCarDOM] = useState(null);
     const [speed, setSpeed] = useState(0);
     const [target, setTarget] = useState(null);
     const [intervalId, setIntervalId] = useState(null);
-    const [posForContinuation, setPosForContinuation] = useState(null);
+    const [dataContinuation, setPosForContinuation] = useState(null);
+    const [startPosition, setStartPosition] = useState(null);
 
     const buildingRef = useRef();
     useEffect(() => {
@@ -71,30 +72,27 @@ const Car = ({ floorHeight, carId }) => {
 
     useEffect(() => {
         console.log(allCarStates[carId], allCarsCurrentFloor[carId], target);
-        // if (allCarStates[carId] === "go-up") {
-        //     console.log("there is semi-target");
-        // }
         if (target !== null) {
-            // if (target !== null && allCarStates[carId] !== "go-up") {
             const easingNumberOfFrames = 100;
             const easeIn = Easing(easingNumberOfFrames, "quadratic");
             const easeOut = Easing(easingNumberOfFrames, "sinusoidal");
 
             const posConst = floorHeight * allCarsCurrentFloor[carId];
+            setStartPosition(posConst);
 
             let posLet;
             let easingInEndPos = 0;
             let id;
-            let i = 0;
-            let j = 0;
+            let speedUpIncrem = 0;
+            let slowDownIncrem = 0;
             let currentFloor = allCarsCurrentFloor[carId];
             const destination = floorHeight * target;
 
             const clearFrame = () => {
                 posLet = destination;
                 clearInterval(id);
-                i = 0;
-                setSpeed(easeIn[i]);
+                speedUpIncrem = 0;
+                setSpeed(easeIn[speedUpIncrem]);
 
                 const _allCarStates = allCarStates;
                 _allCarStates.splice(carId, 1, null);
@@ -105,20 +103,24 @@ const Car = ({ floorHeight, carId }) => {
                 // if it is move to the up
                 if (carState === "go-up" && posLet < destination) {
                     // speed up
-                    if (easeIn[i] < 1) {
-                        posLet += 1 * easeIn[i];
-                        i++;
-                        easingInEndPos = posLet - posConst;
-                        setSpeed(easeIn[i]);
+                    if (easeIn[speedUpIncrem] < 1) {
+                        posLet += 1 * easeIn[speedUpIncrem];
+                        speedUpIncrem++;
+                        easingInEndPos = continuation
+                            ? posLet - startPosition
+                            : posLet - posConst;
+                        setSpeed(easeIn[speedUpIncrem]);
                         // speed constance
                     } else if (posLet < destination - easingInEndPos - 4) {
                         // "4" is temporary work around
+                        console.log(posLet, posConst);
                         posLet += 1;
                         // slow down
                     } else {
-                        posLet += 1 * (1 - easeOut[j]);
-                        j++;
-                        setSpeed(1 - easeOut[j]);
+                        console.log("slow down");
+                        posLet += 1 * (1 - easeOut[slowDownIncrem]);
+                        slowDownIncrem++;
+                        setSpeed(1 - easeOut[slowDownIncrem]);
                     }
 
                     if (floorHeight * currentFloor < posLet - 1) {
@@ -131,19 +133,18 @@ const Car = ({ floorHeight, carId }) => {
                     // if it is move to the down
                 } else if (carState === "go-down" && posLet > destination) {
                     // speed up
-                    if (easeIn[i] < 1) {
-                        posLet -= 1 * easeIn[i];
-                        i++;
-                        easingInEndPos = posConst - posLet;
-                        setSpeed(easeIn[i]);
+                    if (easeIn[speedUpIncrem] < 1) {
+                        posLet -= 1 * easeIn[speedUpIncrem];
+                        speedUpIncrem++;
+                        setSpeed(easeIn[speedUpIncrem]);
                         // speed constance
                     } else if (posLet > destination + easingInEndPos + 4) {
                         posLet -= 1;
                         // slow down
                     } else {
-                        posLet -= 1 * (1 - easeOut[j]);
-                        j++;
-                        setSpeed(1 - easeOut[j]);
+                        posLet -= 1 * (1 - easeOut[slowDownIncrem]);
+                        slowDownIncrem++;
+                        setSpeed(1 - easeOut[slowDownIncrem]);
                     }
 
                     if (floorHeight * currentFloor > posLet + 1) {
@@ -157,14 +158,19 @@ const Car = ({ floorHeight, carId }) => {
                     clearFrame();
                 }
                 carDOM.style.transform = `translateY(-${posLet}px)`;
-                setPosForContinuation(posLet);
+                setPosForContinuation({
+                    posLet,
+                    speedUpIncrem,
+                    slowDownIncrem
+                });
             };
 
             if (allCarStates[carId] === "go-down") {
                 console.log("CHECK THIS EXCEPTION HERE");
             } else if (allCarStates[carId] === "go-up") {
                 clearInterval(intervalId);
-                posLet = posForContinuation;
+                posLet = dataContinuation.posLet;
+                speedUpIncrem = dataContinuation.speedUpIncrem;
                 id = setInterval(() => {
                     frame("go-up", true);
                 }, 15);
