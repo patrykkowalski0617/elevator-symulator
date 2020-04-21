@@ -27,7 +27,7 @@ const Roof = styled.div`
     left: 0;
     z-index: -1000;
     &:after {
-        content: "${props => props.text}";
+        content: "${(props) => props.text}";
         display: block;
         width: calc(100% - 50px);
         height: 0;
@@ -87,14 +87,15 @@ export default function Building() {
                 style={{
                     textAlign: "center",
                     position: "fixed",
-                    bottom: "10px"
+                    bottom: "calc(15vh - 65px)",
+                    width: "100%",
                 }}
             >
                 <button
                     onClick={() => {
                         setAllCarsCurrentFloor([0, 0]);
                     }}
-                    style={{ width: "500px", height: "30px" }}
+                    style={{ width: "250px", height: "40px" }}
                 >
                     BOTTOM
                 </button>
@@ -102,7 +103,7 @@ export default function Building() {
                     onClick={() => {
                         setAllCarsCurrentFloor([7, 7]);
                     }}
-                    style={{ width: "500px", height: "30px" }}
+                    style={{ width: "250px", height: "40px" }}
                 >
                     TOP
                 </button>

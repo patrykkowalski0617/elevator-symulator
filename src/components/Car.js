@@ -4,10 +4,10 @@ import { ShaftContext } from "../context/ShaftContext";
 import Easing from "easing";
 
 const CarStyled = styled.div`
-    height: ${props => props.floorHeight - props.positionOnLoad}px;
+    height: ${(props) => props.floorHeight - props.positionOnLoad}px;
     background: #999;
     position: absolute;
-    bottom: ${props => props.positionOnLoad}px;
+    bottom: ${(props) => props.positionOnLoad}px;
     width: 100%;
     border-width: 4px 0;
     border-style: solid;
@@ -18,11 +18,11 @@ const SpeedControl = styled.div`
     height: 4px;
     background-image: linear-gradient(to right, green, #999900, #ff9900, red);
     border-bottom: 1px solid;
-    opacity: ${props => (props.speed < 0.5 ? 0.5 : props.speed)};
+    opacity: ${(props) => (props.speed < 0.5 ? 0.5 : props.speed)};
 `;
 
 const SpeedMarkChanger = styled.div`
-    width: ${props => 100 - 100 * props.speed}%;
+    width: ${(props) => 100 - 100 * props.speed}%;
     background: #999;
     position: absolute;
     z-index: 1000;
@@ -37,7 +37,7 @@ const Car = ({ floorHeight, carId }) => {
         setAllCarsCurrentFloor,
         allCarsFloorAssignments,
         allCarStates,
-        setAllCarStates
+        setAllCarStates,
     } = useContext(ShaftContext);
     const [speed, setSpeed] = useState(0);
     const [target, setTarget] = useState([]);
@@ -77,7 +77,7 @@ const Car = ({ floorHeight, carId }) => {
             let speedUpIncrem = 0;
             let slowDownIncrem = 0;
             let currentFloor = allCarsCurrentFloor[carId];
-            const destination = floorHeight * target[0];
+            let destination = floorHeight * target[0];
 
             const clearFrame = () => {
                 posLet = destination;
@@ -90,7 +90,7 @@ const Car = ({ floorHeight, carId }) => {
                 setAllCarStates(_allCarStates);
             };
 
-            const frame = (carState, continuation = false) => {
+            const frame = (carState, target, continuation = false) => {
                 // if it is move to the up
                 if (carState === "go-up" && posLet < destination) {
                     // speed up
@@ -152,19 +152,21 @@ const Car = ({ floorHeight, carId }) => {
                 setDataContinuation({
                     posLet,
                     speedUpIncrem,
-                    slowDownIncrem
+                    slowDownIncrem,
                 });
             };
 
             if (allCarStates[carId] === "go-up") {
+                // when car continue go up
                 clearInterval(intervalId);
                 posLet = dataContinuation.posLet;
                 speedUpIncrem = dataContinuation.speedUpIncrem;
                 id = setInterval(() => {
-                    frame("go-up", true);
+                    frame("go-up", target[0], true);
                 }, 15);
                 setIntervalId(id);
             } else if (allCarStates[carId] === null) {
+                // when car starts
                 posLet = posConst;
                 const carState =
                     allCarsCurrentFloor[carId] < target[0]
@@ -175,21 +177,29 @@ const Car = ({ floorHeight, carId }) => {
                 const _allCarStates = allCarStates;
                 _allCarStates.splice(carId, 1, carState);
                 setAllCarStates(_allCarStates);
+
+                const _target =
+                    carState === "go-up"
+                        ? target[0]
+                        : carState === "go-down"
+                        ? target[1]
+                        : console.warn("catch the exception");
                 id = setInterval(() => {
-                    frame(carState);
+                    frame(carState, _target);
                 }, 15);
                 setIntervalId(id);
             } else if (allCarStates[carId] === "go-down") {
-                console.log("GO DOWN");
+                // when car continue go down
                 clearInterval(intervalId);
+                destination = floorHeight * target[1];
                 posLet = dataContinuation.posLet;
                 speedUpIncrem = dataContinuation.speedUpIncrem;
                 id = setInterval(() => {
-                    frame("go-down", true);
+                    frame("go-down", null, true);
                 }, 15);
                 setIntervalId(id);
             } else {
-                console.log("CHECK EXCEPTION HERE");
+                console.warn("catch the exception");
             }
         }
     }, [allCarsCurrentFloor, carId, floorHeight, target]);
@@ -210,7 +220,7 @@ const Car = ({ floorHeight, carId }) => {
                             ? dataContinuation.posLet
                             : floorHeight * allCarsCurrentFloor[carId]
                         : null
-                }px)`
+                }px)`,
             }}
         >
             <SpeedControl speed={speed}>
