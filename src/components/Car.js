@@ -11,6 +11,7 @@ const CarStyled = styled.div`
     width: 100%;
     border-width: 4px 0;
     border-style: solid;
+    text-align: center;
 `;
 
 const SpeedControl = styled.div`
@@ -30,6 +31,8 @@ const SpeedMarkChanger = styled.div`
     top: -0.5px;
     height: 5px;
 `;
+
+const frameIntervalTime = 5;
 
 const Car = ({ floorHeight, carId }) => {
     const {
@@ -55,12 +58,6 @@ const Car = ({ floorHeight, carId }) => {
         const target = [min, max];
         setTarget([...target]);
     }, [allCarsFloorAssignments, carId]);
-
-    // TO DO:
-    // 1. manage semi trgets
-    // 2. prevent go down without delete reached floor
-    // 3. check how to manage semi targets whe its go down
-    // 4. do auto remove reached floor (after time needed to open and close doors)
 
     useEffect(() => {
         if (target[0] !== null) {
@@ -160,20 +157,17 @@ const Car = ({ floorHeight, carId }) => {
                 positionLet = positionConst;
 
                 const carState =
-                    // [4,6]
-                    // 5 < 4 /FALSE
-                    allCarsCurrentFloor[carId] < target[0]
+                    allCarsCurrentFloor[carId] < target[1]
                         ? "go-up"
-                        : // 5 > 4 /TRUE
-                        allCarsCurrentFloor[carId] > target[0]
+                        : allCarsCurrentFloor[carId] > target[0]
                         ? "go-down"
                         : null;
-                console.log(carState);
+                console.log("carState", carState, "target", target);
                 updateCarState(carId, carState);
 
                 id = setInterval(() => {
                     frame(carState);
-                }, 15);
+                }, frameIntervalTime);
                 setIntervalId(id);
             }
             // when car is going up
@@ -183,7 +177,7 @@ const Car = ({ floorHeight, carId }) => {
                 speedUpIncrem = dataForContinuation.speedUpIncrem;
                 id = setInterval(() => {
                     frame("go-up", true);
-                }, 15);
+                }, frameIntervalTime);
                 setIntervalId(id);
             }
             // when car is going down
@@ -194,7 +188,7 @@ const Car = ({ floorHeight, carId }) => {
                 speedUpIncrem = dataForContinuation.speedUpIncrem;
                 id = setInterval(() => {
                     frame("go-down", true);
-                }, 15);
+                }, frameIntervalTime);
                 setIntervalId(id);
             } else {
                 console.warn("catch the exception");
@@ -207,7 +201,6 @@ const Car = ({ floorHeight, carId }) => {
             floorHeight={floorHeight}
             positionLetOnLoad={-4}
             style={{
-                textAlign: "center",
                 transform: `translateY(-${
                     dataForContinuation
                         ? dataForContinuation.positionLet

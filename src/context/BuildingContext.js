@@ -12,7 +12,7 @@ const BuildingContextProvider = props => {
                 numberOfFloors,
                 setNumberOfFloors,
                 numberOfCars,
-                setNnmberOfCars,
+                setNnmberOfCars
             }}
         >
             {props.children}

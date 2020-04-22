@@ -27,14 +27,14 @@ const Roof = styled.div`
     left: 0;
     z-index: -1000;
     &:after {
-        content: "${(props) => props.text}";
+        content: "${props => props.text}";
         display: block;
-        width: calc(100% - 50px);
+        width: calc(100% - 33.33%);
         height: 0;
-        margin-left: calc(-50% - 50px + 25px);
-        border-left: 50px solid transparent;
-        border-right: 50px solid transparent;
-        border-bottom: 50px solid #992222;
+        margin-left: calc(-50% - 33.33% + 25px);
+        border-left: 33.33% solid transparent;
+        border-right: 33.33% solid transparent;
+        border-bottom: 33.33% solid #992222;
         position: absolute;
         bottom: 100%;
     }
@@ -88,24 +88,60 @@ export default function Building() {
                     textAlign: "center",
                     position: "fixed",
                     bottom: "calc(15vh - 65px)",
-                    width: "100%",
+                    width: "70%",
+                    display: "flex",
+                    flexWrap: "wrap",
+                    transform: "translateX(-50%)",
+                    margin: "0 50%"
                 }}
             >
                 <button
                     onClick={() => {
                         setAllCarsCurrentFloor([0, 0]);
                     }}
-                    style={{ width: "250px", height: "40px" }}
+                    style={{ width: "33.33%", height: "30px" }}
                 >
                     BOTTOM
                 </button>
                 <button
                     onClick={() => {
+                        setAllCarsCurrentFloor([4, 4]);
+                    }}
+                    style={{ width: "33.33%", height: "30px" }}
+                >
+                    MID
+                </button>
+                <button
+                    onClick={() => {
                         setAllCarsCurrentFloor([7, 7]);
                     }}
-                    style={{ width: "250px", height: "40px" }}
+                    style={{ width: "33.33%", height: "30px" }}
                 >
                     TOP
+                </button>
+                <button
+                    onClick={() => {
+                        setAllCarsCurrentFloor([7, 0]);
+                    }}
+                    style={{ width: "33.33%", height: "30px" }}
+                >
+                    TOP / BOTTOM
+                </button>
+                <button
+                    onClick={() => {
+                        setAllCarsCurrentFloor([0, 7]);
+                    }}
+                    style={{ width: "33.33%", height: "30px" }}
+                >
+                    BOTTOM / TOP
+                </button>
+                <button
+                    onClick={() => {
+                        setAllCarsCurrentFloor([0, 4]);
+                    }}
+                    style={{ width: "33.33%", height: "30px" }}
+                >
+                    BOTTOM / MID
                 </button>
             </div>
         </>
