@@ -4,10 +4,10 @@ import { ShaftContext } from "../context/ShaftContext";
 import Easing from "easing";
 
 const CarStyled = styled.div`
-    height: ${props => props.floorHeight - props.positionOnLoad}px;
+    height: ${props => props.floorHeight - props.positionLetOnLoad}px;
     background: #999;
     position: absolute;
-    bottom: ${props => props.positionOnLoad}px;
+    bottom: ${props => props.positionLetOnLoad}px;
     width: 100%;
     border-width: 4px 0;
     border-style: solid;
@@ -68,10 +68,10 @@ const Car = ({ floorHeight, carId }) => {
             const easeIn = Easing(easingNumberOfFrames, "quadratic");
             const easeOut = Easing(easingNumberOfFrames, "sinusoidal");
 
-            const posConst = floorHeight * allCarsCurrentFloor[carId];
-            setStartPosition(posConst);
+            const positionConst = floorHeight * allCarsCurrentFloor[carId];
+            setStartPosition(positionConst);
 
-            let position;
+            let positionLet;
             let easingInEndPos = 0;
             let id;
             let speedUpIncrem = 0;
@@ -80,58 +80,58 @@ const Car = ({ floorHeight, carId }) => {
             let destination = floorHeight * target[0];
 
             // INTERVAL FRAME
-            const frame = (carState, target, continuation = false) => {
+            const frame = (carState, continuation = false) => {
                 // if it is move to the up
-                if (carState === "go-up" && position < destination) {
+                if (carState === "go-up" && positionLet < destination) {
                     // speed up
                     if (easeIn[speedUpIncrem] < 1) {
-                        position += 1 * easeIn[speedUpIncrem];
+                        positionLet += 1 * easeIn[speedUpIncrem];
                         speedUpIncrem++;
                         easingInEndPos = continuation
-                            ? position - startPosition
-                            : position - posConst;
+                            ? positionLet - startPosition
+                            : positionLet - positionConst;
                         setSpeed(easeIn[speedUpIncrem]);
                     }
                     // speed constance
-                    else if (position < destination - easingInEndPos - 4) {
+                    else if (positionLet < destination - easingInEndPos - 4) {
                         // "4" is temporary work around
-                        position += 1;
+                        positionLet += 1;
                     }
                     // slow down
                     else {
-                        position += 1 * (1 - easeOut[slowDownIncrem]);
+                        positionLet += 1 * (1 - easeOut[slowDownIncrem]);
                         slowDownIncrem++;
                         setSpeed(1 - easeOut[slowDownIncrem]);
                     }
 
-                    if (floorHeight * currentFloor < position - 1) {
+                    if (floorHeight * currentFloor < positionLet - 1) {
                         currentFloor++;
                         updateCarCurrentFloor(carId, currentFloor);
                     }
                 }
                 // if it is move to the down
-                else if (carState === "go-down" && position > destination) {
+                else if (carState === "go-down" && positionLet > destination) {
                     // speed up
                     if (easeIn[speedUpIncrem] < 1) {
-                        position -= 1 * easeIn[speedUpIncrem];
+                        positionLet -= 1 * easeIn[speedUpIncrem];
                         speedUpIncrem++;
                         easingInEndPos = continuation
-                            ? startPosition - position
-                            : posConst - position;
+                            ? startPosition - positionLet
+                            : positionConst - positionLet;
                         setSpeed(easeIn[speedUpIncrem]);
                     }
                     // speed constance
-                    else if (position > destination + easingInEndPos + 4) {
-                        position -= 1;
+                    else if (positionLet > destination + easingInEndPos + 4) {
+                        positionLet -= 1;
                     }
                     // slow down
                     else {
-                        position -= 1 * (1 - easeOut[slowDownIncrem]);
+                        positionLet -= 1 * (1 - easeOut[slowDownIncrem]);
                         slowDownIncrem++;
                         setSpeed(1 - easeOut[slowDownIncrem]);
                     }
 
-                    if (floorHeight * currentFloor > position + 1) {
+                    if (floorHeight * currentFloor > positionLet + 1) {
                         currentFloor--;
                         updateCarCurrentFloor(carId, currentFloor);
                     }
@@ -139,7 +139,7 @@ const Car = ({ floorHeight, carId }) => {
                     clearFrame();
                 }
                 setDataContinuation({
-                    position,
+                    positionLet,
                     speedUpIncrem,
                     slowDownIncrem
                 });
@@ -147,7 +147,7 @@ const Car = ({ floorHeight, carId }) => {
 
             // CLEAR INTERVAL FRAME
             const clearFrame = () => {
-                position = destination;
+                positionLet = destination;
                 clearInterval(id);
                 speedUpIncrem = 0;
                 setSpeed(easeIn[speedUpIncrem]);
@@ -157,34 +157,32 @@ const Car = ({ floorHeight, carId }) => {
             // SET INTERVAL
             // when is stopped
             if (allCarStates[carId] === null) {
-                position = posConst;
+                positionLet = positionConst;
+
                 const carState =
+                    // [4,6]
+                    // 5 < 4 /FALSE
                     allCarsCurrentFloor[carId] < target[0]
                         ? "go-up"
-                        : allCarsCurrentFloor[carId] > target[0]
+                        : // 5 > 4 /TRUE
+                        allCarsCurrentFloor[carId] > target[0]
                         ? "go-down"
                         : null;
                 console.log(carState);
                 updateCarState(carId, carState);
 
-                const _target =
-                    carState === "go-up"
-                        ? target[0]
-                        : carState === "go-down"
-                        ? target[1]
-                        : console.warn("catch the exception");
                 id = setInterval(() => {
-                    frame(carState, _target);
+                    frame(carState);
                 }, 15);
                 setIntervalId(id);
             }
             // when car is going up
             else if (allCarStates[carId] === "go-up") {
                 clearInterval(intervalId);
-                position = dataForContinuation.position;
+                positionLet = dataForContinuation.positionLet;
                 speedUpIncrem = dataForContinuation.speedUpIncrem;
                 id = setInterval(() => {
-                    frame("go-up", target[0], true);
+                    frame("go-up", true);
                 }, 15);
                 setIntervalId(id);
             }
@@ -192,10 +190,10 @@ const Car = ({ floorHeight, carId }) => {
             else if (allCarStates[carId] === "go-down") {
                 clearInterval(intervalId);
                 destination = floorHeight * target[1];
-                position = dataForContinuation.position;
+                positionLet = dataForContinuation.positionLet;
                 speedUpIncrem = dataForContinuation.speedUpIncrem;
                 id = setInterval(() => {
-                    frame("go-down", null, true);
+                    frame("go-down", true);
                 }, 15);
                 setIntervalId(id);
             } else {
@@ -207,13 +205,13 @@ const Car = ({ floorHeight, carId }) => {
     return (
         <CarStyled
             floorHeight={floorHeight}
-            positionOnLoad={-4}
+            positionLetOnLoad={-4}
             style={{
                 textAlign: "center",
                 transform: `translateY(-${
                     dataForContinuation
-                        ? dataForContinuation.position
-                            ? dataForContinuation.position
+                        ? dataForContinuation.positionLet
+                            ? dataForContinuation.positionLet
                             : floorHeight * allCarsCurrentFloor[carId]
                         : null
                 }px)`
