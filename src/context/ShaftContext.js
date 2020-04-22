@@ -25,28 +25,31 @@ const ShaftContextProvider = props => {
         setAllCarStates(_allCarStates);
     };
 
-    const updateCarFloorAssignments = (carId, floorNumber) => {
+    const addCarFloorAssignment = (carId, floorNumber) => {
         const _allCarsFloorAssignments = allCarsFloorAssignments;
-        const allCarsFloorAssignmentsOfTheNearestCar =
-            _allCarsFloorAssignments[carId];
-        const allCarsFloorAssignmentsOfTheNearestCarUpdated = [
-            ...allCarsFloorAssignmentsOfTheNearestCar,
-            floorNumber
-        ];
-        _allCarsFloorAssignments.splice(
-            carId,
-            1,
-            allCarsFloorAssignmentsOfTheNearestCarUpdated
-        );
+        const carFloorAssignment = _allCarsFloorAssignments[carId];
+        const carFloorAssignmentUpdated = [...carFloorAssignment, floorNumber];
+        _allCarsFloorAssignments.splice(carId, 1, carFloorAssignmentUpdated);
         setAllCarsFloorAssignments([..._allCarsFloorAssignments]);
     };
 
+    const removeCarFloorAssignment = (carId, floorNumber) => {
+        const _allCarsFloorAssignments = allCarsFloorAssignments;
+        const carFloorAssignment = _allCarsFloorAssignments[carId];
+        const index = carFloorAssignment.indexOf(floorNumber);
+        carFloorAssignment.splice(index, 1);
+        const carFloorAssignmentUpdated = [...carFloorAssignment];
+        _allCarsFloorAssignments.splice(carId, 1, carFloorAssignmentUpdated);
+        setAllCarsFloorAssignments([..._allCarsFloorAssignments]);
+    };
+    console.log(allCarsFloorAssignments);
     return (
         <ShaftContext.Provider
             value={{
                 allCarsCurrentFloor,
                 setAllCarsCurrentFloor,
-                updateCarFloorAssignments,
+                addCarFloorAssignment,
+                removeCarFloorAssignment,
                 allCarStates,
                 setAllCarStates,
                 updateCarState,

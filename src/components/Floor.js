@@ -19,13 +19,14 @@ const CarLight = styled.div`
 
 export default function Floor({ floorHeight, floorNumber, role }) {
     const [waitingForCar, setWaitingForCar] = useState(false);
+    const [noCar, setNoCar] = useState(false);
     const {
         allCarsCurrentFloor,
         allCarStates,
-        updateCarFloorAssignments
+        addCarFloorAssignment
     } = useContext(ShaftContext);
 
-    const onClickHandler = () => {
+    const call = () => {
         if (!waitingForCar) {
             setWaitingForCar(true);
             const carId = theNearestCar(
@@ -36,24 +37,43 @@ export default function Floor({ floorHeight, floorNumber, role }) {
 
             // dont assing floor to car, if there is no available cars
             if (carId !== null) {
-                updateCarFloorAssignments(carId, floorNumber);
+                addCarFloorAssignment(carId, floorNumber);
             } else {
-                console.warn("There is no available car.");
+                console.warn(
+                    "There is no available car for Floor " + floorNumber
+                );
+                setNoCar(true);
             }
         }
+    };
+
+    const resetCall = () => {
+        setWaitingForCar(false);
+        setNoCar(false);
     };
 
     return (
         <FloorStyled floorHeight={floorHeight}>
             {role === "enter-floor" ? (
-                <button
-                    data-floor-number={floorNumber}
-                    onClick={e => {
-                        onClickHandler(e);
-                    }}
-                >
-                    Call car
-                </button>
+                <>
+                    <button
+                        style={noCar ? { background: "red" } : null}
+                        data-floor-number={floorNumber}
+                        onClick={e => {
+                            call(e);
+                        }}
+                    >
+                        Call car
+                    </button>
+                    <button
+                        data-floor-number={floorNumber}
+                        onClick={e => {
+                            resetCall(e);
+                        }}
+                    >
+                        reset
+                    </button>
+                </>
             ) : (
                 ""
             )}

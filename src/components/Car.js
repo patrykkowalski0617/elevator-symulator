@@ -32,6 +32,17 @@ const SpeedMarkChanger = styled.div`
     height: 5px;
 `;
 
+const Door = styled.div`
+    background-color: red;
+    width: 100%;
+    height: 3px;
+    opacity: 0;
+    ${props =>
+        props.open
+            ? "width: 0%; transition: 3s linear width; opacity: 1"
+            : null}
+`;
+
 const frameIntervalTime = 5;
 
 const Car = ({ floorHeight, carId }) => {
@@ -39,6 +50,7 @@ const Car = ({ floorHeight, carId }) => {
         allCarsCurrentFloor,
         updateCarCurrentFloor,
         allCarsFloorAssignments,
+        removeCarFloorAssignment,
         allCarStates,
         updateCarState
     } = useContext(ShaftContext);
@@ -148,7 +160,17 @@ const Car = ({ floorHeight, carId }) => {
                 clearInterval(id);
                 speedUpIncrem = 0;
                 setSpeed(easeIn[speedUpIncrem]);
-                updateCarState(carId, null);
+                if (target[0] !== undefined) {
+                    updateCarState(carId, "door-open");
+                    setTimeout(() => {
+                        console.log("close the door");
+                        removeCarFloorAssignment(
+                            carId,
+                            allCarsCurrentFloor[carId]
+                        );
+                        updateCarState(carId, null);
+                    }, 3000);
+                }
             };
 
             // SET INTERVAL
@@ -162,7 +184,6 @@ const Car = ({ floorHeight, carId }) => {
                         : allCarsCurrentFloor[carId] > target[0]
                         ? "go-down"
                         : null;
-                console.log("carState", carState, "target", target);
                 updateCarState(carId, carState);
 
                 id = setInterval(() => {
@@ -213,9 +234,11 @@ const Car = ({ floorHeight, carId }) => {
             <SpeedControl speed={speed}>
                 <SpeedMarkChanger speed={speed} />
             </SpeedControl>
-            {/* <button onClick={removeReachedFloor}>removeReachedFloor</button> */}
             <p>T: {String(target)}</p>
             <p>Now: {allCarsCurrentFloor[carId]}</p>
+            <Door
+                open={allCarStates[carId] === "door-open" ? true : false}
+            ></Door>
         </CarStyled>
     );
 };
