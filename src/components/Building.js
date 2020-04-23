@@ -29,12 +29,12 @@ const Roof = styled.div`
     &:after {
         content: "${props => props.text}";
         display: block;
-        width: calc(100% - 33.33%);
+        width: calc(100% - 25%);
         height: 0;
-        margin-left: calc(-50% - 33.33% + 25px);
-        border-left: 33.33% solid transparent;
-        border-right: 33.33% solid transparent;
-        border-bottom: 33.33% solid #992222;
+        margin-left: calc(-50% - 25% + 25px);
+        border-left: 25% solid transparent;
+        border-right: 25% solid transparent;
+        border-bottom: 25% solid #992222;
         position: absolute;
         bottom: 100%;
     }
@@ -42,7 +42,12 @@ const Roof = styled.div`
 `;
 
 export default function Building() {
-    const { numberOfFloors, numberOfCars } = useContext(BuildingContext);
+    const {
+        numberOfFloors,
+        numberOfCars,
+        automotion,
+        setAutomotion
+    } = useContext(BuildingContext);
     const [buildingDOM, setBuildingDOM] = useState();
     const [buildingWidth, buildingHeight] = useElementSizeOnResize(buildingDOM);
 
@@ -57,7 +62,7 @@ export default function Building() {
     const floorHeight = buildingHeight / numberOfFloors;
     const floorWidth = (100 - carWidth * numberOfCars) / 2;
 
-    const { setAllCarsCurrentFloor } = useContext(ShaftContext);
+    const { setAllCarsCurrentFloor, allCarStates } = useContext(ShaftContext);
 
     return (
         <>
@@ -99,7 +104,7 @@ export default function Building() {
                     onClick={() => {
                         setAllCarsCurrentFloor([0, 0]);
                     }}
-                    style={{ width: "33.33%", height: "30px" }}
+                    style={{ width: "25%", height: "30px" }}
                 >
                     BOTTOM
                 </button>
@@ -107,7 +112,7 @@ export default function Building() {
                     onClick={() => {
                         setAllCarsCurrentFloor([4, 4]);
                     }}
-                    style={{ width: "33.33%", height: "30px" }}
+                    style={{ width: "25%", height: "30px" }}
                 >
                     MID
                 </button>
@@ -115,7 +120,7 @@ export default function Building() {
                     onClick={() => {
                         setAllCarsCurrentFloor([7, 7]);
                     }}
-                    style={{ width: "33.33%", height: "30px" }}
+                    style={{ width: "25%", height: "30px" }}
                 >
                     TOP
                 </button>
@@ -123,25 +128,34 @@ export default function Building() {
                     onClick={() => {
                         setAllCarsCurrentFloor([7, 0]);
                     }}
-                    style={{ width: "33.33%", height: "30px" }}
+                    style={{ width: "25%", height: "30px" }}
                 >
                     TOP / BOTTOM
                 </button>
                 <button
                     onClick={() => {
-                        setAllCarsCurrentFloor([0, 7]);
+                        setAllCarsCurrentFloor([0, 4]);
                     }}
-                    style={{ width: "33.33%", height: "30px" }}
+                    style={{ width: "25%", height: "30px" }}
                 >
-                    BOTTOM / TOP
+                    BOTTOM / MID
                 </button>
                 <button
                     onClick={() => {
-                        setAllCarsCurrentFloor([0, 4]);
+                        setAutomotion(!automotion);
                     }}
-                    style={{ width: "33.33%", height: "30px" }}
+                    style={{ width: "25%", height: "30px" }}
                 >
-                    BOTTOM / MID
+                    AUTOMOTION
+                </button>
+
+                <button
+                    onClick={() => {
+                        alert(allCarStates);
+                    }}
+                    style={{ width: "25%", height: "30px" }}
+                >
+                    PAUSE
                 </button>
             </div>
         </>

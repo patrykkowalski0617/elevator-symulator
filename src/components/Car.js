@@ -39,11 +39,11 @@ const Door = styled.div`
     opacity: 0;
     ${props =>
         props.open
-            ? "width: 0%; transition: 1s linear width; opacity: 1"
+            ? "width: 0%; transition: 2s linear width; opacity: 1"
             : null}
 `;
 
-const frameIntervalTime = 5;
+const frameIntervalTime = 10;
 
 const Car = ({ floorHeight, carId }) => {
     const {
@@ -90,6 +90,7 @@ const Car = ({ floorHeight, carId }) => {
 
             // INTERVAL FRAME
             const frame = (carState, continuation = false) => {
+                console.log("frame", carState, continuation);
                 // if it is move to the up
                 if (carState === "go-up" && positionLet < destination) {
                     // speed up
@@ -160,21 +161,20 @@ const Car = ({ floorHeight, carId }) => {
                 clearInterval(id);
                 speedUpIncrem = 0;
                 setSpeed(easeIn[speedUpIncrem]);
-                if (target[0] !== undefined) {
-                    updateCarState(carId, "door-open");
-                    setTimeout(() => {
-                        removeCarFloorAssignment(
-                            carId,
-                            allCarsCurrentFloor[carId]
-                        );
-                        updateCarState(carId, null);
-                    }, 1000);
-                }
+                // if (target[0] !== undefined) {
+                //     updateCarState(carId, "door-open");
+
+                //     setTimeout(() => {
+                removeCarFloorAssignment(carId, allCarsCurrentFloor[carId]);
+                updateCarState(carId, null);
+                //     }, 2000);
+                // }
             };
 
             // SET INTERVAL
             // when is stopped
             if (allCarStates[carId] === null) {
+                console.log("(allCarStates[carId] === null)");
                 positionLet = positionConst;
 
                 const carState =
@@ -192,6 +192,7 @@ const Car = ({ floorHeight, carId }) => {
             }
             // when car is going up
             else if (allCarStates[carId] === "go-up") {
+                console.log("(allCarStates[carId] === go-up)");
                 clearInterval(intervalId);
                 positionLet = dataForContinuation.positionLet;
                 speedUpIncrem = dataForContinuation.speedUpIncrem;
@@ -202,6 +203,7 @@ const Car = ({ floorHeight, carId }) => {
             }
             // when car is going down
             else if (allCarStates[carId] === "go-down") {
+                console.log("(allCarStates[carId] === go-down)");
                 clearInterval(intervalId);
                 destination = floorHeight * target[1];
                 positionLet = dataForContinuation.positionLet;
@@ -211,10 +213,10 @@ const Car = ({ floorHeight, carId }) => {
                 }, frameIntervalTime);
                 setIntervalId(id);
             } else {
-                console.warn("catch the exception");
+                console.log("catch the exception", allCarStates[carId]);
             }
         }
-    }, [allCarsCurrentFloor, carId, floorHeight, target]);
+    }, [allCarsCurrentFloor, carId, floorHeight, target, updateCarState]);
 
     return (
         <CarStyled

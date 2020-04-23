@@ -20,7 +20,7 @@ const theNearestCar = (allCarStates, allCarsCurrentFloor, floorNumber) => {
                 distanceToFloor
             });
         } else {
-            console.warn("catch the exception");
+            // console.log("catch the exception", carState);
         }
     }
 

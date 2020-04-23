@@ -26,11 +26,20 @@ const ShaftContextProvider = props => {
     };
 
     const addCarFloorAssignment = (carId, floorNumber) => {
-        const _allCarsFloorAssignments = allCarsFloorAssignments;
-        const carFloorAssignment = _allCarsFloorAssignments[carId];
-        const carFloorAssignmentUpdated = [...carFloorAssignment, floorNumber];
-        _allCarsFloorAssignments.splice(carId, 1, carFloorAssignmentUpdated);
-        setAllCarsFloorAssignments([..._allCarsFloorAssignments]);
+        if (carId !== null) {
+            const _allCarsFloorAssignments = allCarsFloorAssignments;
+            const carFloorAssignment = _allCarsFloorAssignments[carId];
+            const carFloorAssignmentUpdated = [
+                ...carFloorAssignment,
+                floorNumber
+            ];
+            _allCarsFloorAssignments.splice(
+                carId,
+                1,
+                carFloorAssignmentUpdated
+            );
+            setAllCarsFloorAssignments([..._allCarsFloorAssignments]);
+        }
     };
 
     const removeCarFloorAssignment = (carId, floorNumber) => {

@@ -5,6 +5,7 @@ export const BuildingContext = createContext();
 const BuildingContextProvider = props => {
     const [numberOfFloors, setNumberOfFloors] = useState(8);
     const [numberOfCars, setNnmberOfCars] = useState(2);
+    const [automotion, setAutomotion] = useState(false);
 
     return (
         <BuildingContext.Provider
@@ -12,7 +13,9 @@ const BuildingContextProvider = props => {
                 numberOfFloors,
                 setNumberOfFloors,
                 numberOfCars,
-                setNnmberOfCars
+                setNnmberOfCars,
+                automotion,
+                setAutomotion
             }}
         >
             {props.children}
