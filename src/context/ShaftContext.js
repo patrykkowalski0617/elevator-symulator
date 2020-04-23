@@ -42,7 +42,7 @@ const ShaftContextProvider = props => {
         _allCarsFloorAssignments.splice(carId, 1, carFloorAssignmentUpdated);
         setAllCarsFloorAssignments([..._allCarsFloorAssignments]);
     };
-    console.log(allCarsFloorAssignments);
+
     return (
         <ShaftContext.Provider
             value={{

@@ -39,7 +39,7 @@ const Door = styled.div`
     opacity: 0;
     ${props =>
         props.open
-            ? "width: 0%; transition: 3s linear width; opacity: 1"
+            ? "width: 0%; transition: 1s linear width; opacity: 1"
             : null}
 `;
 
@@ -163,13 +163,12 @@ const Car = ({ floorHeight, carId }) => {
                 if (target[0] !== undefined) {
                     updateCarState(carId, "door-open");
                     setTimeout(() => {
-                        console.log("close the door");
                         removeCarFloorAssignment(
                             carId,
                             allCarsCurrentFloor[carId]
                         );
                         updateCarState(carId, null);
-                    }, 3000);
+                    }, 1000);
                 }
             };
 

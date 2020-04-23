@@ -87,7 +87,7 @@ export default function Building() {
                 style={{
                     textAlign: "center",
                     position: "fixed",
-                    bottom: "calc(15vh - 65px)",
+                    bottom: "0",
                     width: "70%",
                     display: "flex",
                     flexWrap: "wrap",

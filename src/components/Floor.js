@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { ShaftContext } from "../context/ShaftContext";
 import theNearestCar from "../logic/theNearestCar";
@@ -23,7 +23,8 @@ export default function Floor({ floorHeight, floorNumber, role }) {
     const {
         allCarsCurrentFloor,
         allCarStates,
-        addCarFloorAssignment
+        addCarFloorAssignment,
+        allCarsFloorAssignments
     } = useContext(ShaftContext);
 
     const call = () => {
@@ -52,6 +53,28 @@ export default function Floor({ floorHeight, floorNumber, role }) {
         setNoCar(false);
     };
 
+    useEffect(() => {
+        if (waitingForCar && noCar) {
+            let doRestarCarCall = false;
+            for (let i = 0; i < allCarsFloorAssignments.length; i++) {
+                const assingmentLength = allCarsFloorAssignments[i].length;
+                if (!assingmentLength) {
+                    doRestarCarCall = true;
+                    break;
+                }
+            }
+            if (doRestarCarCall) {
+                const carId = theNearestCar(
+                    allCarStates,
+                    allCarsCurrentFloor,
+                    floorNumber
+                );
+                setNoCar(false);
+                addCarFloorAssignment(carId, floorNumber);
+            }
+        }
+    }, [waitingForCar, allCarsFloorAssignments, noCar]);
+
     return (
         <FloorStyled floorHeight={floorHeight}>
             {role === "enter-floor" ? (
@@ -74,10 +97,9 @@ export default function Floor({ floorHeight, floorNumber, role }) {
                         reset
                     </button>
                 </>
-            ) : (
-                ""
-            )}
-            {waitingForCar ? <CarLight></CarLight> : ""}
+            ) : null}
+            {waitingForCar ? <CarLight></CarLight> : null}
+            {role === "exit-floor" ? floorNumber : null}
         </FloorStyled>
     );
 }

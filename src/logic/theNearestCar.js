@@ -19,24 +19,27 @@ const theNearestCar = (allCarStates, allCarsCurrentFloor, floorNumber) => {
                 carId,
                 distanceToFloor
             });
+        } else {
+            console.warn("catch the exception");
         }
     }
 
     // Step 2 - return first car id of car whitch has the smallest distance
     let min = Number.POSITIVE_INFINITY;
     let theNearestCarNum = null;
+    if (distanceOfCarsWithCorrectCarState.length) {
+        for (let i = 0; i < distanceOfCarsWithCorrectCarState.length; i++) {
+            let carId = distanceOfCarsWithCorrectCarState[i].carId;
+            let distanceToFloor =
+                distanceOfCarsWithCorrectCarState[i].distanceToFloor;
 
-    for (let i = 0; i < distanceOfCarsWithCorrectCarState.length; i++) {
-        let carId = distanceOfCarsWithCorrectCarState[i].carId;
-        let distanceToFloor =
-            distanceOfCarsWithCorrectCarState[i].distanceToFloor;
-
-        if (distanceToFloor < min) {
-            theNearestCarNum = carId;
+            if (distanceToFloor < min) {
+                theNearestCarNum = carId;
+            }
+            min = distanceToFloor < min ? distanceToFloor : min;
         }
-        min = distanceToFloor < min ? distanceToFloor : min;
     }
-
+    // return id of the nearest car or null if there is no available cars
     return theNearestCarNum;
 };
 
