@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { ShaftContext } from "../context/ShaftContext";
 import { BuildingContext } from "../context/BuildingContext";
-import theNearestCar from "../logic/theNearestCar";
 
 const FloorStyled = styled.div`
     border-bottom: 4px solid;
@@ -56,13 +55,7 @@ const callAutomation = (call, floorNumber, setAllCarsCurrentFloor) => {
 export default function Floor({ floorHeight, floorNumber, role }) {
     const [waitingForCar, setWaitingForCar] = useState(false);
     const [noCar, setNoCar] = useState(false);
-    const {
-        allCarsCurrentFloor,
-        setAllCarsCurrentFloor,
-        allCarStates,
-        addCarFloorAssignment,
-        allCarsFloorAssignments
-    } = useContext(ShaftContext);
+    const { setAllCarsCurrentFloor } = useContext(ShaftContext);
     const { automotion } = useContext(BuildingContext);
 
     const call = () => {};

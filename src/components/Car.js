@@ -46,42 +46,19 @@ const Door = styled.div`
 const frameIntervalTime = 10;
 
 const Car = ({ floorHeight, carId }) => {
-    const {
-        allCarsCurrentFloor,
-        updateCarCurrentFloor,
-        allCarsFloorAssignments,
-        removeCarFloorAssignment,
-        allCarStates,
-        updateCarState
-    } = useContext(ShaftContext);
-    const [speed, setSpeed] = useState(0);
-    const [target, setTarget] = useState([]);
-    const [intervalId, setIntervalId] = useState(null);
-    const [dataForContinuation, setDataContinuation] = useState(null);
-    const [startPosition, setStartPosition] = useState(null);
-
     return (
         <CarStyled
             floorHeight={floorHeight}
             positionLetOnLoad={-4}
             style={{
-                transform: `translateY(-${
-                    dataForContinuation
-                        ? dataForContinuation.positionLet
-                            ? dataForContinuation.positionLet
-                            : floorHeight * allCarsCurrentFloor[carId]
-                        : null
-                }px)`
+                transform: `translateY(-${0}px)`
             }}
         >
-            <SpeedControl speed={speed}>
-                <SpeedMarkChanger speed={speed} />
+            <SpeedControl speed={0}>
+                <SpeedMarkChanger speed={0} />
             </SpeedControl>
-            <p>T: {String(target)}</p>
-            <p>Now: {allCarsCurrentFloor[carId]}</p>
-            <Door
-                open={allCarStates[carId] === "door-open" ? true : false}
-            ></Door>
+            <p>T: {String("target")}</p>
+            <p>Now: {"-"}</p>
         </CarStyled>
     );
 };

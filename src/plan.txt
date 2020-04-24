@@ -1,0 +1,26 @@
+SaftContext
+    Variables 
+        allCarsMoveMode // ready, go-up, go-down, door-open
+        allCarsFloorAssignments // arrays with assigned floors
+        allCarsCurrentFloor // arrays with present floors
+
+Car
+    Variables passed
+        floorHeight
+        carId
+    Variables in 
+        carTarget // return floor number
+        isMoveContinuation // true, false
+        moveContinuationData
+        speedLevel // from 0 (minimum speed) to 1 (maximum speed)
+
+Floor
+    Variables passed
+        floorHeight, floorNumber, role
+    Variables in 
+
+
+Logic modules
+    moveFrame(allCarsMoveMode, isMoveContinuation) // call by interval
+    assignFloorToCar
+    intervalSetter // sets and clear interval depends on states
