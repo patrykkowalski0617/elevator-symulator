@@ -1,4 +1,4 @@
-SaftContext
+ShaftContext
     Variables 
         allCarsMoveMode // ready, go-up, go-down, door-open
         allCarsFloorAssignments // arrays with assigned floors
