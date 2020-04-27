@@ -8,11 +8,11 @@ const ShaftContextProvider = props => {
     const initArr = val => Array(numberOfCars).fill(val);
 
     const [allCarsCurrentFloor, setAllCarsCurrentFloor] = useState(initArr(4)); // next floor on way or floor that has been just reached, but not floor which has been just left
-    const [allCarStates, setAllCarStates] = useState(initArr("ready")); // ready, go-up, go-down, door-open
+    const [allCarsState, setAllCarsState] = useState(initArr("ready")); // ready, go-up, go-down, door-open
     const [allCarsFloorAssignments, setAllCarsFloorAssignments] = useState(
         initArr([])
     );
-
+    console.log(allCarsFloorAssignments);
     const updateCarCurrentFloor = (carId, currentFloor) => {
         const _allCarsCurrentFloor = allCarsCurrentFloor;
         _allCarsCurrentFloor.splice(carId, 1, currentFloor);
@@ -20,9 +20,9 @@ const ShaftContextProvider = props => {
     };
 
     const updateCarState = (carId, state) => {
-        const _allCarStates = allCarStates;
-        _allCarStates.splice(carId, 1, state);
-        setAllCarStates(_allCarStates);
+        const _allCarsState = allCarsState;
+        _allCarsState.splice(carId, 1, state);
+        setAllCarsState(_allCarsState);
     };
 
     const addCarFloorAssignment = (carId, floorNumber) => {
@@ -59,8 +59,8 @@ const ShaftContextProvider = props => {
                 setAllCarsCurrentFloor,
                 addCarFloorAssignment,
                 removeCarFloorAssignment,
-                allCarStates,
-                setAllCarStates,
+                allCarsState,
+                setAllCarsState,
                 updateCarState,
                 allCarsFloorAssignments,
                 setAllCarsFloorAssignments,

@@ -62,7 +62,7 @@ export default function Building() {
     const floorHeight = buildingHeight / numberOfFloors;
     const floorWidth = (100 - carWidth * numberOfCars) / 2;
 
-    const { setAllCarsCurrentFloor, allCarStates } = useContext(ShaftContext);
+    const { setAllCarsCurrentFloor, allCarsState } = useContext(ShaftContext);
 
     return (
         <>
@@ -151,7 +151,7 @@ export default function Building() {
 
                 <button
                     onClick={() => {
-                        alert(allCarStates);
+                        alert(allCarsState);
                     }}
                     style={{ width: "25%", height: "30px" }}
                 >

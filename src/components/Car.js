@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import styled from "styled-components";
-import { ShaftContext } from "../context/ShaftContext";
-import Easing from "easing";
+// import { ShaftContext } from "../context/ShaftContext";
+// import Easing from "easing";
 
 const CarStyled = styled.div`
     height: ${props => props.floorHeight - props.positionLetOnLoad}px;
@@ -32,18 +32,18 @@ const SpeedMarkChanger = styled.div`
     height: 5px;
 `;
 
-const Door = styled.div`
-    background-color: red;
-    width: 100%;
-    height: 3px;
-    opacity: 0;
-    ${props =>
-        props.open
-            ? "width: 0%; transition: 2s linear width; opacity: 1"
-            : null}
-`;
+// const Door = styled.div`
+//     background-color: red;
+//     width: 100%;
+//     height: 3px;
+//     opacity: 0;
+//     ${props =>
+//         props.open
+//             ? "width: 0%; transition: 2s linear width; opacity: 1"
+//             : null}
+// `;
 
-const frameIntervalTime = 10;
+// const frameIntervalTime = 10;
 
 const Car = ({ floorHeight, carId }) => {
     return (

@@ -47,7 +47,7 @@ const cases = [
 
 for (let i = 0; i < cases.length; i++) {
     const [
-        allCarStates,
+        allCarsState,
         allCarsCurrentFloor,
         floorNumber,
         expectedReturn
@@ -55,7 +55,7 @@ for (let i = 0; i < cases.length; i++) {
     test("case " + i, () => {
         expect(
             distanceToAvailableCars(
-                allCarStates,
+                allCarsState,
                 allCarsCurrentFloor,
                 floorNumber
             )
