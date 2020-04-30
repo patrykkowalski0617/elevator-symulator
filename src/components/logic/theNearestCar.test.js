@@ -18,8 +18,12 @@ const cases = [
 ];
 
 for (let i = 0; i < cases.length; i++) {
-    const [distanceToAvailableCars, expectedReturn] = cases[i];
+    const [distanceToAvailableCarsRtrn, expectedRtrn] = cases[i];
+
+    const distanceToAvailableCars = jest.fn(() => distanceToAvailableCarsRtrn);
+
     test("case " + i, () => {
-        expect(theNearestCar(distanceToAvailableCars)).toEqual(expectedReturn);
+        expect(theNearestCar(distanceToAvailableCars())).toEqual(expectedRtrn);
+        expect(distanceToAvailableCars).toHaveBeenCalledTimes(1);
     });
 }

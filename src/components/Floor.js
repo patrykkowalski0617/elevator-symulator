@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { ShaftContext } from "../context/ShaftContext";
 import { distanceToAvailableCars, theNearestCar } from "./logic";
@@ -45,7 +45,8 @@ export default function Floor({ floorHeight, floorNumber, role }) {
     };
 
     return (
-        <FloorStyled floorHeight={floorHeight}>
+        <>
+            {/* <FloorStyled floorHeight={floorHeight}> */}
             {role === "enter-floor" ? (
                 <>
                     <button
@@ -70,6 +71,7 @@ export default function Floor({ floorHeight, floorNumber, role }) {
                     />
                 </>
             ) : null}
-        </FloorStyled>
+            {/* </FloorStyled> */}
+        </>
     );
 }
