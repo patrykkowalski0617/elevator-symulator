@@ -1,5 +1,5 @@
 import React from "react";
-import Floor from "./Floor";
+import Car from "./Car";
 import renderer from "react-test-renderer";
 import ShaftContext from "../context/ShaftContext";
 import BuildingContext from "../context/BuildingContext";
@@ -8,7 +8,7 @@ test("", () => {
     const tree = renderer.create(
         <BuildingContext>
             <ShaftContext>
-                <Floor></Floor>
+                <Car></Car>
             </ShaftContext>
         </BuildingContext>
     );
