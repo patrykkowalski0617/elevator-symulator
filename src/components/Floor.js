@@ -17,12 +17,13 @@ const CarLight = styled.div`
     border-radius: 100%;
 `;
 
-export default function Floor({ floorHeight, floorNumber, role }) {
+export default function Floor({ floorHeight, floorNumber, role, title }) {
     const {
         allCarsState,
         allCarsCurrentFloor,
         addCarFloorAssignment
     } = useContext(ShaftContext);
+
     const [waitingForCar, setWaitingForCar] = useState(false);
     const [noCar, setNoCar] = useState(false);
 
@@ -45,8 +46,7 @@ export default function Floor({ floorHeight, floorNumber, role }) {
     };
 
     return (
-        <>
-            {/* <FloorStyled floorHeight={floorHeight}> */}
+        <FloorStyled floorHeight={floorHeight} title={title}>
             {role === "enter-floor" ? (
                 <>
                     <button
@@ -71,7 +71,6 @@ export default function Floor({ floorHeight, floorNumber, role }) {
                     />
                 </>
             ) : null}
-            {/* </FloorStyled> */}
-        </>
+        </FloorStyled>
     );
 }
