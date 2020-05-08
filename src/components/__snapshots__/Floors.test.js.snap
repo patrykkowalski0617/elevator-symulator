@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Floors - render and match snapshot 1`] = `
+<div
+  className="sc-AxiKw jLcaSE"
+>
+  <div
+    className="sc-AxjAm kofykE"
+  />
+  <div
+    className="sc-AxjAm kofykE"
+  />
+  <div
+    className="sc-AxjAm kofykE"
+  />
+  <div
+    className="sc-AxjAm kofykE"
+  />
+  <div
+    className="sc-AxjAm kofykE"
+  />
+  <div
+    className="sc-AxjAm kofykE"
+  />
+  <div
+    className="sc-AxjAm kofykE"
+  />
+  <div
+    className="sc-AxjAm kofykE"
+  />
+</div>
+`;

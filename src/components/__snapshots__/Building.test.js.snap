@@ -1,0 +1,439 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Building - render and match snapshot 1`] = `
+Array [
+  <div
+    className="sc-Axmtr blzgxu"
+  >
+    <div
+      className="sc-AxmLO jFgloW"
+    />
+    <div
+      className="sc-AxiKw dyhqYb"
+      role="enter-floor"
+    >
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <button
+          data-floor-number={7}
+          onClick={[Function]}
+          style={null}
+        >
+          Call car
+        </button>
+        <button
+          data-floor-number={7}
+          onClick={[Function]}
+        >
+          reset
+        </button>
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <button
+          data-floor-number={6}
+          onClick={[Function]}
+          style={null}
+        >
+          Call car
+        </button>
+        <button
+          data-floor-number={6}
+          onClick={[Function]}
+        >
+          reset
+        </button>
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <button
+          data-floor-number={5}
+          onClick={[Function]}
+          style={null}
+        >
+          Call car
+        </button>
+        <button
+          data-floor-number={5}
+          onClick={[Function]}
+        >
+          reset
+        </button>
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <button
+          data-floor-number={4}
+          onClick={[Function]}
+          style={null}
+        >
+          Call car
+        </button>
+        <button
+          data-floor-number={4}
+          onClick={[Function]}
+        >
+          reset
+        </button>
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <button
+          data-floor-number={3}
+          onClick={[Function]}
+          style={null}
+        >
+          Call car
+        </button>
+        <button
+          data-floor-number={3}
+          onClick={[Function]}
+        >
+          reset
+        </button>
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <button
+          data-floor-number={2}
+          onClick={[Function]}
+          style={null}
+        >
+          Call car
+        </button>
+        <button
+          data-floor-number={2}
+          onClick={[Function]}
+        >
+          reset
+        </button>
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <button
+          data-floor-number={1}
+          onClick={[Function]}
+          style={null}
+        >
+          Call car
+        </button>
+        <button
+          data-floor-number={1}
+          onClick={[Function]}
+        >
+          reset
+        </button>
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <button
+          data-floor-number={0}
+          onClick={[Function]}
+          style={null}
+        >
+          Call car
+        </button>
+        <button
+          data-floor-number={0}
+          onClick={[Function]}
+        >
+          reset
+        </button>
+      </div>
+    </div>
+    <div
+      className="sc-AxheI dcDElg"
+    >
+      <div
+        className="sc-AxhCb hFepj"
+        style={
+          Object {
+            "transform": "translateY(-0px)",
+          }
+        }
+      >
+        <div
+          className="sc-AxhUy ZMmr"
+          speed={0}
+        >
+          <div
+            className="sc-AxgMl jwFsLE"
+            speed={0}
+          />
+        </div>
+        <p>
+          T: 
+          target
+        </p>
+        <p>
+          Now: 
+          -
+        </p>
+      </div>
+    </div>
+    <div
+      className="sc-AxheI dcDElg"
+    >
+      <div
+        className="sc-AxhCb hFepj"
+        style={
+          Object {
+            "transform": "translateY(-0px)",
+          }
+        }
+      >
+        <div
+          className="sc-AxhUy ZMmr"
+          speed={0}
+        >
+          <div
+            className="sc-AxgMl jwFsLE"
+            speed={0}
+          />
+        </div>
+        <p>
+          T: 
+          target
+        </p>
+        <p>
+          Now: 
+          -
+        </p>
+      </div>
+    </div>
+    <div
+      className="sc-AxiKw iRCYiP"
+      role="exit-floor"
+    >
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <p>
+          7
+        </p>
+        <input
+          style={
+            Object {
+              "height": "35px",
+              "width": "35px",
+            }
+          }
+          type="checkbox"
+        />
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <p>
+          6
+        </p>
+        <input
+          style={
+            Object {
+              "height": "35px",
+              "width": "35px",
+            }
+          }
+          type="checkbox"
+        />
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <p>
+          5
+        </p>
+        <input
+          style={
+            Object {
+              "height": "35px",
+              "width": "35px",
+            }
+          }
+          type="checkbox"
+        />
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <p>
+          4
+        </p>
+        <input
+          style={
+            Object {
+              "height": "35px",
+              "width": "35px",
+            }
+          }
+          type="checkbox"
+        />
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <p>
+          3
+        </p>
+        <input
+          style={
+            Object {
+              "height": "35px",
+              "width": "35px",
+            }
+          }
+          type="checkbox"
+        />
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <p>
+          2
+        </p>
+        <input
+          style={
+            Object {
+              "height": "35px",
+              "width": "35px",
+            }
+          }
+          type="checkbox"
+        />
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <p>
+          1
+        </p>
+        <input
+          style={
+            Object {
+              "height": "35px",
+              "width": "35px",
+            }
+          }
+          type="checkbox"
+        />
+      </div>
+      <div
+        className="sc-AxjAm lbIxyM"
+      >
+        <p>
+          0
+        </p>
+        <input
+          style={
+            Object {
+              "height": "35px",
+              "width": "35px",
+            }
+          }
+          type="checkbox"
+        />
+      </div>
+    </div>
+  </div>,
+  <div
+    style={
+      Object {
+        "bottom": "0",
+        "display": "flex",
+        "flexWrap": "wrap",
+        "margin": "0 50%",
+        "position": "fixed",
+        "textAlign": "center",
+        "transform": "translateX(-50%)",
+        "width": "70%",
+      }
+    }
+  >
+    <button
+      onClick={[Function]}
+      style={
+        Object {
+          "height": "30px",
+          "width": "25%",
+        }
+      }
+    >
+      BOTTOM
+    </button>
+    <button
+      onClick={[Function]}
+      style={
+        Object {
+          "height": "30px",
+          "width": "25%",
+        }
+      }
+    >
+      MID
+    </button>
+    <button
+      onClick={[Function]}
+      style={
+        Object {
+          "height": "30px",
+          "width": "25%",
+        }
+      }
+    >
+      TOP
+    </button>
+    <button
+      onClick={[Function]}
+      style={
+        Object {
+          "height": "30px",
+          "width": "25%",
+        }
+      }
+    >
+      TOP / BOTTOM
+    </button>
+    <button
+      onClick={[Function]}
+      style={
+        Object {
+          "height": "30px",
+          "width": "25%",
+        }
+      }
+    >
+      BOTTOM / MID
+    </button>
+    <button
+      onClick={[Function]}
+      style={
+        Object {
+          "height": "30px",
+          "width": "25%",
+        }
+      }
+    >
+      AUTOMOTION
+    </button>
+    <button
+      onClick={[Function]}
+      style={
+        Object {
+          "height": "30px",
+          "width": "25%",
+        }
+      }
+    >
+      PAUSE
+    </button>
+  </div>,
+]
+`;
