@@ -26,7 +26,7 @@ Array [
           data-floor-number={7}
           onClick={[Function]}
         >
-          reset
+          Reset
         </button>
       </div>
       <div
@@ -43,7 +43,7 @@ Array [
           data-floor-number={6}
           onClick={[Function]}
         >
-          reset
+          Reset
         </button>
       </div>
       <div
@@ -60,7 +60,7 @@ Array [
           data-floor-number={5}
           onClick={[Function]}
         >
-          reset
+          Reset
         </button>
       </div>
       <div
@@ -77,7 +77,7 @@ Array [
           data-floor-number={4}
           onClick={[Function]}
         >
-          reset
+          Reset
         </button>
       </div>
       <div
@@ -94,7 +94,7 @@ Array [
           data-floor-number={3}
           onClick={[Function]}
         >
-          reset
+          Reset
         </button>
       </div>
       <div
@@ -111,7 +111,7 @@ Array [
           data-floor-number={2}
           onClick={[Function]}
         >
-          reset
+          Reset
         </button>
       </div>
       <div
@@ -128,7 +128,7 @@ Array [
           data-floor-number={1}
           onClick={[Function]}
         >
-          reset
+          Reset
         </button>
       </div>
       <div
@@ -145,7 +145,7 @@ Array [
           data-floor-number={0}
           onClick={[Function]}
         >
-          reset
+          Reset
         </button>
       </div>
     </div>
