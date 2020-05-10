@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { ShaftContext } from "../context/ShaftContext";
-import { distanceToAvailableCars, theNearestCar } from "../logic";
+import { theNearestCar } from "../logic";
 
 const FloorStyled = styled.div`
     border-bottom: 4px solid;
@@ -30,13 +30,12 @@ export default function Floor({ floorHeight, floorNumber, role, title }) {
     const call = () => {
         setWaitingForCar(true);
         if (!waitingForCar) {
-            const carsDistances = distanceToAvailableCars(
+            const carId = theNearestCar(
                 allCarsState,
                 allCarsCurrentFloor,
                 floorNumber
             );
-            const carId = theNearestCar(carsDistances);
-            console.log(carId);
+
             if (carId !== null) {
                 addCarFloorAssignment(carId, floorNumber);
             } else {

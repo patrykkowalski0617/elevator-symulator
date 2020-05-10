@@ -2,12 +2,8 @@ import carTarget, { theNearestFloors } from "./carTarget";
 
 const theNearestFloorsCases = [
     [
-        [[2, 5, 9, 12], 7],
-        [5, 9]
-    ],
-    [
-        [[2, 5, 7, 9, 12], 7],
-        [7, 7]
+        [[9, 12], 7],
+        [null, 9]
     ]
 ];
 
@@ -17,9 +13,33 @@ for (let i = 0; i < theNearestFloorsCases.length; i++) {
         expected
     ] = theNearestFloorsCases[i];
 
-    test("case ", () => {
+    test("theNearestFloors case " + i, () => {
         expect(theNearestFloors(carFloorAssignments, carCurrentFloor)).toEqual(
             expected
         );
+    });
+}
+
+const carTargetCases = [
+    {
+        carState: "ready",
+        carFloorAssignments: [2],
+        carCurrentFloor: 7,
+        expected: 2
+    }
+];
+
+for (let i = 0; i < carTargetCases.length; i++) {
+    const {
+        carState,
+        carFloorAssignments,
+        carCurrentFloor,
+        expected
+    } = carTargetCases[i];
+
+    test("carTarget case " + i, () => {
+        expect(
+            carTarget(carState, carFloorAssignments, carCurrentFloor)
+        ).toEqual(expected);
     });
 }
