@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { ShaftContext } from "../context/ShaftContext";
-import { theNearestCar } from "../logic";
+import { theNearestCar } from "../car_logic";
 
 const FloorStyled = styled.div`
     border-bottom: 4px solid;

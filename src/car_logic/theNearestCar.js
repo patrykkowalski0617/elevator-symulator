@@ -1,3 +1,6 @@
+// This part of code is supposed to be run
+// before ShaftContext is updating allCarsFloorAssignments by addCarFloorAssignment
+
 export const distanceToAvailableCars = (
     allCarsState,
     allCarsCurrentFloor,
