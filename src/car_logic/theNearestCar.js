@@ -35,31 +35,40 @@ export const distanceToAvailableCars = (
     return distanceToAvailableCarsArr;
 };
 
-// return id of the nearest car or null if there is no available cars
+// return id of the nearest car or -1 if there is no available cars
 const theNearestCar = (
     allCarsState,
     allCarsCurrentFloor,
     floorNumber,
     tolerance
 ) => {
-    const distanceToCars = distanceToAvailableCars(
-        allCarsState,
-        allCarsCurrentFloor,
-        floorNumber
-    );
+    if (
+        allCarsState.length !== 0 &&
+        allCarsCurrentFloor.length !== 0 &&
+        typeof floorNumber === "number"
+    ) {
+        const distanceToCars = distanceToAvailableCars(
+            allCarsState,
+            allCarsCurrentFloor,
+            floorNumber,
+            tolerance
+        );
 
-    let theNearestCarNum = null; // defaulft value is null
-    let min = Number.POSITIVE_INFINITY;
-    for (let i = 0; i < distanceToCars.length; i++) {
-        const { carId, distance } = distanceToCars[i];
+        // defaulft value is -1 and it should returned
+        // when there is no available car
+        let theNearestCarNum = -1;
+        let min = Number.POSITIVE_INFINITY;
+        for (let i = 0; i < distanceToCars.length; i++) {
+            const { carId, distance } = distanceToCars[i];
 
-        if (distance < min) {
-            theNearestCarNum = carId;
+            if (distance < min) {
+                theNearestCarNum = carId;
+            }
+            min = distance < min ? distance : min;
         }
-        min = distance < min ? distance : min;
-    }
 
-    return theNearestCarNum;
+        return theNearestCarNum;
+    }
 };
 
 export default theNearestCar;

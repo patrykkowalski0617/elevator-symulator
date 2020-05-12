@@ -1,40 +1,51 @@
 import theNearestCar, { distanceToAvailableCars } from "./theNearestCar";
-import testCases from "./_testCases";
+import { standardCases, theNearestCarCases } from "./_testCases";
 
-for (let i = 0; i < testCases.length; i++) {
-    const {
-        allCarsState,
-        allCarsCurrentFloor,
-        floorNumber,
-        expectedBy: { _distanceToAvailableCars }
-    } = testCases[i];
-
-    test("distanceToAvailableCars case " + i, () => {
-        const value = distanceToAvailableCars(
+const distanceToAvailableCars_testFunction = (cases, casesDescription) => {
+    for (let i = 0; i < cases.length; i++) {
+        const {
             allCarsState,
             allCarsCurrentFloor,
-            floorNumber
+            floorNumber,
+            expectedBy: { _distanceToAvailableCars }
+        } = cases[i];
+
+        test(
+            "distanceToAvailableCars " + casesDescription + " case " + i,
+            () => {
+                const value = distanceToAvailableCars(
+                    allCarsState,
+                    allCarsCurrentFloor,
+                    floorNumber
+                );
+
+                expect(value).toEqual(_distanceToAvailableCars);
+            }
         );
+    }
+};
 
-        expect(value).toEqual(_distanceToAvailableCars);
-    });
-}
-
-for (let i = 0; i < testCases.length; i++) {
-    const {
-        allCarsState,
-        allCarsCurrentFloor,
-        floorNumber,
-        expectedBy: { _theNearestCar }
-    } = testCases[i];
-
-    test("theNearestCar case " + i, () => {
-        const value = theNearestCar(
+const theNearestCar_testFunction = (cases, casesDescription) => {
+    for (let i = 0; i < cases.length; i++) {
+        const {
             allCarsState,
             allCarsCurrentFloor,
-            floorNumber
-        );
+            floorNumber,
+            expectedBy: { _theNearestCar }
+        } = cases[i];
 
-        expect(value).toEqual(_theNearestCar);
-    });
-}
+        test("theNearestCar " + casesDescription + " case " + i, () => {
+            const value = theNearestCar(
+                allCarsState,
+                allCarsCurrentFloor,
+                floorNumber
+            );
+
+            expect(value).toEqual(_theNearestCar);
+        });
+    }
+};
+
+distanceToAvailableCars_testFunction(standardCases, "standardCases");
+theNearestCar_testFunction(standardCases, "standardCases");
+theNearestCar_testFunction(theNearestCarCases, "theNearestCarCases");

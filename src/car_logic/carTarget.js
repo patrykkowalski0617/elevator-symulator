@@ -2,11 +2,14 @@
 // after ShaftContext is updating allCarsFloorAssignments by addCarFloorAssignment
 
 const carTarget = (allCarsFloorAssignments, carId) => {
-    const carFloorAssignments = allCarsFloorAssignments[carId].sort(
-        (a, b) => b + a
-    );
-
-    return carFloorAssignments[0];
+    let carFloorAssignments, target;
+    if (typeof carId === "number") {
+        carFloorAssignments = allCarsFloorAssignments[carId].sort(
+            (a, b) => a - b
+        );
+        target = carFloorAssignments[0];
+    }
+    return target;
 };
 
 export default carTarget;

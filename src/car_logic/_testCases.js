@@ -1,4 +1,4 @@
-const testCases = [
+export const standardCases = [
     {
         floorNumber: 7,
         allCarsCurrentFloor: [0, 0],
@@ -51,7 +51,73 @@ const testCases = [
             _theNearestCar: 1,
             _carTarget: 7
         }
+    },
+    {
+        floorNumber: 7,
+        allCarsCurrentFloor: [5, 0],
+        allCarsState: ["go-down", "go-up"],
+        allCarsFloorAssignments: [[2], [9]],
+        expectedBy: {
+            _distanceToAvailableCars: [{ carId: 1, distance: 7 }],
+            _theNearestCar: 1,
+            _carTarget: 7
+        }
     }
 ];
 
-export default testCases;
+export const theNearestCarCases = [
+    {
+        floorNumber: "z",
+        allCarsCurrentFloor: [5, 0],
+        allCarsState: ["go-down", "go-down"],
+        allCarsFloorAssignments: [],
+        expectedBy: {
+            _theNearestCar: undefined
+        }
+    },
+    {
+        floorNumber: 7,
+        allCarsCurrentFloor: [],
+        allCarsState: ["go-down", "go-down"],
+        allCarsFloorAssignments: [],
+        expectedBy: {
+            _theNearestCar: undefined
+        }
+    },
+    {
+        floorNumber: 7,
+        allCarsCurrentFloor: [5, 0],
+        allCarsState: [],
+        allCarsFloorAssignments: [],
+        expectedBy: {
+            _theNearestCar: undefined
+        }
+    },
+    {
+        floorNumber: 7,
+        allCarsCurrentFloor: null,
+        allCarsState: [],
+        allCarsFloorAssignments: [],
+        expectedBy: {
+            _theNearestCar: undefined
+        }
+    },
+    {
+        floorNumber: 7,
+        allCarsCurrentFloor: undefined,
+        allCarsState: [],
+        allCarsFloorAssignments: [],
+        expectedBy: {
+            _theNearestCar: undefined
+        }
+    },
+    {
+        floorNumber: 7,
+        allCarsCurrentFloor: [2, 9],
+        allCarsState: ["go-down", "go-up"],
+        allCarsFloorAssignments: [],
+        expectedBy: {
+            _theNearestCar: -1
+        }
+    }
+];
