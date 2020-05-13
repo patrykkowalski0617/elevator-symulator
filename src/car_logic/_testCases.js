@@ -70,7 +70,6 @@ export const theNearestCarCases = [
         floorNumber: "z",
         allCarsCurrentFloor: [5, 0],
         allCarsState: ["go-down", "go-down"],
-        allCarsFloorAssignments: [],
         expectedBy: {
             _theNearestCar: undefined
         }
@@ -79,7 +78,6 @@ export const theNearestCarCases = [
         floorNumber: 7,
         allCarsCurrentFloor: [],
         allCarsState: ["go-down", "go-down"],
-        allCarsFloorAssignments: [],
         expectedBy: {
             _theNearestCar: undefined
         }
@@ -88,7 +86,6 @@ export const theNearestCarCases = [
         floorNumber: 7,
         allCarsCurrentFloor: [5, 0],
         allCarsState: [],
-        allCarsFloorAssignments: [],
         expectedBy: {
             _theNearestCar: undefined
         }
@@ -97,7 +94,6 @@ export const theNearestCarCases = [
         floorNumber: 7,
         allCarsCurrentFloor: null,
         allCarsState: [],
-        allCarsFloorAssignments: [],
         expectedBy: {
             _theNearestCar: undefined
         }
@@ -106,7 +102,6 @@ export const theNearestCarCases = [
         floorNumber: 7,
         allCarsCurrentFloor: undefined,
         allCarsState: [],
-        allCarsFloorAssignments: [],
         expectedBy: {
             _theNearestCar: undefined
         }
@@ -115,9 +110,32 @@ export const theNearestCarCases = [
         floorNumber: 7,
         allCarsCurrentFloor: [2, 9],
         allCarsState: ["go-down", "go-up"],
-        allCarsFloorAssignments: [],
         expectedBy: {
             _theNearestCar: -1
+        }
+    },
+    {
+        floorNumber: 7,
+        allCarsCurrentFloor: [7, 9],
+        allCarsState: ["go-down", "go-up"],
+        expectedBy: {
+            _theNearestCar: -1
+        }
+    },
+    {
+        floorNumber: 7,
+        allCarsCurrentFloor: [6, 9],
+        allCarsState: ["go-up", "go-up"],
+        expectedBy: {
+            _theNearestCar: -1
+        }
+    },
+    {
+        floorNumber: 7,
+        allCarsCurrentFloor: [5, 9],
+        allCarsState: ["go-up", "go-up"],
+        expectedBy: {
+            _theNearestCar: 0
         }
     }
 ];
