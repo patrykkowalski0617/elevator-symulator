@@ -14,11 +14,11 @@ export const speedUp = distancePx => {
     // returned array is too long
     let halfOfEasing = [];
 
-    for (var i = 0; i < easing.length; i++) {
+    for (var i = 0; i < easing.length; i += 2) {
         halfOfEasing.push(easing[i]);
     }
 
-    return easing;
+    return halfOfEasing;
 };
 
 export const slowDown = distancePx => {
