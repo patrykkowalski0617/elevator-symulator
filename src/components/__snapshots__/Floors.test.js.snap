@@ -2,31 +2,37 @@
 
 exports[`Floors - render and match snapshot 1`] = `
 <div
-  className="sc-AxiKw jLcaSE"
+  className="sc-AxiKw jKaJHS"
 >
   <div
-    className="sc-AxjAm kofykE"
+    className="sc-AxjAm cEScls"
   />
   <div
-    className="sc-AxjAm kofykE"
+    className="sc-AxjAm cEScls"
   />
   <div
-    className="sc-AxjAm kofykE"
+    className="sc-AxjAm cEScls"
   />
   <div
-    className="sc-AxjAm kofykE"
+    className="sc-AxjAm cEScls"
   />
   <div
-    className="sc-AxjAm kofykE"
+    className="sc-AxjAm cEScls"
   />
   <div
-    className="sc-AxjAm kofykE"
+    className="sc-AxjAm cEScls"
   />
   <div
-    className="sc-AxjAm kofykE"
+    className="sc-AxjAm cEScls"
   />
   <div
-    className="sc-AxjAm kofykE"
+    className="sc-AxjAm cEScls"
+  />
+  <div
+    className="sc-AxjAm cEScls"
+  />
+  <div
+    className="sc-AxjAm cEScls"
   />
 </div>
 `;

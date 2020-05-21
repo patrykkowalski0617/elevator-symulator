@@ -6,15 +6,10 @@ import Floor from "./Floor";
 const FloorWrapper = styled.div`
     width: ${props => props.floorWidth}%;
     border-style: solid;
-    border-width: ${props =>
-        props.role === "enter-floor"
-            ? "0 1px 0 2px"
-            : props.role === "exit-floor"
-            ? "0 2px 0 1px"
-            : ""};
+    background: #555;
+    border-width: 0 2px;
 `;
-
-export default function Floors({ role, floorHeight, floorWidth }) {
+export default function Floors({ role, floorWidth }) {
     const { numberOfFloors } = useContext(BuildingContext);
 
     const renderFloors = () => {
@@ -24,8 +19,8 @@ export default function Floors({ role, floorHeight, floorWidth }) {
                 <Floor
                     key={i}
                     role={role}
-                    floorHeight={floorHeight}
                     floorNumber={numberOfFloors - i - 1}
+                    numberOfFloors={numberOfFloors}
                 ></Floor>
             );
         }

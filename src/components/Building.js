@@ -1,45 +1,45 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useRef, useContext } from "react";
 import { BuildingContext } from "../context/BuildingContext";
 import Floors from "./Floors";
 import styled from "styled-components";
 import Shaft from "./Shaft";
-import useElementSizeOnResize from "../customHooks/useElementSizeOnResize";
 import { ShaftContext } from "../context/ShaftContext";
 
 const BuildingStyled = styled.div`
-    height: 70vh;
+    height: 90vh;
     width: 70vw;
+    overflow: hidden;
     max-width: 600px;
     min-width: 320px;
-    margin: 15vh auto;
-    margin-top: calc(15vh + 25px);
-    background: #555;
+    margin: 5vh auto;
+    background: #000;
     position: relative;
     display: flex;
     flex-flow: row wrap;
+    border-style: solid;
+    border-width: 6px 4px;
 `;
 
-const Roof = styled.div`
-    padding-left: 50%;
-    padding-bottom: 10%; 
-    position: absolute;
-    right: 0;
-    left: 0;
-    z-index: -1000;
-    &:after {
-        content: "${props => props.text}";
-        display: block;
-        width: calc(100% - 25%);
-        height: 0;
-        margin-left: calc(-50% - 25% + 25px);
-        border-left: 25% solid transparent;
-        border-right: 25% solid transparent;
-        border-bottom: 25% solid #992222;
-        position: absolute;
-        bottom: 100%;
-    }
-    display: none;
-`;
+// const Roof = styled.div`
+//     padding-left: 50%;
+//     padding-bottom: 10%;
+//     position: absolute;
+//     right: 0;
+//     left: 0;
+//     z-index: -1000;
+//     &:after {
+//         content: "${props => props.text}";
+//         display: block;
+//         width: calc(100% - 25%);
+//         height: 0;
+//         margin-left: calc(-50% - 25% + 25px);
+//         border-left: 25% solid transparent;
+//         border-right: 25% solid transparent;
+//         border-bottom: 25% solid #992222;
+//         position: absolute;
+//         bottom: 100%;
+//     }
+// `;
 
 export default function Building() {
     const {
@@ -48,18 +48,11 @@ export default function Building() {
         automotion,
         setAutomotion
     } = useContext(BuildingContext);
-    const [buildingDOM, setBuildingDOM] = useState();
-    const [buildingWidth, buildingHeight] = useElementSizeOnResize(buildingDOM);
 
     const buildingRef = useRef();
-    useEffect(() => {
-        const ref = buildingRef.current;
-        setBuildingDOM(ref);
-    }, []);
 
     // Sizes
     const carWidth = 10;
-    const floorHeight = buildingHeight / numberOfFloors;
     const floorWidth = (100 - carWidth * numberOfCars) / 2;
 
     const { setAllCarsCurrentFloor, allCarsState } = useContext(ShaftContext);
@@ -67,28 +60,16 @@ export default function Building() {
     return (
         <>
             <BuildingStyled ref={buildingRef}>
-                <Roof
-                    text={`Building size: ${buildingWidth} x ${buildingHeight}`}
-                ></Roof>
-
-                <Floors
-                    role={"enter-floor"}
-                    floorHeight={floorHeight}
-                    floorWidth={floorWidth}
-                ></Floors>
+                {/* <Roof></Roof> */}
+                <Floors role={"enter-floor"} floorWidth={floorWidth}></Floors>
                 <Shaft
-                    floorHeight={floorHeight}
                     numberOfCars={numberOfCars}
                     carWidth={carWidth}
                     numberOfFloors={numberOfFloors}
                 ></Shaft>
-                <Floors
-                    role={"exit-floor"}
-                    floorHeight={floorHeight}
-                    floorWidth={floorWidth}
-                ></Floors>
+                <Floors role={"exit-floor"} floorWidth={floorWidth}></Floors>
             </BuildingStyled>
-            <div
+            {/* <div
                 style={{
                     textAlign: "center",
                     position: "fixed",
@@ -157,7 +138,7 @@ export default function Building() {
                 >
                     PAUSE
                 </button>
-            </div>
+            </div> */}
         </>
     );
 }

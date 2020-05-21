@@ -12,5 +12,6 @@ test("Floor - render and match snapshot", () => {
             </ShaftContext>
         </BuildingContext>
     );
+
     expect(tree.toJSON()).toMatchSnapshot();
 });

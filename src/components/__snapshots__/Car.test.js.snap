@@ -2,13 +2,18 @@
 
 exports[`Car - render and match snapshot 1`] = `
 <div
-  className="sc-AxjAm bxCfcx"
+  className="sc-AxjAm hyFNtb"
   style={
     Object {
-      "transform": "translateY(-0px)",
+      "transform": "translateY(calc(-0%))",
     }
   }
 >
+  <button
+    onClick={[Function]}
+  >
+    start
+  </button>
   <div
     className="sc-AxirZ fhuDLq"
     speed={0}
@@ -20,7 +25,7 @@ exports[`Car - render and match snapshot 1`] = `
   </div>
   <p>
     T: 
-    target
+    t
   </p>
   <p>
     Now: 

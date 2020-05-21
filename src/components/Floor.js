@@ -4,8 +4,10 @@ import { ShaftContext } from "../context/ShaftContext";
 import { theNearestCar } from "../car_logic";
 
 const FloorStyled = styled.div`
-    border-bottom: 4px solid;
-    height: ${props => props.floorHeight}px;
+    height: ${props => 100 / props.numberOfFloors}%;
+    border-style: solid;
+    border-color: #222;
+    border-width: 2px 0;
 `;
 
 const CarLight = styled.div`
@@ -17,7 +19,7 @@ const CarLight = styled.div`
     border-radius: 100%;
 `;
 
-export default function Floor({ floorHeight, floorNumber, role, title }) {
+export default function Floor({ floorNumber, numberOfFloors, role, title }) {
     const {
         allCarsState,
         allCarsCurrentFloor,
@@ -45,7 +47,7 @@ export default function Floor({ floorHeight, floorNumber, role, title }) {
     };
 
     return (
-        <FloorStyled floorHeight={floorHeight} title={title}>
+        <FloorStyled numberOfFloors={numberOfFloors} title={title}>
             {role === "enter-floor" ? (
                 <>
                     <button
@@ -66,7 +68,7 @@ export default function Floor({ floorHeight, floorNumber, role, title }) {
                     <p>{floorNumber}</p>
                     <input
                         type="checkbox"
-                        style={{ width: "35px", height: "35px" }}
+                        style={{ width: "15px", height: "15px" }}
                     />
                 </>
             ) : null}

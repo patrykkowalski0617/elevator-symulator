@@ -11,13 +11,15 @@ export const speedUp = distancePx => {
     const rel = 2.99031970597443;
     const frames = Math.round(distancePx * rel);
     const easing = Easing(frames, "quadratic");
-    // returned array is too long
+    // returned array two times longer than slowDown easing
     let halfOfEasing = [];
 
     for (var i = 0; i < easing.length; i += 2) {
-        halfOfEasing.push(easing[i]);
+        const sum = easing[i] + easing[i + 1];
+        if (sum) {
+            halfOfEasing.push(sum);
+        }
     }
-
     return halfOfEasing;
 };
 

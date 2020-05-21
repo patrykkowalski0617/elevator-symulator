@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 // import { ShaftContext } from "../context/ShaftContext";
-// import Easing from "easing";
+import { animation } from "../car_logic";
 
 const CarStyled = styled.div`
-    height: ${props => props.floorHeight - props.positionLetOnLoad}px;
-    background: #999;
-    position: absolute;
-    bottom: ${props => props.positionLetOnLoad}px;
-    width: 100%;
-    border-width: 4px 0;
-    border-style: solid;
     text-align: center;
+    width: 100%;
+    height: ${props => 100 / props.numberOfFloors}%;
+    background: #999;
+    padding: 3px 0 0 0;
+    border-style: solid;
+    border-color: #222;
+    border-width: 2px 1px;
+    position: relative;
+    margin: 0 1px;
+    &::before,
+    &::after {
+        display: block;
+        position: absolute;
+        height: 2px;
+        left: -1px;
+        right: -1px;
+        background: #222;
+        content: "";
+    }
+    &::after {
+        bottom: -4px;
+    }
+    &::before {
+        top: -4px;
+    }
 `;
 
 const SpeedControl = styled.div`
@@ -45,19 +63,35 @@ const SpeedMarkChanger = styled.div`
 
 // const frameIntervalTime = 10;
 
-const Car = ({ floorHeight, carId }) => {
+const Car = ({ numberOfFloors, carId }) => {
+    const [carPosition, setCcarPosition] = useState(0);
+    const { start } = animation(numberOfFloors);
+
+    const getState = state => {
+        console.log(carId + " " + state);
+    };
+    const getPosition = postion => {
+        setCcarPosition(postion);
+    };
+
     return (
         <CarStyled
-            floorHeight={floorHeight}
-            positionLetOnLoad={-4}
+            numberOfFloors={numberOfFloors}
             style={{
-                transform: `translateY(-${0}px)`
+                transform: `translateY(calc(-${carPosition}%))`
             }}
         >
+            <button
+                onClick={() => {
+                    start(carId + 1, getState, getPosition);
+                }}
+            >
+                start
+            </button>
             <SpeedControl speed={0}>
                 <SpeedMarkChanger speed={0} />
             </SpeedControl>
-            <p>T: {String("target")}</p>
+            <p>T: {String("t")}</p>
             <p>Now: {"-"}</p>
         </CarStyled>
     );

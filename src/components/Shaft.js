@@ -5,22 +5,33 @@ import Car from "./Car";
 const CarShaftStyled = styled.div`
     background: #777;
     width: ${props => props.carWidth}%;
-    border-width: 0 1px 4px 1px;
-    border-style: solid;
     position: relative;
+    display: flex;
+    align-items: flex-end;
+    &::before,
+    &::after {
+        display: block;
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background: #222;
+        content: "";
+    }
+    &::after {
+        bottom: 0;
+    }
+    &::before {
+        top: 0;
+    }
 `;
 
-const Shaft = ({ floorHeight, numberOfCars, carWidth, numberOfFloors }) => {
+const Shaft = ({ numberOfCars, carWidth, numberOfFloors }) => {
     const renderCars = () => {
         const arr = [];
         for (let i = 0; i < numberOfCars; i++) {
             arr.push(
                 <CarShaftStyled key={i} carWidth={carWidth}>
-                    <Car
-                        floorHeight={floorHeight}
-                        carId={i}
-                        numberOfFloors={numberOfFloors}
-                    />
+                    <Car carId={i} numberOfFloors={numberOfFloors} />
                 </CarShaftStyled>
             );
         }
