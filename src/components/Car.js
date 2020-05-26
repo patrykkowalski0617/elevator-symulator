@@ -65,13 +65,13 @@ const SpeedMarkChanger = styled.div`
 
 const Car = ({ numberOfFloors, carId }) => {
     const [carPosition, setCcarPosition] = useState(0);
-    const { start } = animation(numberOfFloors);
+    const { start } = animation(numberOfFloors, 15);
 
-    const getState = state => {
+    const getCurrentFloor = state => {
         console.log(carId + " " + state);
     };
-    const getPosition = postion => {
-        setCcarPosition(postion);
+    const getPosition = position => {
+        setCcarPosition(position);
     };
 
     return (
@@ -83,7 +83,7 @@ const Car = ({ numberOfFloors, carId }) => {
         >
             <button
                 onClick={() => {
-                    start(carId + 1, getState, getPosition);
+                    start(carId + 1, 0, getCurrentFloor, getPosition);
                 }}
             >
                 start

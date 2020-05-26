@@ -1,16 +1,16 @@
-export default function animation(numberOfFloors) {
-    const frameTime = 15;
-    let position = 0;
-    let state = "state";
-    const frame = numberOfFloors => {
-        position++;
-    };
+export default function animation(frameTime) {
+    const start = (targetFloor, currentFloor, getCurrentFloor, getPosition) => {
+        const frame = () => {
+            position++;
+        };
+        let position = 0;
+        let _currentFloor = currentFloor;
+        let intervalId;
 
-    const start = (targetFloor, getState, getPosition) => {
-        const intervalId = setInterval(() => {
-            frame(numberOfFloors);
+        intervalId = setInterval(() => {
+            frame();
             if (position % 100 === 0) {
-                getState(state);
+                getCurrentFloor(_currentFloor);
             }
             getPosition(position);
 
