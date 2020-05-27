@@ -1,6 +1,6 @@
 import animation from "./animation";
 
-const { start } = animation(15, 1);
+const { start } = animation(15);
 
 jest.useFakeTimers();
 
