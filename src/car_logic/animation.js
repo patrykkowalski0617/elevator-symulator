@@ -1,15 +1,13 @@
 export default function animation(frameTime) {
     const start = (targetFloor, currentFloor, getCurrentFloor, getPosition) => {
-        const frame = () => {
-            position++;
-        };
         let position = 0;
         let _currentFloor = currentFloor;
         let intervalId;
 
         intervalId = setInterval(() => {
-            frame();
+            position++;
             if (position % 100 === 0) {
+                _currentFloor++;
                 getCurrentFloor(_currentFloor);
             }
             getPosition(position);
