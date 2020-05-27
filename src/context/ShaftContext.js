@@ -8,7 +8,7 @@ const ShaftContextProvider = props => {
     const initArr = val => Array(numberOfCars).fill(val);
 
     // next floor on way or floor that has been just reached, but not floor which has been just left
-    const [allCarsCurrentFloor, setAllCarsCurrentFloor] = useState(initArr(4));
+    const [allCarsCurrentFloor, setAllCarsCurrentFloor] = useState(initArr(0));
     // ready, go-up, go-down, door-open
     const [allCarsState, setAllCarsState] = useState(initArr("ready"));
     const [allCarsFloorAssignments, setAllCarsFloorAssignments] = useState(
@@ -58,15 +58,13 @@ const ShaftContextProvider = props => {
         <ShaftContext.Provider
             value={{
                 allCarsCurrentFloor,
-                setAllCarsCurrentFloor,
+                updateCarCurrentFloor,
+                allCarsFloorAssignments,
                 addCarFloorAssignment,
                 removeCarFloorAssignment,
                 allCarsState,
                 setAllCarsState,
-                updateCarState,
-                allCarsFloorAssignments,
-                setAllCarsFloorAssignments,
-                updateCarCurrentFloor
+                updateCarState
             }}
         >
             {props.children}

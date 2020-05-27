@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-// import { ShaftContext } from "../context/ShaftContext";
+import { ShaftContext } from "../context/ShaftContext";
 import { animation } from "../car_logic";
 
 const CarStyled = styled.div`
@@ -64,16 +64,18 @@ const SpeedMarkChanger = styled.div`
 // const frameIntervalTime = 10;
 
 const Car = ({ numberOfFloors, carId }) => {
-    const [carPosition, setCcarPosition] = useState(0);
+    const { updateCarCurrentFloor, allCarsCurrentFloor } = useContext(
+        ShaftContext
+    );
+    const [carPosition, setCarPosition] = useState(0);
     const { start } = animation(numberOfFloors, 15);
 
-    const getCurrentFloor = state => {
-        console.log(carId + " " + state);
-    };
     const getPosition = position => {
-        setCcarPosition(position);
+        setCarPosition(position);
     };
-
+    const getCurrentFloor = currentFloor => {
+        updateCarCurrentFloor(carId, currentFloor);
+    };
     return (
         <CarStyled
             numberOfFloors={numberOfFloors}
@@ -92,7 +94,7 @@ const Car = ({ numberOfFloors, carId }) => {
                 <SpeedMarkChanger speed={0} />
             </SpeedControl>
             <p>T: {String("t")}</p>
-            <p>Now: {"-"}</p>
+            <p>Now: {allCarsCurrentFloor[carId]}</p>
         </CarStyled>
     );
 };

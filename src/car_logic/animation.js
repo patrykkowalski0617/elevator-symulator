@@ -6,7 +6,10 @@ export default function animation(frameTime) {
 
         intervalId = setInterval(() => {
             position++;
-            if (position % 100 === 0) {
+            if (
+                position === 1 ||
+                (position % 100 === 0 && position !== targetFloor * 100)
+            ) {
                 _currentFloor++;
                 getCurrentFloor(_currentFloor);
             }
