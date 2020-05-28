@@ -1,13 +1,13 @@
-export default function animation(frameTime) {
+export default function animation(frameTime = 15) {
     const start = (targetFloor, currentFloor, getCurrentFloor, getPosition) => {
         let position = 0;
         let _currentFloor = currentFloor;
         let intervalId;
 
-        intervalId = setInterval(() => {
+        const intervalFrame = () => {
             position++;
             if (
-                position === 1 ||
+                position === targetFloor ||
                 (position % 100 === 0 && position !== targetFloor * 100)
             ) {
                 _currentFloor++;
@@ -20,6 +20,11 @@ export default function animation(frameTime) {
             if (position >= target) {
                 clearInterval(intervalId);
             }
+        };
+
+        intervalFrame();
+        intervalId = setInterval(() => {
+            intervalFrame();
         }, frameTime);
     };
 

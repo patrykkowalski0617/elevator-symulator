@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Car from "./Car";
 
-const CarShaftStyled = styled.div`
+export const CarShaftStyled = styled.div`
     background: #777;
     width: ${props => props.carWidth}%;
     position: relative;

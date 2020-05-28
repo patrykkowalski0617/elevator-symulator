@@ -29,7 +29,6 @@ exports[`Car - render and match snapshot 1`] = `
   </p>
   <p>
     Now: 
-    -
   </p>
 </div>
 `;

@@ -68,7 +68,7 @@ const Car = ({ numberOfFloors, carId }) => {
         ShaftContext
     );
     const [carPosition, setCarPosition] = useState(0);
-    const { start } = animation(15);
+    const { start } = animation();
 
     const getPosition = position => {
         setCarPosition(position);
