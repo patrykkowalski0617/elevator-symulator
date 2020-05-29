@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Car from "./Car";
 
-export const CarShaftStyled = styled.div`
+export const ShaftStyled = styled.div`
     background: #777;
     width: ${props => props.carWidth}%;
     position: relative;
@@ -30,9 +30,9 @@ const Shaft = ({ numberOfCars, carWidth, numberOfFloors }) => {
         const arr = [];
         for (let i = 0; i < numberOfCars; i++) {
             arr.push(
-                <CarShaftStyled key={i} carWidth={carWidth}>
+                <ShaftStyled key={i} carWidth={carWidth}>
                     <Car carId={i} numberOfFloors={numberOfFloors} />
-                </CarShaftStyled>
+                </ShaftStyled>
             );
         }
 

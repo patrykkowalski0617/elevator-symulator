@@ -1,5 +1,5 @@
 import React from "react";
-import Shaft, { CarShaftStyled } from "./Shaft";
+import Shaft, { ShaftStyled } from "./Shaft";
 import renderer from "react-test-renderer";
 import { render, cleanup } from "@testing-library/react";
 
@@ -9,10 +9,10 @@ test("Shaft - render and match snapshot", () => {
 });
 
 afterEach(cleanup);
-test("Shaft has no vertical border, padding or margin", () => {
-    render(<CarShaftStyled></CarShaftStyled>);
+test("Shaft has no vertical border, padding and margin", () => {
+    render(<ShaftStyled></ShaftStyled>);
 
-    const className = CarShaftStyled.styledComponentId;
+    const className = ShaftStyled.styledComponentId;
     const ShaftRoots = document.getElementsByClassName(className)[0];
     const style = window.getComputedStyle(ShaftRoots);
 
