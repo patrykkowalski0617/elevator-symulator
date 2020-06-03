@@ -1,32 +1,41 @@
-export default function animation(frameTime = 15) {
-    const start = (targetFloor, currentFloor, getCurrentFloor, getPosition) => {
-        let position = 0;
-        let _currentFloor = currentFloor;
-        let intervalId;
+export default function animation(
+    getCarState,
+    getCurrentFloor,
+    getPosition,
+    updateCarState,
+    setIntervalId,
+    frameTime = 15
+) {
+    const start = (
+        targetFloor,
+        currentFloor,
+        currentPosition,
+        intervalId,
+        carId
+    ) => {
+        let _intervalId;
+        clearInterval(intervalId);
+        // it suppose to update proper state depending on move direction
+        updateCarState(carId, "go-up");
+        let position = currentPosition;
+        let floor = currentFloor;
+        const target = targetFloor * 100;
 
-        const intervalFrame = () => {
+        _intervalId = setInterval(() => {
             position++;
+            getPosition(position);
             if (
                 position === targetFloor ||
                 (position % 100 === 0 && position !== targetFloor * 100)
             ) {
-                _currentFloor++;
-                getCurrentFloor(_currentFloor);
+                floor++;
+                getCurrentFloor(floor);
             }
-            getPosition(position);
-
-            const target = targetFloor * 100;
-
             if (position >= target) {
-                clearInterval(intervalId);
+                clearInterval(_intervalId);
             }
-        };
-
-        intervalFrame();
-        intervalId = setInterval(() => {
-            intervalFrame();
         }, frameTime);
+        setIntervalId(_intervalId);
     };
-
     return { start };
 }

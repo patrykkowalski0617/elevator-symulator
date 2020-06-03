@@ -1,11 +1,11 @@
 import Easing from "easing";
 
-// solution is not proper, but works
+// solution is not proper (but works)
 // rel = frames / distance (avarage relation frames to got distance)
 // for example:
 // const frames = 50
 // const distance = Easing(frames, "quadratic").reduce((total, num) => total + num)
-// frames / distance usually is equal to around 2.99031970597443
+// frames / distance usually is equal around 2.99031970597443
 
 export const speedUp = distancePx => {
     const rel = 2.99031970597443;

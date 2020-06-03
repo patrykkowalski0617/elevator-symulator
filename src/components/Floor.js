@@ -19,6 +19,11 @@ const CarLight = styled.div`
     border-radius: 100%;
 `;
 
+const AssignedCar = styled.div`
+    float: right;
+    margin: 2px 7px;
+`;
+
 export default function Floor({ floorNumber, numberOfFloors, role, title }) {
     const {
         allCarsState,
@@ -28,6 +33,7 @@ export default function Floor({ floorNumber, numberOfFloors, role, title }) {
 
     const [waitingForCar, setWaitingForCar] = useState(false);
     const [noCar, setNoCar] = useState(false);
+    const [assignedCar, setAssignedCar] = useState("");
 
     const call = () => {
         setWaitingForCar(true);
@@ -40,6 +46,7 @@ export default function Floor({ floorNumber, numberOfFloors, role, title }) {
 
             if (carId !== null) {
                 addCarFloorAssignment(carId, floorNumber);
+                setAssignedCar(carId);
             } else {
                 setNoCar(true);
             }
@@ -57,12 +64,14 @@ export default function Floor({ floorNumber, numberOfFloors, role, title }) {
                     >
                         Call car
                     </button>
-                    <button data-floor-number={floorNumber} onClick={() => {}}>
-                        Reset
-                    </button>
                 </>
             ) : null}
-            {waitingForCar ? <CarLight></CarLight> : null}
+            {waitingForCar ? (
+                <>
+                    <CarLight></CarLight>
+                    <AssignedCar>{assignedCar}</AssignedCar>
+                </>
+            ) : null}
             {role === "exit-floor" ? (
                 <>
                     <p>{floorNumber}</p>

@@ -2,10 +2,10 @@
 
 exports[`Building - render and match snapshot 1`] = `
 <div
-  className="sc-Axmtr bVVBwG"
+  className="sc-AxheI diWqdR"
 >
   <div
-    className="sc-AxiKw kyKEfW"
+    className="sc-AxhCb hJpnPK"
     role="enter-floor"
   >
     <div
@@ -18,12 +18,6 @@ exports[`Building - render and match snapshot 1`] = `
       >
         Call car
       </button>
-      <button
-        data-floor-number={9}
-        onClick={[Function]}
-      >
-        Reset
-      </button>
     </div>
     <div
       className="sc-AxjAm cEScls"
@@ -34,12 +28,6 @@ exports[`Building - render and match snapshot 1`] = `
         style={null}
       >
         Call car
-      </button>
-      <button
-        data-floor-number={8}
-        onClick={[Function]}
-      >
-        Reset
       </button>
     </div>
     <div
@@ -52,12 +40,6 @@ exports[`Building - render and match snapshot 1`] = `
       >
         Call car
       </button>
-      <button
-        data-floor-number={7}
-        onClick={[Function]}
-      >
-        Reset
-      </button>
     </div>
     <div
       className="sc-AxjAm cEScls"
@@ -68,12 +50,6 @@ exports[`Building - render and match snapshot 1`] = `
         style={null}
       >
         Call car
-      </button>
-      <button
-        data-floor-number={6}
-        onClick={[Function]}
-      >
-        Reset
       </button>
     </div>
     <div
@@ -86,12 +62,6 @@ exports[`Building - render and match snapshot 1`] = `
       >
         Call car
       </button>
-      <button
-        data-floor-number={5}
-        onClick={[Function]}
-      >
-        Reset
-      </button>
     </div>
     <div
       className="sc-AxjAm cEScls"
@@ -102,12 +72,6 @@ exports[`Building - render and match snapshot 1`] = `
         style={null}
       >
         Call car
-      </button>
-      <button
-        data-floor-number={4}
-        onClick={[Function]}
-      >
-        Reset
       </button>
     </div>
     <div
@@ -120,12 +84,6 @@ exports[`Building - render and match snapshot 1`] = `
       >
         Call car
       </button>
-      <button
-        data-floor-number={3}
-        onClick={[Function]}
-      >
-        Reset
-      </button>
     </div>
     <div
       className="sc-AxjAm cEScls"
@@ -136,12 +94,6 @@ exports[`Building - render and match snapshot 1`] = `
         style={null}
       >
         Call car
-      </button>
-      <button
-        data-floor-number={2}
-        onClick={[Function]}
-      >
-        Reset
       </button>
     </div>
     <div
@@ -154,12 +106,6 @@ exports[`Building - render and match snapshot 1`] = `
       >
         Call car
       </button>
-      <button
-        data-floor-number={1}
-        onClick={[Function]}
-      >
-        Reset
-      </button>
     </div>
     <div
       className="sc-AxjAm cEScls"
@@ -171,86 +117,58 @@ exports[`Building - render and match snapshot 1`] = `
       >
         Call car
       </button>
-      <button
-        data-floor-number={0}
-        onClick={[Function]}
-      >
-        Reset
-      </button>
     </div>
   </div>
   <div
-    className="sc-AxheI kVJGRi"
+    className="sc-AxgMl doKRFk"
   >
     <div
-      className="sc-AxhCb bXgSMk"
+      className="sc-AxhUy jREPaF"
       style={
         Object {
           "transform": "translateY(calc(-0%))",
         }
       }
     >
-      <button
-        onClick={[Function]}
-      >
-        start
-      </button>
-      <div
-        className="sc-AxhUy ZMmr"
-        speed={0}
-      >
-        <div
-          className="sc-AxgMl jwFsLE"
-          speed={0}
-        />
-      </div>
       <p>
-        T: 
-        t
+        C: 
+        0
       </p>
       <p>
-        Now: 
+        T: 
+      </p>
+      <p>
+        N: 
         0
       </p>
     </div>
   </div>
   <div
-    className="sc-AxheI kVJGRi"
+    className="sc-AxgMl doKRFk"
   >
     <div
-      className="sc-AxhCb bXgSMk"
+      className="sc-AxhUy jREPaF"
       style={
         Object {
           "transform": "translateY(calc(-0%))",
         }
       }
     >
-      <button
-        onClick={[Function]}
-      >
-        start
-      </button>
-      <div
-        className="sc-AxhUy ZMmr"
-        speed={0}
-      >
-        <div
-          className="sc-AxgMl jwFsLE"
-          speed={0}
-        />
-      </div>
       <p>
-        T: 
-        t
+        C: 
+        1
       </p>
       <p>
-        Now: 
+        T: 
+      </p>
+      <p>
+        N: 
         0
       </p>
     </div>
   </div>
   <div
-    className="sc-AxiKw kyKEfW"
+    className="sc-AxhCb hJpnPK"
     role="exit-floor"
   >
     <div

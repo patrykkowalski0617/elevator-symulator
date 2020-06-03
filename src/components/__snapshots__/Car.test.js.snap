@@ -9,26 +9,14 @@ exports[`Car - render and match snapshot 1`] = `
     }
   }
 >
-  <button
-    onClick={[Function]}
-  >
-    start
-  </button>
-  <div
-    className="sc-AxirZ fhuDLq"
-    speed={0}
-  >
-    <div
-      className="sc-AxiKw hvHYkj"
-      speed={0}
-    />
-  </div>
   <p>
-    T: 
-    t
+    C: 
   </p>
   <p>
-    Now: 
+    T: 
+  </p>
+  <p>
+    N: 
   </p>
 </div>
 `;

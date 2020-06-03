@@ -1,5 +1,5 @@
 // This part of code is supposed to be run
-// after ShaftContext is updating allCarsFloorAssignments by addCarFloorAssignment
+// after ShaftContext update allCarsFloorAssignments by addCarFloorAssignment
 
 const carTarget = (allCarsFloorAssignments, carId) => {
     let carFloorAssignments, target;
