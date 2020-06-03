@@ -4,7 +4,7 @@ export default function animation(
     getPosition,
     updateCarState,
     setIntervalId,
-    frameTime = 15
+    frameTime = 10
 ) {
     const start = (
         targetFloor,

@@ -44,7 +44,7 @@ export default function Floor({ floorNumber, numberOfFloors, role, title }) {
                 floorNumber
             );
 
-            if (carId !== null) {
+            if (carId >= 0) {
                 addCarFloorAssignment(carId, floorNumber);
                 setAssignedCar(carId);
             } else {
