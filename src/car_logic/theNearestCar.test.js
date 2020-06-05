@@ -1,6 +1,6 @@
 import theNearestCar, { distanceToAvailableCars } from "./theNearestCar";
 
-const distanceToAvailableCarsCases = [
+const cases = [
     {
         floorNumber: 7,
         allCarsCurrentFloor: [0, 0],
@@ -16,7 +16,7 @@ const distanceToAvailableCarsCases = [
     },
     {
         floorNumber: 7,
-        allCarsCurrentFloor: [7, 7],
+        allCarsCurrentFloor: [[7], [7]],
         allCarsState: ["ready", "ready"],
         allCarsFloorAssignments: [[], []],
         expectedBy: {
@@ -29,7 +29,7 @@ const distanceToAvailableCarsCases = [
     },
     {
         floorNumber: 7,
-        allCarsCurrentFloor: [9, 9],
+        allCarsCurrentFloor: [[9], [9]],
         allCarsState: ["ready", "ready"],
         allCarsFloorAssignments: [[], []],
         expectedBy: {
@@ -42,7 +42,7 @@ const distanceToAvailableCarsCases = [
     },
     {
         floorNumber: 7,
-        allCarsCurrentFloor: [0, 0],
+        allCarsCurrentFloor: [[0], [0]],
         allCarsState: ["go-down", "go-up"],
         allCarsFloorAssignments: [[], []],
         expectedBy: {
@@ -52,7 +52,7 @@ const distanceToAvailableCarsCases = [
     },
     {
         floorNumber: 7,
-        allCarsCurrentFloor: [5, 0],
+        allCarsCurrentFloor: [[5], [0]],
         allCarsState: ["go-down", "go-up"],
         allCarsFloorAssignments: [[2], [9]],
         expectedBy: {
@@ -62,86 +62,12 @@ const distanceToAvailableCarsCases = [
     },
     {
         floorNumber: 7,
-        allCarsCurrentFloor: [7, 9],
+        allCarsCurrentFloor: [[7], [9]],
+        allCarsFloorAssignments: [[], []],
         allCarsState: ["go-down", "go-up"],
         expectedBy: {
             _distanceToAvailableCars: [],
             _theNearestCar: -1
-        }
-    }
-];
-
-const theNearestCarCases = [
-    {
-        floorNumber: "z",
-        allCarsCurrentFloor: [5, 0],
-        allCarsState: ["go-down", "go-down"],
-        expectedBy: {
-            _theNearestCar: undefined
-        }
-    },
-    {
-        floorNumber: 7,
-        allCarsCurrentFloor: [],
-        allCarsState: ["go-down", "go-down"],
-        expectedBy: {
-            _theNearestCar: undefined
-        }
-    },
-    {
-        floorNumber: 7,
-        allCarsCurrentFloor: [5, 0],
-        allCarsState: [],
-        expectedBy: {
-            _theNearestCar: undefined
-        }
-    },
-    {
-        floorNumber: 7,
-        allCarsCurrentFloor: null,
-        allCarsState: [],
-        expectedBy: {
-            _theNearestCar: undefined
-        }
-    },
-    {
-        floorNumber: 7,
-        allCarsCurrentFloor: undefined,
-        allCarsState: [],
-        expectedBy: {
-            _theNearestCar: undefined
-        }
-    },
-    {
-        floorNumber: 7,
-        allCarsCurrentFloor: [2, 9],
-        allCarsState: ["go-down", "go-up"],
-        expectedBy: {
-            _theNearestCar: -1
-        }
-    },
-    {
-        floorNumber: 7,
-        allCarsCurrentFloor: [7, 9],
-        allCarsState: ["go-down", "go-up"],
-        expectedBy: {
-            _theNearestCar: -1
-        }
-    },
-    {
-        floorNumber: 7,
-        allCarsCurrentFloor: [6, 9],
-        allCarsState: ["go-up", "go-up"],
-        expectedBy: {
-            _theNearestCar: -1
-        }
-    },
-    {
-        floorNumber: 7,
-        allCarsCurrentFloor: [5, 9],
-        allCarsState: ["go-up", "go-up"],
-        expectedBy: {
-            _theNearestCar: 0
         }
     }
 ];
@@ -151,6 +77,7 @@ const distanceToAvailableCars_testFunction = (cases, casesDescription) => {
         const {
             allCarsState,
             allCarsCurrentFloor,
+            allCarsFloorAssignments,
             floorNumber,
             expectedBy: { _distanceToAvailableCars }
         } = cases[i];
@@ -161,6 +88,7 @@ const distanceToAvailableCars_testFunction = (cases, casesDescription) => {
                 const value = distanceToAvailableCars(
                     allCarsState,
                     allCarsCurrentFloor,
+                    allCarsFloorAssignments,
                     floorNumber
                 );
 
@@ -175,6 +103,7 @@ const theNearestCar_testFunction = (cases, casesDescription) => {
         const {
             allCarsState,
             allCarsCurrentFloor,
+            allCarsFloorAssignments,
             floorNumber,
             expectedBy: { _theNearestCar }
         } = cases[i];
@@ -183,6 +112,7 @@ const theNearestCar_testFunction = (cases, casesDescription) => {
             const value = theNearestCar(
                 allCarsState,
                 allCarsCurrentFloor,
+                allCarsFloorAssignments,
                 floorNumber
             );
 
@@ -191,12 +121,5 @@ const theNearestCar_testFunction = (cases, casesDescription) => {
     }
 };
 
-distanceToAvailableCars_testFunction(
-    distanceToAvailableCarsCases,
-    "distanceToAvailableCarsCases"
-);
-theNearestCar_testFunction(
-    distanceToAvailableCarsCases,
-    "distanceToAvailableCarsCases"
-);
-theNearestCar_testFunction(theNearestCarCases, "theNearestCarCases");
+distanceToAvailableCars_testFunction(cases, "distanceToAvailableCarsCases");
+theNearestCar_testFunction(cases, "theNearestCarCases");

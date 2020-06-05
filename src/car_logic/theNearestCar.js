@@ -1,9 +1,11 @@
 // This part of code is supposed to be run
 // before ShaftContext is updating allCarsFloorAssignments by addCarFloorAssignment
+import { carTarget } from "./";
 
 export const distanceToAvailableCars = (
     allCarsState,
     allCarsCurrentFloor,
+    allCarsFloorAssignments,
     floorNumber,
     tolerance = 1 // number of floors between floorNumber and carCurrentFloor that is acceptable to asign car to floor
 ) => {
@@ -21,11 +23,18 @@ export const distanceToAvailableCars = (
             carCurrentFloor = allCarsCurrentFloor[carId];
             distance = Math.abs(floorNumber - carCurrentFloor); // Math.abs - make number positive
 
+            const currentCarTarget = carTarget(
+                allCarsFloorAssignments[carId],
+                allCarsState[carId]
+            );
+
             if (
                 carState === "ready" ||
                 (carState === "go-up" &&
+                    floorNumber < currentCarTarget &&
                     carCurrentFloor + tolerance < floorNumber) ||
                 (carState === "go-down" &&
+                    floorNumber > currentCarTarget &&
                     carCurrentFloor - tolerance > floorNumber)
             ) {
                 distanceToAvailableCarsArr.push({ carId, distance });
@@ -40,6 +49,7 @@ export const distanceToAvailableCars = (
 const theNearestCar = (
     allCarsState,
     allCarsCurrentFloor,
+    allCarsFloorAssignments,
     floorNumber,
     tolerance
 ) => {
@@ -51,6 +61,7 @@ const theNearestCar = (
         const distanceToCars = distanceToAvailableCars(
             allCarsState,
             allCarsCurrentFloor,
+            allCarsFloorAssignments,
             floorNumber,
             tolerance
         );

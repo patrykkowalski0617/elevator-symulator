@@ -9,7 +9,18 @@ exports[`Building - render and match snapshot 1`] = `
     role="enter-floor"
   >
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
+    >
+      <button
+        data-floor-number={10}
+        onClick={[Function]}
+        style={null}
+      >
+        Call car
+      </button>
+    </div>
+    <div
+      className="sc-AxjAm brxPLV"
     >
       <button
         data-floor-number={9}
@@ -20,7 +31,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <button
         data-floor-number={8}
@@ -31,7 +42,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <button
         data-floor-number={7}
@@ -42,7 +53,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <button
         data-floor-number={6}
@@ -53,7 +64,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <button
         data-floor-number={5}
@@ -64,7 +75,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <button
         data-floor-number={4}
@@ -75,7 +86,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <button
         data-floor-number={3}
@@ -86,7 +97,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <button
         data-floor-number={2}
@@ -97,7 +108,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <button
         data-floor-number={1}
@@ -108,7 +119,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <button
         data-floor-number={0}
@@ -123,10 +134,10 @@ exports[`Building - render and match snapshot 1`] = `
     className="sc-AxgMl doKRFk"
   >
     <div
-      className="sc-AxhUy jREPaF"
+      className="sc-AxhUy gYmzoA"
       style={
         Object {
-          "transform": "translateY(calc(-0%))",
+          "transform": "translateY(calc(-500%))",
         }
       }
     >
@@ -139,7 +150,7 @@ exports[`Building - render and match snapshot 1`] = `
       </p>
       <p>
         C: 
-        0
+        5
       </p>
     </div>
   </div>
@@ -147,10 +158,10 @@ exports[`Building - render and match snapshot 1`] = `
     className="sc-AxgMl doKRFk"
   >
     <div
-      className="sc-AxhUy jREPaF"
+      className="sc-AxhUy gYmzoA"
       style={
         Object {
-          "transform": "translateY(calc(-0%))",
+          "transform": "translateY(calc(-500%))",
         }
       }
     >
@@ -163,7 +174,7 @@ exports[`Building - render and match snapshot 1`] = `
       </p>
       <p>
         C: 
-        0
+        5
       </p>
     </div>
   </div>
@@ -172,7 +183,23 @@ exports[`Building - render and match snapshot 1`] = `
     role="exit-floor"
   >
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
+    >
+      <p>
+        10
+      </p>
+      <input
+        style={
+          Object {
+            "height": "15px",
+            "width": "15px",
+          }
+        }
+        type="checkbox"
+      />
+    </div>
+    <div
+      className="sc-AxjAm brxPLV"
     >
       <p>
         9
@@ -188,7 +215,7 @@ exports[`Building - render and match snapshot 1`] = `
       />
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <p>
         8
@@ -204,7 +231,7 @@ exports[`Building - render and match snapshot 1`] = `
       />
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <p>
         7
@@ -220,7 +247,7 @@ exports[`Building - render and match snapshot 1`] = `
       />
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <p>
         6
@@ -236,7 +263,7 @@ exports[`Building - render and match snapshot 1`] = `
       />
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <p>
         5
@@ -252,7 +279,7 @@ exports[`Building - render and match snapshot 1`] = `
       />
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <p>
         4
@@ -268,7 +295,7 @@ exports[`Building - render and match snapshot 1`] = `
       />
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <p>
         3
@@ -284,7 +311,7 @@ exports[`Building - render and match snapshot 1`] = `
       />
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <p>
         2
@@ -300,7 +327,7 @@ exports[`Building - render and match snapshot 1`] = `
       />
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <p>
         1
@@ -316,7 +343,7 @@ exports[`Building - render and match snapshot 1`] = `
       />
     </div>
     <div
-      className="sc-AxjAm cEScls"
+      className="sc-AxjAm brxPLV"
     >
       <p>
         0
