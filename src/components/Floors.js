@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { BuildingContext } from "../context/BuildingContext";
 import styled from "styled-components";
 import Floor from "./Floor";
+import { floorColor } from "../style_mixin";
 
 const FloorWrapper = styled.div`
     width: ${props => props.floorWidth}%;
@@ -21,6 +22,7 @@ export default function Floors({ role, floorWidth }) {
                     role={role}
                     floorNumber={numberOfFloors - i - 1}
                     numberOfFloors={numberOfFloors}
+                    floorColor={floorColor(numberOfFloors, i)}
                 ></Floor>
             );
         }

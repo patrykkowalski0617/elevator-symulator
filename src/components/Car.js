@@ -2,12 +2,14 @@ import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { ShaftContext } from "../context/ShaftContext";
 import { carTarget, move } from "../car_logic";
+import { floorColor } from "../style_mixin";
 
 const CarStyled = styled.div`
     text-align: center;
     width: 100%;
     height: ${props => 100 / props.numberOfFloors}%;
-    background: #999;
+    background-color: ${props => props.carColor};
+    transition: 1s background-color;
     padding: 3px 0 0 0;
     border-style: solid;
     border-color: #222;
@@ -46,6 +48,9 @@ const Car = ({ numberOfFloors, carId }) => {
 
     const [carPosition, setCarPosition] = useState(currentFloor * 100);
     const [intervalId, setIntervalId] = useState(null);
+    const [carColor, setCarColor] = useState(
+        floorColor(numberOfFloors, numberOfFloors - currentFloor - 1)
+    );
 
     const getPosition = position => {
         setCarPosition(position);
@@ -56,6 +61,9 @@ const Car = ({ numberOfFloors, carId }) => {
 
     const getCurrentFloor = currentFloor => {
         updateCarCurrentFloor(carId, currentFloor);
+        setCarColor(
+            floorColor(numberOfFloors, numberOfFloors - currentFloor - 1)
+        );
     };
     const currentPosition = carPosition;
 
@@ -83,6 +91,7 @@ const Car = ({ numberOfFloors, carId }) => {
     return (
         <CarStyled
             numberOfFloors={numberOfFloors}
+            carColor={carColor}
             style={{
                 transform: `translateY(calc(-${carPosition}%))`
             }}

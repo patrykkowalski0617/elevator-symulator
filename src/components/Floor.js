@@ -1,13 +1,14 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { ShaftContext } from "../context/ShaftContext";
-import { theNearestCar, carTarget } from "../car_logic";
+import { theNearestCar } from "../car_logic";
 
 const FloorStyled = styled.div`
     height: ${props => 100 / props.numberOfFloors}%;
     border-style: solid;
     border-color: #222;
     border-width: 2px 0;
+    background-color: ${props => props.floorColor};
 `;
 
 const CarLight = styled.div`
@@ -24,7 +25,13 @@ const AssignedCar = styled.div`
     margin: 2px 7px;
 `;
 
-export default function Floor({ floorNumber, numberOfFloors, role, title }) {
+export default function Floor({
+    floorNumber,
+    numberOfFloors,
+    role,
+    title,
+    floorColor
+}) {
     const {
         allCarsState,
         allCarsCurrentFloor,
@@ -34,7 +41,7 @@ export default function Floor({ floorNumber, numberOfFloors, role, title }) {
 
     const [waitingForCar, setWaitingForCar] = useState(false);
     const [noCar, setNoCar] = useState(false);
-    const [assignedCar, setAssignedCar] = useState("");
+    const [assignedCar, setAssignedCar] = useState("none");
 
     const call = () => {
         setWaitingForCar(true);
@@ -56,7 +63,11 @@ export default function Floor({ floorNumber, numberOfFloors, role, title }) {
     };
 
     return (
-        <FloorStyled numberOfFloors={numberOfFloors} title={title}>
+        <FloorStyled
+            numberOfFloors={numberOfFloors}
+            title={title}
+            floorColor={floorColor}
+        >
             {role === "enter-floor" ? (
                 <>
                     <button
@@ -71,7 +82,7 @@ export default function Floor({ floorNumber, numberOfFloors, role, title }) {
             {waitingForCar ? (
                 <>
                     <CarLight></CarLight>
-                    <AssignedCar>{assignedCar}</AssignedCar>
+                    <AssignedCar>Assigned car: {assignedCar}</AssignedCar>
                 </>
             ) : null}
             {role === "exit-floor" ? (
