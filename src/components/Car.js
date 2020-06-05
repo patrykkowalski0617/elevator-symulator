@@ -8,13 +8,12 @@ const CarStyled = styled.div`
     text-align: center;
     width: 100%;
     height: ${props => 100 / props.numberOfFloors}%;
-    background-color: ${props => props.carColor};
-    transition: 1s background-color;
-    padding: 3px 0 0 0;
+    background-color: #999;
     border-style: solid;
     border-color: #222;
     border-width: 2px 1px;
     position: relative;
+    flex-wrap: wrap;
     margin: 0 1px;
     &::before,
     &::after {
@@ -32,6 +31,27 @@ const CarStyled = styled.div`
     &::before {
         top: -4px;
     }
+`;
+
+const Data = styled.p`
+    position: absolute;
+    text-align: center;
+    top: -20px;
+    height: 20px;
+    width: 100%;
+    font-size: 12px;
+    color: #fff;
+`;
+
+const Door = styled.div`
+    background-color: red;
+    width: ${props => (props.carState === "door-open" ? "0%; " : "50%")};
+    height: 100%;
+    transition: 1s 0.2s ease-in-out width, 1s linear background-color;
+    background-color: ${props => props.carColor};
+    left: ${props => (props.left ? "0" : "")};
+    right: ${props => (props.left ? "" : "0")};
+    position: absolute;
 `;
 
 const Car = ({ numberOfFloors, carId }) => {
@@ -88,17 +108,22 @@ const Car = ({ numberOfFloors, carId }) => {
         // eslint-disable-next-line
     }, [floorAssignments]);
 
+    useEffect(() => {
+        console.log(carState);
+    }, [carState]);
+
     return (
         <CarStyled
             numberOfFloors={numberOfFloors}
-            carColor={carColor}
             style={{
                 transform: `translateY(calc(-${carPosition}%))`
             }}
         >
-            <p>ID: {carId}</p>
-            <p>T: {floorAssignments ? floorAssignments[0] : ""}</p>
-            <p>C: {currentFloor}</p>
+            <Data>
+                C: {carId}, T: {floorAssignments ? floorAssignments[0] : ""}
+            </Data>
+            <Door left={true} carColor={carColor} carState={carState}></Door>
+            <Door carColor={carColor} carState={carState}></Door>
         </CarStyled>
     );
 };

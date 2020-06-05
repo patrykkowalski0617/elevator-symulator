@@ -49,7 +49,7 @@ export default function move(
                     floor--;
                 }
                 getCurrentFloor(floor);
-            } else if (position === targetFloor * 100) {
+            } else if (position + 1 === targetFloor * 100) {
                 getCarState("door-open");
             }
 
