@@ -39,6 +39,7 @@ export default function Floor({ floorNumber, numberOfFloors, role, title }) {
         setWaitingForCar(true);
         if (!waitingForCar) {
             const carId = theNearestCar(
+                // ["go-down", "ready"],
                 allCarsState,
                 allCarsCurrentFloor,
                 floorNumber

@@ -20,6 +20,7 @@ export const distanceToAvailableCars = (
             carState = allCarsState[carId];
             carCurrentFloor = allCarsCurrentFloor[carId];
             distance = Math.abs(floorNumber - carCurrentFloor); // Math.abs - make number positive
+
             if (
                 carState === "ready" ||
                 (carState === "go-up" &&

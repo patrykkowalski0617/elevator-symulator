@@ -1,14 +1,16 @@
 // This part of code is supposed to be run
 // after ShaftContext update allCarsFloorAssignments by addCarFloorAssignment
 
-const carTarget = (allCarsFloorAssignments, carId) => {
-    let carFloorAssignments, target;
-    if (typeof carId === "number") {
-        carFloorAssignments = allCarsFloorAssignments[carId].sort(
-            (a, b) => a - b
-        );
-        target = carFloorAssignments[0];
+const carTarget = (floorAssignments, carState) => {
+    let target;
+    if (floorAssignments.length === 1) {
+        target = floorAssignments[0];
+    } else if (carState === "go-up") {
+        target = Math.min.apply(Math, floorAssignments);
+    } else if (carState === "go-down") {
+        target = Math.max.apply(Math, floorAssignments);
     }
+
     return target;
 };
 

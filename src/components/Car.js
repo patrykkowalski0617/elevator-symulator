@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { ShaftContext } from "../context/ShaftContext";
-import { carTarget as getCarTarget, animation } from "../car_logic";
+import { carTarget, move } from "../car_logic";
 
 const CarStyled = styled.div`
     text-align: center;
@@ -37,21 +37,15 @@ const Car = ({ numberOfFloors, carId }) => {
         updateCarCurrentFloor,
         updateCarState,
         allCarsCurrentFloor,
-        allCarsFloorAssignments
+        allCarsFloorAssignments,
+        allCarsState
     } = useContext(ShaftContext);
-    const [carPosition, setCarPosition] = useState(0);
-    const [carTargetStack, setCarTargetStack] = useState([]);
-    const [intervalId, setIntervalId] = useState(null);
+    const floorAssignments = allCarsFloorAssignments[carId];
+    const carState = allCarsState[carId];
+    const currentFloor = allCarsCurrentFloor[carId];
 
-    useEffect(() => {
-        const target = getCarTarget(allCarsFloorAssignments, carId);
-        if (target) {
-            setCarTargetStack(
-                [...carTargetStack, target].sort((a, b) => a - b)
-            );
-        }
-        // eslint-disable-next-line
-    }, [allCarsFloorAssignments]);
+    const [carPosition, setCarPosition] = useState(currentFloor * 100);
+    const [intervalId, setIntervalId] = useState(null);
 
     const getPosition = position => {
         setCarPosition(position);
@@ -59,46 +53,44 @@ const Car = ({ numberOfFloors, carId }) => {
     const getCarState = state => {
         updateCarState(carId, state);
     };
-    const targetFloor = carTargetStack[0];
-    const currentFloor = allCarsCurrentFloor[carId];
+
     const getCurrentFloor = currentFloor => {
         updateCarCurrentFloor(carId, currentFloor);
     };
     const currentPosition = carPosition;
 
     useEffect(() => {
-        const { start } = animation(
+        const targetFloor = carTarget(floorAssignments, carState);
+        const start = move(
             getCarState,
             getCurrentFloor,
             getPosition,
-            updateCarState,
             setIntervalId
         );
-        if (carTargetStack[0]) {
+        if (floorAssignments.length) {
+            const isContinuation = floorAssignments.length ? false : true;
             start(
                 targetFloor,
                 currentFloor,
                 currentPosition,
                 intervalId,
-                carId
+                isContinuation
             );
         }
         // eslint-disable-next-line
-    }, [carTargetStack[0]]);
+    }, [floorAssignments]);
 
     return (
-        <>
-            <CarStyled
-                numberOfFloors={numberOfFloors}
-                style={{
-                    transform: `translateY(calc(-${carPosition}%))`
-                }}
-            >
-                <p>C: {carId}</p>
-                <p>T: {carTargetStack[0]}</p>
-                <p>N: {allCarsCurrentFloor[carId]}</p>
-            </CarStyled>
-        </>
+        <CarStyled
+            numberOfFloors={numberOfFloors}
+            style={{
+                transform: `translateY(calc(-${carPosition}%))`
+            }}
+        >
+            <p>ID: {carId}</p>
+            <p>T: {floorAssignments ? floorAssignments[0] : ""}</p>
+            <p>C: {currentFloor}</p>
+        </CarStyled>
     );
 };
 

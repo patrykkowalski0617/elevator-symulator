@@ -131,14 +131,14 @@ exports[`Building - render and match snapshot 1`] = `
       }
     >
       <p>
-        C: 
+        ID: 
         0
       </p>
       <p>
         T: 
       </p>
       <p>
-        N: 
+        C: 
         0
       </p>
     </div>
@@ -155,14 +155,14 @@ exports[`Building - render and match snapshot 1`] = `
       }
     >
       <p>
-        C: 
+        ID: 
         1
       </p>
       <p>
         T: 
       </p>
       <p>
-        N: 
+        C: 
         0
       </p>
     </div>

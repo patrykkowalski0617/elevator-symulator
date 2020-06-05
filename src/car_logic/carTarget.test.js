@@ -1,39 +1,19 @@
 import carTarget from "./carTarget";
-import { standardCases } from "./_testCases";
+
+const cases = [
+    { floorAssignments: [0], carState: "ready", expectedResult: 0 },
+    { floorAssignments: [5, 2], carState: "go-up", expectedResult: 2 },
+    { floorAssignments: [5, 2], carState: "go-down", expectedResult: 5 }
+];
 
 const testFunction = (cases, casesDescription) => {
     for (let i = 0; i < cases.length; i++) {
-        // const i = 0;
-        const {
-            floorNumber,
-            expectedBy: { _theNearestCar, _carTarget }
-        } = cases[i];
-        let { allCarsFloorAssignments } = cases[i];
-
-        const carId = _theNearestCar;
-        // ShaftContext is updating allCarsFloorAssignments by addCarFloorAssignment
-        const addCarFloorAssignment = (carId, floorNumber) => {
-            if (carId !== null) {
-                const _allCarsFloorAssignments = allCarsFloorAssignments;
-                const carFloorAssignment = _allCarsFloorAssignments[carId];
-                const carFloorAssignmentUpdated = [
-                    ...carFloorAssignment,
-                    floorNumber
-                ];
-                _allCarsFloorAssignments.splice(
-                    carId,
-                    1,
-                    carFloorAssignmentUpdated
-                );
-                return [..._allCarsFloorAssignments];
-            }
-        };
-        allCarsFloorAssignments = addCarFloorAssignment(carId, floorNumber);
-        const value = carTarget(allCarsFloorAssignments, carId);
+        const { floorAssignments, carState, expectedResult } = cases[i];
+        const value = carTarget(floorAssignments, carState);
         test("_carTarget " + casesDescription + " case " + i, () => {
-            expect(value).toEqual(_carTarget);
+            expect(value).toEqual(expectedResult);
         });
     }
 };
 
-testFunction(standardCases, "standardCases");
+testFunction(cases, "carTarget");
