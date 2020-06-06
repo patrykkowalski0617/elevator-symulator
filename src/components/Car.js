@@ -94,8 +94,9 @@ const Car = ({ numberOfFloors, carId }) => {
             getPosition,
             setIntervalId
         );
+
+        const isContinuation = floorAssignments.length > 1 ? true : false;
         if (floorAssignments.length) {
-            const isContinuation = floorAssignments.length ? false : true;
             start(
                 targetFloor,
                 currentFloor,
