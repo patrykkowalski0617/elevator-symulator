@@ -78,7 +78,6 @@ const Car = ({ numberOfFloors, carId }) => {
     const getCarState = state => {
         updateCarState(carId, state);
     };
-
     const getCurrentFloor = currentFloor => {
         updateCarCurrentFloor(carId, currentFloor);
         setCarColor(
@@ -107,10 +106,6 @@ const Car = ({ numberOfFloors, carId }) => {
         }
         // eslint-disable-next-line
     }, [floorAssignments]);
-
-    useEffect(() => {
-        console.log(carState);
-    }, [carState]);
 
     return (
         <CarStyled

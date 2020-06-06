@@ -28,6 +28,8 @@ export default function move(
             if (!isContinuation) {
                 floor--;
             }
+        } else {
+            state = "door-open";
         }
         getCarState(state);
         getCurrentFloor(floor);
