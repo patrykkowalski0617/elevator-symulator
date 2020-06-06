@@ -18,13 +18,13 @@ const ShaftContextProvider = props => {
     const updateCarCurrentFloor = (carId, currentFloor) => {
         const _allCarsCurrentFloor = allCarsCurrentFloor;
         _allCarsCurrentFloor.splice(carId, 1, currentFloor);
-        setAllCarsCurrentFloor(_allCarsCurrentFloor);
+        setAllCarsCurrentFloor([..._allCarsCurrentFloor]);
     };
 
     const updateCarState = (carId, state) => {
         const _allCarsState = allCarsState;
         _allCarsState.splice(carId, 1, state);
-        setAllCarsState(_allCarsState);
+        setAllCarsState([..._allCarsState]);
     };
 
     const addCarFloorAssignment = (carId, floorNumber) => {

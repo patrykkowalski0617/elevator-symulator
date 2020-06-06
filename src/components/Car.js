@@ -107,6 +107,20 @@ const Car = ({ numberOfFloors, carId }) => {
         // eslint-disable-next-line
     }, [floorAssignments]);
 
+    useEffect(() => {
+        const repeater = () => {
+            // possibli in future it will not timeout
+            // but event inform that all passengers have got in
+            setTimeout(() => {
+                updateCarState(carId, "door-close");
+            }, 3000);
+        };
+        if (carState === "door-open") {
+            repeater();
+        }
+        // eslint-disable-next-line
+    }, [carState]);
+
     return (
         <CarStyled
             numberOfFloors={numberOfFloors}
