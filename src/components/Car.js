@@ -44,14 +44,17 @@ const Data = styled.p`
 `;
 
 const Door = styled.div`
-    background-color: red;
-    width: ${props => (props.carState === "door-open" ? "0%; " : "50%")};
+    width: ${props => (props.carState.includes("door-open") ? "0%; " : "50%")};
     height: 100%;
-    transition: 1s 0.2s ease-in-out width, 1s linear background-color;
+    transition: 1s 0.2s ease-in-out width, 0.5s linear background-color;
     background-color: ${props => props.carColor};
     left: ${props => (props.left ? "0" : "")};
     right: ${props => (props.left ? "" : "0")};
+    border: 0px solid rgba(0, 0, 0, 0.3);
+    border-left-width: ${props => (props.left ? "" : "0.5px")};
+    border-right-width: ${props => (props.left ? "0.5px" : "")};
     position: absolute;
+    /* opacity: 0.85; */
 `;
 
 const Car = ({ numberOfFloors, carId }) => {
@@ -60,7 +63,8 @@ const Car = ({ numberOfFloors, carId }) => {
         updateCarState,
         allCarsCurrentFloor,
         allCarsFloorAssignments,
-        allCarsState
+        allCarsState,
+        reset
     } = useContext(ShaftContext);
     const floorAssignments = allCarsFloorAssignments[carId];
     const carState = allCarsState[carId];
@@ -95,32 +99,20 @@ const Car = ({ numberOfFloors, carId }) => {
             setIntervalId
         );
 
-        const isContinuation = floorAssignments.length > 1 ? true : false;
-        if (floorAssignments.length) {
+        if (floorAssignments.length && !reset) {
+            const isContinuation = floorAssignments.length > 1 ? true : false;
+            console.log("carId", carId);
             start(
                 targetFloor,
                 currentFloor,
                 currentPosition,
+                carState,
                 intervalId,
                 isContinuation
             );
         }
         // eslint-disable-next-line
     }, [floorAssignments]);
-
-    useEffect(() => {
-        const repeater = () => {
-            // possibli in future it will not timeout
-            // but event inform that all passengers have got in
-            setTimeout(() => {
-                updateCarState(carId, "door-close");
-            }, 3000);
-        };
-        if (carState === "door-open") {
-            repeater();
-        }
-        // eslint-disable-next-line
-    }, [carState]);
 
     return (
         <CarStyled

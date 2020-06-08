@@ -9,60 +9,90 @@ export default function move(
         targetFloor,
         currentFloor,
         currentPosition,
+        carState,
         intervalId,
         isContinuation
     ) => {
-        let _intervalId;
-        clearInterval(intervalId);
-
-        // set immediately after start
-        let state = "";
+        console.log(
+            "start",
+            targetFloor,
+            currentFloor,
+            currentPosition,
+            carState,
+            intervalId,
+            isContinuation
+        );
+        let _intervalId = intervalId;
         let floor = currentFloor;
-        if (targetFloor > currentFloor) {
-            state = "go-up";
-            if (!isContinuation) {
-                floor++;
-            }
-        } else if (targetFloor < currentFloor) {
-            state = "go-down";
-            if (!isContinuation) {
-                floor--;
-            }
-        } else {
-            state = "door-open";
+        let state = carState;
+        let position = currentPosition;
+        const targetPosition = targetFloor * 100;
+        if (intervalId !== null) {
+            clearInterval(_intervalId);
         }
-        getCarState(state);
-        getCurrentFloor(floor);
+
+        // set immediately after start call
+        // when car is not moving
+        if (carState === "ready") {
+            // when targetFloor is not reached and it's above
+            if (targetFloor > currentFloor) {
+                state = "go-up";
+                if (!isContinuation) {
+                    floor++;
+                }
+            }
+            // when targetFloor is not reached and it's below
+            else if (targetFloor < currentFloor) {
+                state = "go-down";
+                if (!isContinuation) {
+                    floor--;
+                }
+            }
+            getCarState(state);
+            getCurrentFloor(floor);
+        } else {
+            console.log("_else");
+        }
 
         // set in each intrval
-        let position = currentPosition;
-        const target = targetFloor * 100;
         _intervalId = setInterval(() => {
-            if (state === "go-up") {
+            console.log(`interval ${_intervalId} iteration`);
+
+            // manage position
+            if (state.includes("go-up")) {
                 position++;
-            } else if (state === "go-down") {
+            } else if (state.includes("go-down")) {
                 position--;
             }
             getPosition(position);
+
+            // manage floor
             if (position !== targetFloor * 100 && position % 100 === 0) {
-                if (state === "go-up") {
+                if (state.includes("go-up")) {
                     floor++;
-                } else if (state === "go-down") {
+                } else if (state.includes("go-down")) {
                     floor--;
                 }
                 getCurrentFloor(floor);
-            } else if (position + 1 === targetFloor * 100) {
-                getCarState("door-open");
             }
 
-            if (position >= target && state === "go-up") {
-                clearInterval(_intervalId);
-            } else if (position <= target && state === "go-down") {
+            // manage door
+            if (position + 1 === targetFloor * 100) {
+                // getCarState(state + "-door-open");
+            }
+
+            // clear interval
+            if (
+                (position >= targetPosition && state.includes("go-up")) ||
+                (position <= targetPosition && state.includes("go-down"))
+            ) {
                 clearInterval(_intervalId);
             }
         }, frameTime);
 
-        setIntervalId(_intervalId);
+        if (!state.includes("door-open")) {
+            setIntervalId(_intervalId);
+        }
     };
     return start;
 }

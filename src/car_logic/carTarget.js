@@ -10,8 +10,9 @@ const carTarget = (floorAssignments, carState) => {
     } else if (carState === "go-down") {
         target = Math.max.apply(Math, floorAssignments);
     }
-
-    return target;
+    if (target !== Infinity && target !== -Infinity) {
+        return target;
+    }
 };
 
 export default carTarget;

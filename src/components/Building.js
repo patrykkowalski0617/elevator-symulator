@@ -7,7 +7,6 @@ import Shaft from "./Shaft";
 const BuildingStyled = styled.div`
     height: 90vh;
     width: 70vw;
-    overflow: hidden;
     max-width: 600px;
     min-width: 320px;
     margin: 5vh auto;
@@ -18,27 +17,6 @@ const BuildingStyled = styled.div`
     border-style: solid;
     border-width: 6px 4px;
 `;
-
-// const Roof = styled.div`
-//     padding-left: 50%;
-//     padding-bottom: 10%;
-//     position: absolute;
-//     right: 0;
-//     left: 0;
-//     z-index: -1000;
-//     &:after {
-//         content: "${props => props.text}";
-//         display: block;
-//         width: calc(100% - 25%);
-//         height: 0;
-//         margin-left: calc(-50% - 25% + 25px);
-//         border-left: 25% solid transparent;
-//         border-right: 25% solid transparent;
-//         border-bottom: 25% solid #992222;
-//         position: absolute;
-//         bottom: 100%;
-//     }
-// `;
 
 export default function Building() {
     const { numberOfFloors, numberOfCars } = useContext(BuildingContext);
@@ -52,7 +30,6 @@ export default function Building() {
     return (
         <>
             <BuildingStyled ref={buildingRef}>
-                {/* <Roof></Roof> */}
                 <Floors role={"enter-floor"} floorWidth={floorWidth}></Floors>
                 <Shaft
                     numberOfCars={numberOfCars}
