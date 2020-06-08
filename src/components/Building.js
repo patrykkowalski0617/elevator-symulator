@@ -28,16 +28,14 @@ export default function Building() {
     const floorWidth = (100 - carWidth * numberOfCars) / 2;
 
     return (
-        <>
-            <BuildingStyled ref={buildingRef}>
-                <Floors role={"enter-floor"} floorWidth={floorWidth}></Floors>
-                <Shaft
-                    numberOfCars={numberOfCars}
-                    carWidth={carWidth}
-                    numberOfFloors={numberOfFloors}
-                ></Shaft>
-                <Floors role={"exit-floor"} floorWidth={floorWidth}></Floors>
-            </BuildingStyled>
-        </>
+        <BuildingStyled ref={buildingRef}>
+            <Floors role={"enter-floor"} floorWidth={floorWidth}></Floors>
+            <Shaft
+                numberOfCars={numberOfCars}
+                carWidth={carWidth}
+                numberOfFloors={numberOfFloors}
+            ></Shaft>
+            <Floors role={"exit-floor"} floorWidth={floorWidth}></Floors>
+        </BuildingStyled>
     );
 }

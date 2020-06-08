@@ -3,12 +3,15 @@ import Floor from "./Floor";
 import renderer from "react-test-renderer";
 import ShaftContext from "../context/ShaftContext";
 import BuildingContext from "../context/BuildingContext";
+import FloorsContext from "../context/FloorsContext";
 
 test("Floor - render and match snapshot", () => {
     const tree = renderer.create(
         <BuildingContext>
             <ShaftContext>
-                <Floor></Floor>
+                <FloorsContext>
+                    <Floor></Floor>
+                </FloorsContext>
             </ShaftContext>
         </BuildingContext>
     );

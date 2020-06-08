@@ -5,6 +5,7 @@ const cases = [
         targetFloor: 9,
         currentFloor: 0,
         currentPosition: 0,
+        carState: "ready",
         intervalId: 0,
         isContinuation: false,
         expectedResults: {
@@ -16,6 +17,7 @@ const cases = [
         targetFloor: 0,
         currentFloor: 9,
         currentPosition: 900,
+        carState: "ready",
         intervalId: 0,
         isContinuation: false,
         expectedResults: {
@@ -27,6 +29,7 @@ const cases = [
         targetFloor: 0,
         currentFloor: 9,
         currentPosition: 900,
+        carState: "ready",
         intervalId: 0,
         isContinuation: true,
         expectedResults: {
@@ -40,9 +43,9 @@ const cases = [
 
 jest.useFakeTimers();
 
-const testFunction = (cases, casesDescription) => {
+const testFunction = cases => {
     for (let i = 0; i < cases.length; i++) {
-        test("move", done => {
+        test("move case " + i, done => {
             const getCarState = jest.fn(() => {
                 try {
                     done();
@@ -86,6 +89,7 @@ const testFunction = (cases, casesDescription) => {
                 targetFloor,
                 currentFloor,
                 currentPosition,
+                carState,
                 intervalId,
                 isContinuation,
                 expectedResults
@@ -95,6 +99,7 @@ const testFunction = (cases, casesDescription) => {
                 targetFloor,
                 currentFloor,
                 currentPosition,
+                carState,
                 intervalId,
                 isContinuation
             );

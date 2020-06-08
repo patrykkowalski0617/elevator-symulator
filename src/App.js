@@ -6,15 +6,13 @@ import FloorsContext from "./context/FloorsContext";
 
 function App() {
     return (
-        <>
-            <BuildingContext>
-                <ShaftContext>
-                    <FloorsContext>
-                        <Building></Building>
-                    </FloorsContext>
-                </ShaftContext>
-            </BuildingContext>
-        </>
+        <BuildingContext>
+            <ShaftContext>
+                <FloorsContext>
+                    <Building></Building>
+                </FloorsContext>
+            </ShaftContext>
+        </BuildingContext>
     );
 }
 

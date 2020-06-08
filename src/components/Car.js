@@ -44,13 +44,13 @@ const Data = styled.p`
 `;
 
 const Door = styled.div`
-    width: ${props => (props.carState.includes("door-open") ? "0%; " : "50%")};
+    width: ${props => (props.carState.includes("door-open") ? "10%; " : "50%")};
     height: 100%;
     transition: 1s 0.2s ease-in-out width, 0.5s linear background-color;
     background-color: ${props => props.carColor};
     left: ${props => (props.left ? "0" : "")};
     right: ${props => (props.left ? "" : "0")};
-    border: 0px solid rgba(0, 0, 0, 0.3);
+    border: 0px solid rgba(0, 0, 0, 0.1);
     border-left-width: ${props => (props.left ? "" : "0.5px")};
     border-right-width: ${props => (props.left ? "0.5px" : "")};
     position: absolute;
@@ -63,11 +63,9 @@ const Car = ({ numberOfFloors, carId }) => {
         updateCarState,
         allCarsCurrentFloor,
         allCarsFloorAssignments,
-        allCarsState,
-        reset
+        allCarsState
     } = useContext(ShaftContext);
     const floorAssignments = allCarsFloorAssignments[carId];
-    const carState = allCarsState[carId];
     const currentFloor = allCarsCurrentFloor[carId];
 
     const [carPosition, setCarPosition] = useState(currentFloor * 100);
@@ -75,12 +73,13 @@ const Car = ({ numberOfFloors, carId }) => {
     const [carColor, setCarColor] = useState(
         floorColor(numberOfFloors, numberOfFloors - currentFloor - 1)
     );
+    const [carState, setCarState] = useState(allCarsState[carId]);
 
     const getPosition = position => {
         setCarPosition(position);
     };
     const getCarState = state => {
-        updateCarState(carId, state);
+        setCarState(state);
     };
     const getCurrentFloor = currentFloor => {
         updateCarCurrentFloor(carId, currentFloor);
@@ -89,19 +88,22 @@ const Car = ({ numberOfFloors, carId }) => {
         );
     };
     const currentPosition = carPosition;
+    const targetFloor = carTarget(floorAssignments, carState);
+    const start = move(
+        getCarState,
+        getCurrentFloor,
+        getPosition,
+        setIntervalId
+    );
 
     useEffect(() => {
-        const targetFloor = carTarget(floorAssignments, carState);
-        const start = move(
-            getCarState,
-            getCurrentFloor,
-            getPosition,
-            setIntervalId
-        );
+        updateCarState(carId, carState);
+        // eslint-disable-next-line
+    }, [carState]);
 
-        if (floorAssignments.length && !reset) {
+    useEffect(() => {
+        if (floorAssignments.length) {
             const isContinuation = floorAssignments.length > 1 ? true : false;
-            console.log("carId", carId);
             start(
                 targetFloor,
                 currentFloor,

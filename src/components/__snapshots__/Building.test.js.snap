@@ -2,14 +2,14 @@
 
 exports[`Building - render and match snapshot 1`] = `
 <div
-  className="sc-AxheI diWqdR"
+  className="sc-AxmLO cQCEIO"
 >
   <div
     className="sc-AxhCb hJpnPK"
     role="enter-floor"
   >
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm ghBzSx"
     >
       <button
         data-floor-number={10}
@@ -20,7 +20,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm DgnVW"
     >
       <button
         data-floor-number={9}
@@ -31,7 +31,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm euAsXx"
     >
       <button
         data-floor-number={8}
@@ -42,7 +42,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm ljETuG"
     >
       <button
         data-floor-number={7}
@@ -53,7 +53,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm hIZreI"
     >
       <button
         data-floor-number={6}
@@ -64,7 +64,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm gQikiy"
     >
       <button
         data-floor-number={5}
@@ -75,7 +75,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm eYjwYl"
     >
       <button
         data-floor-number={4}
@@ -86,7 +86,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm hKmDaX"
     >
       <button
         data-floor-number={3}
@@ -97,7 +97,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm kdccyK"
     >
       <button
         data-floor-number={2}
@@ -108,7 +108,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm fwPPRP"
     >
       <button
         data-floor-number={1}
@@ -119,7 +119,7 @@ exports[`Building - render and match snapshot 1`] = `
       </button>
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm hOHeui"
     >
       <button
         data-floor-number={0}
@@ -131,51 +131,55 @@ exports[`Building - render and match snapshot 1`] = `
     </div>
   </div>
   <div
-    className="sc-AxgMl doKRFk"
+    className="sc-Axmtr bKgxpp"
   >
     <div
-      className="sc-AxhUy gYmzoA"
+      className="sc-AxhUy gqHuyY"
       style={
         Object {
-          "transform": "translateY(calc(-500%))",
+          "transform": "translateY(calc(-0%))",
         }
       }
     >
-      <p>
-        ID: 
-        0
-      </p>
-      <p>
-        T: 
-      </p>
-      <p>
+      <p
+        className="sc-AxgMl bJzgAf"
+      >
         C: 
-        5
+        0
+        , T: 
       </p>
+      <div
+        className="sc-AxheI bBMfsN"
+      />
+      <div
+        className="sc-AxheI iIQMNt"
+      />
     </div>
   </div>
   <div
-    className="sc-AxgMl doKRFk"
+    className="sc-Axmtr bKgxpp"
   >
     <div
-      className="sc-AxhUy gYmzoA"
+      className="sc-AxhUy gqHuyY"
       style={
         Object {
-          "transform": "translateY(calc(-500%))",
+          "transform": "translateY(calc(-0%))",
         }
       }
     >
-      <p>
-        ID: 
-        1
-      </p>
-      <p>
-        T: 
-      </p>
-      <p>
+      <p
+        className="sc-AxgMl bJzgAf"
+      >
         C: 
-        5
+        1
+        , T: 
       </p>
+      <div
+        className="sc-AxheI bBMfsN"
+      />
+      <div
+        className="sc-AxheI iIQMNt"
+      />
     </div>
   </div>
   <div
@@ -183,180 +187,81 @@ exports[`Building - render and match snapshot 1`] = `
     role="exit-floor"
   >
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm ghBzSx"
     >
       <p>
         10
       </p>
-      <input
-        style={
-          Object {
-            "height": "15px",
-            "width": "15px",
-          }
-        }
-        type="checkbox"
-      />
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm DgnVW"
     >
       <p>
         9
       </p>
-      <input
-        style={
-          Object {
-            "height": "15px",
-            "width": "15px",
-          }
-        }
-        type="checkbox"
-      />
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm euAsXx"
     >
       <p>
         8
       </p>
-      <input
-        style={
-          Object {
-            "height": "15px",
-            "width": "15px",
-          }
-        }
-        type="checkbox"
-      />
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm ljETuG"
     >
       <p>
         7
       </p>
-      <input
-        style={
-          Object {
-            "height": "15px",
-            "width": "15px",
-          }
-        }
-        type="checkbox"
-      />
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm hIZreI"
     >
       <p>
         6
       </p>
-      <input
-        style={
-          Object {
-            "height": "15px",
-            "width": "15px",
-          }
-        }
-        type="checkbox"
-      />
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm gQikiy"
     >
       <p>
         5
       </p>
-      <input
-        style={
-          Object {
-            "height": "15px",
-            "width": "15px",
-          }
-        }
-        type="checkbox"
-      />
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm eYjwYl"
     >
       <p>
         4
       </p>
-      <input
-        style={
-          Object {
-            "height": "15px",
-            "width": "15px",
-          }
-        }
-        type="checkbox"
-      />
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm hKmDaX"
     >
       <p>
         3
       </p>
-      <input
-        style={
-          Object {
-            "height": "15px",
-            "width": "15px",
-          }
-        }
-        type="checkbox"
-      />
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm kdccyK"
     >
       <p>
         2
       </p>
-      <input
-        style={
-          Object {
-            "height": "15px",
-            "width": "15px",
-          }
-        }
-        type="checkbox"
-      />
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm fwPPRP"
     >
       <p>
         1
       </p>
-      <input
-        style={
-          Object {
-            "height": "15px",
-            "width": "15px",
-          }
-        }
-        type="checkbox"
-      />
     </div>
     <div
-      className="sc-AxjAm brxPLV"
+      className="sc-AxjAm hOHeui"
     >
       <p>
         0
       </p>
-      <input
-        style={
-          Object {
-            "height": "15px",
-            "width": "15px",
-          }
-        }
-        type="checkbox"
-      />
     </div>
   </div>
 </div>

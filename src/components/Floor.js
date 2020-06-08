@@ -89,7 +89,7 @@ export default function Floor({
                             <CarLight></CarLight>
                             <AssignedCar>
                                 {assignedCar !== null
-                                    ? `Assigned car: ${assignedCar}`
+                                    ? `Car: ${assignedCar}`
                                     : ""}
                             </AssignedCar>
                         </>
@@ -97,15 +97,7 @@ export default function Floor({
                 </>
             ) : null}
 
-            {role === "exit-floor" ? (
-                <>
-                    <p>{floorNumber}</p>
-                    <input
-                        type="checkbox"
-                        style={{ width: "15px", height: "15px" }}
-                    />
-                </>
-            ) : null}
+            {role === "exit-floor" ? <p>{floorNumber}</p> : null}
         </FloorStyled>
     );
 }

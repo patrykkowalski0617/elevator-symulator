@@ -13,15 +13,6 @@ export default function move(
         intervalId,
         isContinuation
     ) => {
-        console.log(
-            "start",
-            targetFloor,
-            currentFloor,
-            currentPosition,
-            carState,
-            intervalId,
-            isContinuation
-        );
         let _intervalId = intervalId;
         let floor = currentFloor;
         let state = carState;
@@ -50,47 +41,43 @@ export default function move(
             }
             getCarState(state);
             getCurrentFloor(floor);
-        } else {
-            console.log("_else");
         }
 
         // set in each intrval
-        _intervalId = setInterval(() => {
-            console.log(`interval ${_intervalId} iteration`);
-
-            // manage position
-            if (state.includes("go-up")) {
-                position++;
-            } else if (state.includes("go-down")) {
-                position--;
-            }
-            getPosition(position);
-
-            // manage floor
-            if (position !== targetFloor * 100 && position % 100 === 0) {
-                if (state.includes("go-up")) {
-                    floor++;
-                } else if (state.includes("go-down")) {
-                    floor--;
-                }
-                getCurrentFloor(floor);
-            }
-
-            // manage door
-            if (position + 1 === targetFloor * 100) {
-                // getCarState(state + "-door-open");
-            }
-
-            // clear interval
-            if (
-                (position >= targetPosition && state.includes("go-up")) ||
-                (position <= targetPosition && state.includes("go-down"))
-            ) {
-                clearInterval(_intervalId);
-            }
-        }, frameTime);
-
         if (!state.includes("door-open")) {
+            _intervalId = setInterval(() => {
+                // manage position
+                if (state.includes("go-up")) {
+                    position++;
+                } else if (state.includes("go-down")) {
+                    position--;
+                }
+                getPosition(position);
+
+                // manage floor
+                if (position !== targetPosition && position % 100 === 0) {
+                    if (state.includes("go-up")) {
+                        floor++;
+                    } else if (state.includes("go-down")) {
+                        floor--;
+                    }
+                    getCurrentFloor(floor);
+                }
+
+                // manage door
+                if (position === targetPosition) {
+                    getCarState(state + "-door-open");
+                }
+
+                // clear interval
+                if (
+                    (position >= targetPosition && state.includes("go-up")) ||
+                    (position <= targetPosition && state.includes("go-down"))
+                ) {
+                    clearInterval(_intervalId);
+                }
+            }, frameTime);
+
             setIntervalId(_intervalId);
         }
     };
