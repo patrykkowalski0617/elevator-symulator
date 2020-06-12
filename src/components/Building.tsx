@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from "react";
+import React, { useContext } from "react";
 import { BuildingContext } from "../context/BuildingContext";
 import Floors from "./Floors";
 import styled from "styled-components";
@@ -18,17 +18,15 @@ const BuildingStyled = styled.div`
     border-width: 6px 4px;
 `;
 
-export default function Building() {
+const Building: React.FC = () => {
     const { numberOfFloors, numberOfCars } = useContext(BuildingContext);
 
-    const buildingRef = useRef();
-
     // Sizes
-    const carWidth = 10;
-    const floorWidth = (100 - carWidth * numberOfCars) / 2;
+    const carWidth: number = 10;
+    const floorWidth: number = (100 - carWidth * numberOfCars) / 2;
 
     return (
-        <BuildingStyled ref={buildingRef}>
+        <BuildingStyled>
             <Floors role={"enter-floor"} floorWidth={floorWidth}></Floors>
             <Shaft
                 numberOfCars={numberOfCars}
@@ -38,4 +36,6 @@ export default function Building() {
             <Floors role={"exit-floor"} floorWidth={floorWidth}></Floors>
         </BuildingStyled>
     );
-}
+};
+
+export default Building;

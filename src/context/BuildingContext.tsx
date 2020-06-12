@@ -1,8 +1,16 @@
 import React, { createContext, useState } from "react";
 
-export const BuildingContext = createContext();
+interface IContextProps {
+    numberOfFloors: number;
+    setNumberOfFloors: (n: number) => void;
+    numberOfCars: number;
+    setNnmberOfCars: (n: number) => void;
+    automotion: boolean;
+    setAutomotion: (b: boolean) => void;
+}
+export const BuildingContext = createContext({} as IContextProps);
 
-const BuildingContextProvider = props => {
+const BuildingContextProvider = (props: { children: React.ReactNode }) => {
     const [numberOfFloors, setNumberOfFloors] = useState(11);
     const howManyCars = Math.floor(numberOfFloors / 5);
     const [numberOfCars, setNnmberOfCars] = useState(howManyCars);
