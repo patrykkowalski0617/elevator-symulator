@@ -1,5 +1,21 @@
 import move from "./move";
 
+interface ICases {
+    length: number;
+    [index: number]: {
+        targetFloor: number;
+        currentFloor: number;
+        currentPosition: number;
+        carState: string;
+        intervalId: number;
+        isContinuation: boolean;
+        expectedResults: {
+            getCurrentFloor: number;
+            getPosition: number;
+        };
+    };
+}
+
 const cases = [
     {
         targetFloor: 9,
@@ -43,7 +59,7 @@ const cases = [
 
 jest.useFakeTimers();
 
-const testFunction = cases => {
+const testFunction = (cases: ICases) => {
     for (let i = 0; i < cases.length; i++) {
         test("move case " + i, done => {
             const getCarState = jest.fn(() => {
@@ -115,4 +131,4 @@ const testFunction = cases => {
     }
 };
 
-testFunction(cases, "move");
+testFunction(cases);

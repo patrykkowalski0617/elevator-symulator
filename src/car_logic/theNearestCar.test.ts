@@ -1,5 +1,19 @@
 import theNearestCar, { distanceToAvailableCars } from "./theNearestCar";
 
+interface ICases {
+    length: number;
+    [index: number]: {
+        allCarsCurrentFloor: number[];
+        floorNumber: number;
+        allCarsState: string[];
+        allCarsFloorAssignments: number[][];
+        expectedBy: {
+            _distanceToAvailableCars: { carId: number; distance: number }[];
+            _theNearestCar: number;
+        };
+    };
+}
+
 const cases = [
     {
         floorNumber: 7,
@@ -16,7 +30,7 @@ const cases = [
     },
     {
         floorNumber: 7,
-        allCarsCurrentFloor: [[7], [7]],
+        allCarsCurrentFloor: [7, 7],
         allCarsState: ["ready", "ready"],
         allCarsFloorAssignments: [[], []],
         expectedBy: {
@@ -29,7 +43,7 @@ const cases = [
     },
     {
         floorNumber: 7,
-        allCarsCurrentFloor: [[9], [9]],
+        allCarsCurrentFloor: [9, 9],
         allCarsState: ["ready", "ready"],
         allCarsFloorAssignments: [[], []],
         expectedBy: {
@@ -42,7 +56,7 @@ const cases = [
     },
     {
         floorNumber: 7,
-        allCarsCurrentFloor: [[0], [0]],
+        allCarsCurrentFloor: [0, 0],
         allCarsState: ["go-down", "go-up"],
         allCarsFloorAssignments: [[], []],
         expectedBy: {
@@ -52,7 +66,7 @@ const cases = [
     },
     {
         floorNumber: 7,
-        allCarsCurrentFloor: [[5], [0]],
+        allCarsCurrentFloor: [5, 0],
         allCarsState: ["go-down", "go-up"],
         allCarsFloorAssignments: [[2], [9]],
         expectedBy: {
@@ -62,7 +76,7 @@ const cases = [
     },
     {
         floorNumber: 7,
-        allCarsCurrentFloor: [[7], [9]],
+        allCarsCurrentFloor: [7, 9],
         allCarsFloorAssignments: [[], []],
         allCarsState: ["go-down", "go-up"],
         expectedBy: {
@@ -72,7 +86,10 @@ const cases = [
     }
 ];
 
-const distanceToAvailableCars_testFunction = (cases, casesDescription) => {
+const distanceToAvailableCars_testFunction = (
+    cases: ICases,
+    casesDescription: string
+) => {
     for (let i = 0; i < cases.length; i++) {
         const {
             allCarsState,
@@ -85,12 +102,15 @@ const distanceToAvailableCars_testFunction = (cases, casesDescription) => {
         test(
             "distanceToAvailableCars " + casesDescription + " case " + i,
             () => {
-                const value = distanceToAvailableCars(
+                const value: {
+                    carId: number;
+                    distance: number;
+                }[] = distanceToAvailableCars({
                     allCarsState,
                     allCarsCurrentFloor,
                     allCarsFloorAssignments,
                     floorNumber
-                );
+                });
 
                 expect(value).toEqual(_distanceToAvailableCars);
             }
@@ -98,7 +118,10 @@ const distanceToAvailableCars_testFunction = (cases, casesDescription) => {
     }
 };
 
-const theNearestCar_testFunction = (cases, casesDescription) => {
+const theNearestCar_testFunction = (
+    cases: ICases,
+    casesDescription: string
+) => {
     for (let i = 0; i < cases.length; i++) {
         const {
             allCarsState,
@@ -109,12 +132,12 @@ const theNearestCar_testFunction = (cases, casesDescription) => {
         } = cases[i];
 
         test("theNearestCar " + casesDescription + " case " + i, () => {
-            const value = theNearestCar(
+            const value: number | undefined = theNearestCar({
                 allCarsState,
                 allCarsCurrentFloor,
                 allCarsFloorAssignments,
                 floorNumber
-            );
+            });
 
             expect(value).toEqual(_theNearestCar);
         });

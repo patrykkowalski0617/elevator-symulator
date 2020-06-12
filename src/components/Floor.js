@@ -53,12 +53,12 @@ export default function Floor({
 
     useEffect(() => {
         if (waitingForCar) {
-            const carId = theNearestCar(
+            const carId = theNearestCar({
                 allCarsState,
                 allCarsCurrentFloor,
                 allCarsFloorAssignments,
                 floorNumber
-            );
+            });
             if (carId >= 0) {
                 addCarFloorAssignment(carId, floorNumber);
                 setAssignedCar(carId);

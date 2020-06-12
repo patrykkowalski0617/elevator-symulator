@@ -1,23 +1,23 @@
 export default function move(
-    getCarState,
-    getCurrentFloor,
-    getPosition,
-    setIntervalId,
-    frameTime = 10
+    getCarState: (state: string) => void,
+    getCurrentFloor: (floor: number) => void,
+    getPosition: (floor: number) => void,
+    setIntervalId: (id: number) => void,
+    frameTime: number = 10
 ) {
     const start = (
-        targetFloor,
-        currentFloor,
-        currentPosition,
-        carState,
-        intervalId,
-        isContinuation
+        targetFloor: number,
+        currentFloor: number,
+        currentPosition: number,
+        carState: string,
+        intervalId: number,
+        isContinuation: boolean
     ) => {
-        let _intervalId = intervalId;
-        let floor = currentFloor;
-        let state = carState;
-        let position = currentPosition;
-        const targetPosition = targetFloor * 100;
+        let _intervalId: number = intervalId;
+        let floor: number = currentFloor;
+        let state: string = carState;
+        let position: number = currentPosition;
+        const targetPosition: number = targetFloor * 100;
         if (intervalId !== null) {
             clearInterval(_intervalId);
         }

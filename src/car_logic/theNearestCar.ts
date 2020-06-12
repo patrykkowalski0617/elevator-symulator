@@ -1,16 +1,27 @@
 // This part of code is supposed to be run
 // before ShaftContext is updating allCarsFloorAssignments by addCarFloorAssignment
 
-export const distanceToAvailableCars = (
-    allCarsState,
-    allCarsCurrentFloor,
-    allCarsFloorAssignments,
-    floorNumber,
-    tolerance = 1 // number of floors between floorNumber and carCurrentFloor that is acceptable to asign car to floor
-) => {
-    let distanceToAvailableCarsArr = []; // defaulft value is []
+interface IParam {
+    floorNumber: number;
+    allCarsCurrentFloor: number[];
+    allCarsState: string[];
+    allCarsFloorAssignments: { length: number; [index: number]: number[] };
+    tolerance?: number;
+}
 
-    let carState, carCurrentFloor, distance;
+export const distanceToAvailableCars = ({
+    floorNumber,
+    allCarsCurrentFloor,
+    allCarsState,
+    allCarsFloorAssignments,
+    tolerance = 1 // number of floors between floorNumber and carCurrentFloor that is acceptable to asign car to floor
+}: IParam) => {
+    let distanceToAvailableCarsArr: {
+        carId: number;
+        distance: number;
+    }[] = [];
+
+    let carState: string, carCurrentFloor: number, distance: number;
 
     if (
         allCarsState.length > 0 &&
@@ -22,7 +33,7 @@ export const distanceToAvailableCars = (
             carCurrentFloor = allCarsCurrentFloor[carId];
             distance = Math.abs(floorNumber - carCurrentFloor); // Math.abs - make number positive
 
-            let mainCarTarget = Math.max.apply(
+            let mainCarTarget: number | null = Math.max.apply(
                 Math,
                 allCarsFloorAssignments[carId]
             );
@@ -35,9 +46,11 @@ export const distanceToAvailableCars = (
             if (
                 carState === "ready" ||
                 (carState.includes("go-up") &&
+                    mainCarTarget &&
                     floorNumber < mainCarTarget &&
                     carCurrentFloor + tolerance < floorNumber) ||
                 (carState.includes("go-down") &&
+                    mainCarTarget &&
                     floorNumber > mainCarTarget &&
                     carCurrentFloor - tolerance > floorNumber)
             ) {
@@ -50,30 +63,33 @@ export const distanceToAvailableCars = (
 };
 
 // return id of the nearest car or -1 if there is no available cars
-const theNearestCar = (
-    allCarsState,
-    allCarsCurrentFloor,
-    allCarsFloorAssignments,
+const theNearestCar = ({
     floorNumber,
+    allCarsCurrentFloor,
+    allCarsState,
+    allCarsFloorAssignments,
     tolerance
-) => {
+}: IParam) => {
     if (
         allCarsState.length !== 0 &&
         allCarsCurrentFloor.length !== 0 &&
         typeof floorNumber === "number"
     ) {
-        const distanceToCars = distanceToAvailableCars(
-            allCarsState,
-            allCarsCurrentFloor,
-            allCarsFloorAssignments,
+        const distanceToCars: {
+            carId: number;
+            distance: number;
+        }[] = distanceToAvailableCars({
             floorNumber,
+            allCarsCurrentFloor,
+            allCarsState,
+            allCarsFloorAssignments,
             tolerance
-        );
+        });
 
         // defaulft value is -1 and it should returned
         // when there is no available car
-        let theNearestCarNum = -1;
-        let min = Number.POSITIVE_INFINITY;
+        let theNearestCarNum: number = -1;
+        let min: number = Number.POSITIVE_INFINITY;
         for (let i = 0; i < distanceToCars.length; i++) {
             const { carId, distance } = distanceToCars[i];
 
