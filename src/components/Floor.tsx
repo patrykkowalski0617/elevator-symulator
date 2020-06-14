@@ -4,7 +4,7 @@ import { ShaftContext } from "../context/ShaftContext";
 import { FloorsContext } from "../context/FloorsContext";
 import { theNearestCar } from "../car_logic";
 
-const FloorStyled = styled.div`
+const FloorStyled = styled.div<{ numberOfFloors: number; floorColor: string }>`
     height: ${props => 100 / props.numberOfFloors}%;
     border-style: solid;
     border-color: #222;
@@ -26,13 +26,19 @@ const AssignedCar = styled.div`
     margin: 2px 7px;
 `;
 
-export default function Floor({
+type FloorProps = {
+    floorNumber: number;
+    numberOfFloors: number;
+    role: string;
+    floorColor: string;
+};
+
+const Floor = ({
     floorNumber,
     numberOfFloors,
     role,
-    title,
     floorColor
-}) {
+}: FloorProps) => {
     const {
         allCarsState,
         allCarsCurrentFloor,
@@ -45,7 +51,7 @@ export default function Floor({
     const waitingForCar = floorsWaitingForCar[floorNumber];
 
     const [noCar, setNoCar] = useState(false);
-    const [assignedCar, setAssignedCar] = useState(null);
+    const [assignedCar, setAssignedCar] = useState<number | null>(null);
 
     const call = () => {
         addFloorWaitingForCar(floorNumber);
@@ -59,7 +65,7 @@ export default function Floor({
                 allCarsFloorAssignments,
                 floorNumber
             });
-            if (carId >= 0) {
+            if (carId && carId >= 0) {
                 addCarFloorAssignment(carId, floorNumber);
                 setAssignedCar(carId);
             } else {
@@ -70,15 +76,11 @@ export default function Floor({
     }, [waitingForCar]);
 
     return (
-        <FloorStyled
-            numberOfFloors={numberOfFloors}
-            title={title}
-            floorColor={floorColor}
-        >
+        <FloorStyled numberOfFloors={numberOfFloors} floorColor={floorColor}>
             {role === "enter-floor" ? (
                 <>
                     <button
-                        style={noCar ? { background: "red" } : null}
+                        style={noCar ? { background: "red" } : {}}
                         data-floor-number={floorNumber}
                         onClick={call}
                     >
@@ -100,4 +102,6 @@ export default function Floor({
             {role === "exit-floor" ? <p>{floorNumber}</p> : null}
         </FloorStyled>
     );
-}
+};
+
+export default Floor;

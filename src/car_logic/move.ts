@@ -6,19 +6,21 @@ export default function move(
     frameTime: number = 10
 ) {
     const start = (
-        targetFloor: number,
+        targetFloor: number | undefined,
         currentFloor: number,
         currentPosition: number,
         carState: string,
-        intervalId: number,
+        intervalId: number | null,
         isContinuation: boolean
     ) => {
-        let _intervalId: number = intervalId;
+        let _intervalId: number | null = intervalId;
         let floor: number = currentFloor;
         let state: string = carState;
         let position: number = currentPosition;
-        const targetPosition: number = targetFloor * 100;
-        if (intervalId !== null) {
+        const targetPosition: number | null = targetFloor
+            ? targetFloor * 100
+            : null;
+        if (_intervalId !== null) {
             clearInterval(_intervalId);
         }
 
@@ -26,14 +28,14 @@ export default function move(
         // when car is not moving
         if (carState === "ready") {
             // when targetFloor is not reached and it's above
-            if (targetFloor > currentFloor) {
+            if (targetFloor && targetFloor > currentFloor) {
                 state = "go-up";
                 if (!isContinuation) {
                     floor++;
                 }
             }
             // when targetFloor is not reached and it's below
-            else if (targetFloor < currentFloor) {
+            else if (targetFloor && targetFloor < currentFloor) {
                 state = "go-down";
                 if (!isContinuation) {
                     floor--;
@@ -71,8 +73,13 @@ export default function move(
 
                 // clear interval
                 if (
-                    (position >= targetPosition && state.includes("go-up")) ||
-                    (position <= targetPosition && state.includes("go-down"))
+                    _intervalId !== null &&
+                    ((targetPosition &&
+                        position >= targetPosition &&
+                        state.includes("go-up")) ||
+                        (targetPosition &&
+                            position <= targetPosition &&
+                            state.includes("go-down")))
                 ) {
                     clearInterval(_intervalId);
                 }

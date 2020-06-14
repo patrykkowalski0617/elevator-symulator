@@ -4,7 +4,7 @@ import { ShaftContext } from "../context/ShaftContext";
 import { carTarget, move } from "../car_logic";
 import { floorColor } from "../style_mixin";
 
-const CarStyled = styled.div`
+const CarStyled = styled.div<{ numberOfFloors: number }>`
     text-align: center;
     width: 100%;
     height: ${props => 100 / props.numberOfFloors}%;
@@ -43,7 +43,7 @@ const Data = styled.p`
     color: #fff;
 `;
 
-const Door = styled.div`
+const Door = styled.div<{ carState: string; carColor: string; left?: boolean }>`
     width: ${props => (props.carState.includes("door-open") ? "10%; " : "50%")};
     height: 100%;
     transition: 1s 0.2s ease-in-out width, 0.5s linear background-color;
@@ -57,7 +57,9 @@ const Door = styled.div`
     /* opacity: 0.85; */
 `;
 
-const Car = ({ numberOfFloors, carId }) => {
+type CarProps = { numberOfFloors: number; carId: number };
+
+const Car = ({ numberOfFloors, carId }: CarProps) => {
     const {
         updateCarCurrentFloor,
         updateCarState,
@@ -68,27 +70,30 @@ const Car = ({ numberOfFloors, carId }) => {
     const floorAssignments = allCarsFloorAssignments[carId];
     const currentFloor = allCarsCurrentFloor[carId];
 
-    const [carPosition, setCarPosition] = useState(currentFloor * 100);
-    const [intervalId, setIntervalId] = useState(null);
-    const [carColor, setCarColor] = useState(
+    const [carPosition, setCarPosition] = useState<number>(currentFloor * 100);
+    const [intervalId, setIntervalId] = useState<number | null>(null);
+    const [carColor, setCarColor] = useState<string>(
         floorColor(numberOfFloors, numberOfFloors - currentFloor - 1)
     );
-    const [carState, setCarState] = useState(allCarsState[carId]);
+    const [carState, setCarState] = useState<string>(allCarsState[carId]);
 
-    const getPosition = position => {
+    const getPosition = (position: number) => {
         setCarPosition(position);
     };
-    const getCarState = state => {
+    const getCarState = (state: string) => {
         setCarState(state);
     };
-    const getCurrentFloor = currentFloor => {
+    const getCurrentFloor = (currentFloor: number) => {
         updateCarCurrentFloor(carId, currentFloor);
         setCarColor(
             floorColor(numberOfFloors, numberOfFloors - currentFloor - 1)
         );
     };
-    const currentPosition = carPosition;
-    const targetFloor = carTarget(floorAssignments, carState);
+    const currentPosition: number = carPosition;
+    const targetFloor: number | undefined = carTarget(
+        floorAssignments,
+        carState
+    );
     const start = move(
         getCarState,
         getCurrentFloor,

@@ -4,13 +4,19 @@ import styled from "styled-components";
 import Floor from "./Floor";
 import { floorColor } from "../style_mixin";
 
-const FloorWrapper = styled.div`
+const FloorWrapper = styled.div<{ floorWidth: number }>`
     width: ${props => props.floorWidth}%;
     border-style: solid;
     background: #555;
     border-width: 0 2px;
 `;
-export default function Floors({ role, floorWidth }) {
+
+type FloorsProps = {
+    role: string;
+    floorWidth: number;
+};
+
+const Floors = ({ role, floorWidth }: FloorsProps) => {
     const { numberOfFloors } = useContext(BuildingContext);
 
     const renderFloors = () => {
@@ -35,4 +41,6 @@ export default function Floors({ role, floorWidth }) {
             {renderFloors()}
         </FloorWrapper>
     );
-}
+};
+
+export default Floors;
