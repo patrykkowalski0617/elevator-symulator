@@ -14,7 +14,7 @@ exports[`Building - render and match snapshot 1`] = `
       <button
         data-floor-number={10}
         onClick={[Function]}
-        style={null}
+        style={Object {}}
       >
         Call car
       </button>
@@ -25,7 +25,7 @@ exports[`Building - render and match snapshot 1`] = `
       <button
         data-floor-number={9}
         onClick={[Function]}
-        style={null}
+        style={Object {}}
       >
         Call car
       </button>
@@ -36,7 +36,7 @@ exports[`Building - render and match snapshot 1`] = `
       <button
         data-floor-number={8}
         onClick={[Function]}
-        style={null}
+        style={Object {}}
       >
         Call car
       </button>
@@ -47,7 +47,7 @@ exports[`Building - render and match snapshot 1`] = `
       <button
         data-floor-number={7}
         onClick={[Function]}
-        style={null}
+        style={Object {}}
       >
         Call car
       </button>
@@ -58,7 +58,7 @@ exports[`Building - render and match snapshot 1`] = `
       <button
         data-floor-number={6}
         onClick={[Function]}
-        style={null}
+        style={Object {}}
       >
         Call car
       </button>
@@ -69,7 +69,7 @@ exports[`Building - render and match snapshot 1`] = `
       <button
         data-floor-number={5}
         onClick={[Function]}
-        style={null}
+        style={Object {}}
       >
         Call car
       </button>
@@ -80,7 +80,7 @@ exports[`Building - render and match snapshot 1`] = `
       <button
         data-floor-number={4}
         onClick={[Function]}
-        style={null}
+        style={Object {}}
       >
         Call car
       </button>
@@ -91,7 +91,7 @@ exports[`Building - render and match snapshot 1`] = `
       <button
         data-floor-number={3}
         onClick={[Function]}
-        style={null}
+        style={Object {}}
       >
         Call car
       </button>
@@ -102,7 +102,7 @@ exports[`Building - render and match snapshot 1`] = `
       <button
         data-floor-number={2}
         onClick={[Function]}
-        style={null}
+        style={Object {}}
       >
         Call car
       </button>
@@ -113,7 +113,7 @@ exports[`Building - render and match snapshot 1`] = `
       <button
         data-floor-number={1}
         onClick={[Function]}
-        style={null}
+        style={Object {}}
       >
         Call car
       </button>
@@ -124,7 +124,7 @@ exports[`Building - render and match snapshot 1`] = `
       <button
         data-floor-number={0}
         onClick={[Function]}
-        style={null}
+        style={Object {}}
       >
         Call car
       </button>

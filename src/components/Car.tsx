@@ -67,8 +67,8 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         allCarsFloorAssignments,
         allCarsState
     } = useContext(ShaftContext);
-    const floorAssignments = allCarsFloorAssignments[carId];
-    const currentFloor = allCarsCurrentFloor[carId];
+    const floorAssignments: number[] = allCarsFloorAssignments[carId];
+    const currentFloor: number = allCarsCurrentFloor[carId];
 
     const [carPosition, setCarPosition] = useState<number>(currentFloor * 100);
     const [intervalId, setIntervalId] = useState<number | null>(null);

@@ -10,7 +10,7 @@ test("Floors - render and match snapshot", () => {
         <BuildingContext>
             <ShaftContext>
                 <FloorsContext>
-                    <Floors role={"role"} floorWidth={10}></Floors>
+                    <Floors></Floors>
                 </FloorsContext>
             </ShaftContext>
         </BuildingContext>

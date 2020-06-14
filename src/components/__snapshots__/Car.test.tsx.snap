@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Car - render and match snapshot 1`] = `
+<div
+  className="sc-AxjAm jiuuOD"
+  style={
+    Object {
+      "transform": "translateY(calc(-0%))",
+    }
+  }
+>
+  <p
+    className="sc-AxirZ NNbYs"
+  >
+    C: 
+    1
+    , T: 
+  </p>
+  <div
+    className="sc-AxiKw gISOTm"
+  />
+  <div
+    className="sc-AxiKw fwtrde"
+  />
+</div>
+`;

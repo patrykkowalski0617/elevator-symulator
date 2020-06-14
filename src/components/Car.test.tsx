@@ -10,7 +10,7 @@ test("Car - render and match snapshot", () => {
         <BuildingContext>
             <ShaftContext>
                 <FloorsContext>
-                    <Car></Car>
+                    <Car carId={1}></Car>
                 </FloorsContext>
             </ShaftContext>
         </BuildingContext>

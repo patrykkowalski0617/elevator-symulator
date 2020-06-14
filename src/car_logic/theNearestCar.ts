@@ -33,7 +33,7 @@ export const distanceToAvailableCars = ({
             carCurrentFloor = allCarsCurrentFloor[carId];
             distance = Math.abs(floorNumber - carCurrentFloor); // Math.abs - make number positive
 
-            let mainCarTarget: number | null = Math.max.apply(
+            let mainCarTarget: number = Math.max.apply(
                 Math,
                 allCarsFloorAssignments[carId]
             );
@@ -41,17 +41,17 @@ export const distanceToAvailableCars = ({
             mainCarTarget =
                 mainCarTarget !== Infinity && mainCarTarget !== -Infinity
                     ? mainCarTarget
-                    : null;
+                    : floorNumber;
 
             if (
                 carState === "ready" ||
                 (carState.includes("go-up") &&
                     mainCarTarget &&
-                    floorNumber < mainCarTarget &&
+                    floorNumber <= mainCarTarget &&
                     carCurrentFloor + tolerance < floorNumber) ||
                 (carState.includes("go-down") &&
                     mainCarTarget &&
-                    floorNumber > mainCarTarget &&
+                    floorNumber >= mainCarTarget &&
                     carCurrentFloor - tolerance > floorNumber)
             ) {
                 distanceToAvailableCarsArr.push({ carId, distance });

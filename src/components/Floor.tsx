@@ -65,7 +65,7 @@ const Floor = ({
                 allCarsFloorAssignments,
                 floorNumber
             });
-            if (carId && carId >= 0) {
+            if (carId !== null && carId !== undefined && carId >= 0) {
                 addCarFloorAssignment(carId, floorNumber);
                 setAssignedCar(carId);
             } else {
