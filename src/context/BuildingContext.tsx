@@ -8,6 +8,7 @@ interface IContextProps {
     automotion: boolean;
     setAutomotion: (b: boolean) => void;
 }
+
 export const BuildingContext = createContext({} as IContextProps);
 
 const BuildingContextProvider = (props: { children: React.ReactNode }) => {

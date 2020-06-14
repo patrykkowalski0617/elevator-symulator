@@ -1,10 +1,21 @@
 import React, { createContext, useState, useContext } from "react";
 import { BuildingContext } from "./BuildingContext";
 
-export const ShaftContext = createContext();
-const ShaftContextProvider = props => {
+interface IContextProps {
+    allCarsCurrentFloor: number[];
+    updateCarCurrentFloor: (carId: number, currentFloor: number) => void;
+    allCarsFloorAssignments: number[][];
+    addCarFloorAssignment: (carId: number, floorNumber: number) => void;
+    removeCarFloorAssignment: (carId: number, floorNumber: number) => void;
+    allCarsState: string[];
+    updateCarState: (carId: number, state: string) => void;
+}
+
+export const ShaftContext = createContext({} as IContextProps);
+
+const ShaftContextProvider = (props: { children: React.ReactNode }) => {
     const { numberOfCars } = useContext(BuildingContext);
-    const initArr = val => Array(numberOfCars).fill(val);
+    const initArr = (val: any) => Array(numberOfCars).fill(val);
 
     // next floor on way or floor that has been just reached, but not floor which has been just left
     const [allCarsCurrentFloor, setAllCarsCurrentFloor] = useState(initArr(0));
@@ -14,19 +25,19 @@ const ShaftContextProvider = props => {
         initArr([])
     );
 
-    const updateCarCurrentFloor = (carId, currentFloor) => {
+    const updateCarCurrentFloor = (carId: number, currentFloor: number) => {
         const _allCarsCurrentFloor = [...allCarsCurrentFloor];
         _allCarsCurrentFloor.splice(carId, 1, currentFloor);
         setAllCarsCurrentFloor([..._allCarsCurrentFloor]);
     };
 
-    const updateCarState = (carId, state) => {
+    const updateCarState = (carId: number, state: string) => {
         const _allCarsState = [...allCarsState];
         _allCarsState.splice(carId, 1, state);
         setAllCarsState([..._allCarsState]);
     };
 
-    const addCarFloorAssignment = (carId, floorNumber) => {
+    const addCarFloorAssignment = (carId: number, floorNumber: number) => {
         if (carId !== null) {
             const _allCarsFloorAssignments = [...allCarsFloorAssignments];
             const carFloorAssignment = [..._allCarsFloorAssignments[carId]];
@@ -43,7 +54,7 @@ const ShaftContextProvider = props => {
         }
     };
 
-    const removeCarFloorAssignment = (carId, floorNumber) => {
+    const removeCarFloorAssignment = (carId: number, floorNumber: number) => {
         const _allCarsFloorAssignments = [...allCarsFloorAssignments];
         const carFloorAssignment = [..._allCarsFloorAssignments[carId]];
         const index = carFloorAssignment.indexOf(floorNumber);
