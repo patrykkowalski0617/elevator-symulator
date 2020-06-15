@@ -17,25 +17,24 @@ export default function move(
         let floor: number = currentFloor;
         let state: string = carState;
         let position: number = currentPosition;
-        const targetPosition: number | null = targetFloor
-            ? targetFloor * 100
-            : null;
+        const targetPosition: number | null =
+            typeof targetFloor === "number" ? targetFloor * 100 : null;
         if (_intervalId !== null) {
             clearInterval(_intervalId);
         }
 
         // set immediately after start call
         // when car is not moving
-        if (carState === "ready") {
+        if (typeof targetFloor === "number" && carState === "ready") {
             // when targetFloor is not reached and it's above
-            if (targetFloor && targetFloor > currentFloor) {
+            if (targetFloor > currentFloor) {
                 state = "go-up";
                 if (!isContinuation) {
                     floor++;
                 }
             }
             // when targetFloor is not reached and it's below
-            else if (targetFloor && targetFloor < currentFloor) {
+            else if (targetFloor < currentFloor) {
                 state = "go-down";
                 if (!isContinuation) {
                     floor--;
@@ -74,11 +73,9 @@ export default function move(
                 // clear interval
                 if (
                     _intervalId !== null &&
-                    ((targetPosition &&
-                        position >= targetPosition &&
-                        state.includes("go-up")) ||
-                        (targetPosition &&
-                            position <= targetPosition &&
+                    targetPosition !== null &&
+                    ((position >= targetPosition && state.includes("go-up")) ||
+                        (position <= targetPosition &&
                             state.includes("go-down")))
                 ) {
                     clearInterval(_intervalId);
