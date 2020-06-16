@@ -9,7 +9,7 @@ const App: React.FC = () => {
         <BuildingContext>
             <ShaftContext>
                 <FloorsContext>
-                    <Building></Building>
+                    <Building />
                 </FloorsContext>
             </ShaftContext>
         </BuildingContext>

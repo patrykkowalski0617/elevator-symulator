@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StickManForm - render and match snapshot 1`] = `
+<div
+  className="sc-AxjAm jBaJjh"
+>
+  <form
+    className="sc-AxirZ eKZeFp"
+  >
+    <button
+      className="sc-AxhCb fUpRBs"
+      onClick={[Function]}
+    >
+      x
+    </button>
+    <h3>
+      Create Stickman on floor 
+    </h3>
+    <fieldset>
+      <label
+        htmlFor="how-many"
+      >
+        How many:
+      </label>
+      <input
+        id="how-many"
+        type="number"
+      />
+      <label
+        htmlFor="destination"
+      >
+        Destiantion:
+      </label>
+      <input
+        id="destination"
+        type="number"
+      />
+    </fieldset>
+    <button
+      className="sc-AxiKw hcdXEi"
+    >
+      Submit
+    </button>
+  </form>
+</div>
+`;

@@ -3,6 +3,7 @@ import { BuildingContext } from "../context/BuildingContext";
 import Floors from "./Floors";
 import styled from "styled-components";
 import Shaft from "./Shaft";
+import StickManForm from "./StickManForm";
 
 const BuildingStyled = styled.div`
     height: 90vh;
@@ -19,22 +20,27 @@ const BuildingStyled = styled.div`
 `;
 
 const Building: React.FC = () => {
-    const { numberOfFloors, numberOfCars } = useContext(BuildingContext);
+    const { numberOfFloors, numberOfCars, creatingStickMan } = useContext(
+        BuildingContext
+    );
 
     // Sizes
     const carWidth: number = 10;
     const floorWidth: number = (100 - carWidth * numberOfCars) / 2;
 
     return (
-        <BuildingStyled>
-            <Floors role={"enter-floor"} floorWidth={floorWidth}></Floors>
-            <Shaft
-                numberOfCars={numberOfCars}
-                carWidth={carWidth}
-                numberOfFloors={numberOfFloors}
-            ></Shaft>
-            <Floors role={"exit-floor"} floorWidth={floorWidth}></Floors>
-        </BuildingStyled>
+        <>
+            {creatingStickMan ? <StickManForm floorNumber={0} /> : null}
+            <BuildingStyled>
+                <Floors role={"enter-floor"} floorWidth={floorWidth}></Floors>
+                <Shaft
+                    numberOfCars={numberOfCars}
+                    carWidth={carWidth}
+                    numberOfFloors={numberOfFloors}
+                ></Shaft>
+                <Floors role={"exit-floor"} floorWidth={floorWidth}></Floors>
+            </BuildingStyled>
+        </>
     );
 };
 

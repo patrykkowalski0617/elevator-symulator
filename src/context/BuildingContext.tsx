@@ -7,6 +7,8 @@ interface IContextProps {
     setNnmberOfCars: (n: number) => void;
     automotion: boolean;
     setAutomotion: (b: boolean) => void;
+    creatingStickMan: boolean;
+    setCreatingStickMan: (arr: boolean) => void;
 }
 
 export const BuildingContext = createContext({} as IContextProps);
@@ -16,6 +18,7 @@ const BuildingContextProvider = (props: { children: React.ReactNode }) => {
     const howManyCars = Math.floor(numberOfFloors / 5);
     const [numberOfCars, setNnmberOfCars] = useState(howManyCars);
     const [automotion, setAutomotion] = useState(false);
+    const [creatingStickMan, setCreatingStickMan] = useState<boolean>(false);
 
     return (
         <BuildingContext.Provider
@@ -25,7 +28,9 @@ const BuildingContextProvider = (props: { children: React.ReactNode }) => {
                 numberOfCars,
                 setNnmberOfCars,
                 automotion,
-                setAutomotion
+                setAutomotion,
+                creatingStickMan,
+                setCreatingStickMan
             }}
         >
             {props.children}

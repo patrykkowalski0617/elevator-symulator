@@ -2,7 +2,9 @@ import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { ShaftContext } from "../context/ShaftContext";
 import { FloorsContext } from "../context/FloorsContext";
+import { BuildingContext } from "../context/BuildingContext";
 import { theNearestCar } from "../car_logic";
+import StickMan from "./StickMan";
 
 const FloorStyled = styled.div<{ numberOfFloors: number; floorColor: string }>`
     height: ${props => 100 / props.numberOfFloors}%;
@@ -10,6 +12,7 @@ const FloorStyled = styled.div<{ numberOfFloors: number; floorColor: string }>`
     border-color: #222;
     border-width: 2px 0;
     background-color: ${props => props.floorColor};
+    position: relative;
 `;
 
 const CarLight = styled.div`
@@ -48,13 +51,29 @@ const Floor = ({
     const { floorsWaitingForCar, addFloorWaitingForCar } = useContext(
         FloorsContext
     );
+    const { setCreatingStickMan } = useContext(BuildingContext);
+
     const waitingForCar = floorsWaitingForCar[floorNumber];
 
-    const [noCar, setNoCar] = useState(false);
+    const [noCar, setNoCar] = useState<boolean>(false);
     const [assignedCar, setAssignedCar] = useState<number | null>(null);
+    const [stickManDestinations, setStickManDestinations] = useState<number[]>(
+        []
+    );
 
     const call = () => {
         addFloorWaitingForCar(floorNumber);
+    };
+
+    const createStickman = (destination: number, howMany: number) => {
+        setStickManDestinations([...stickManDestinations, destination]);
+    };
+
+    const onClickHandler = () => {
+        // const destination = 1;
+        // const howMany = 1;
+        // createStickman(destination, howMany);
+        setCreatingStickMan(true);
     };
 
     useEffect(() => {
@@ -79,13 +98,18 @@ const Floor = ({
         <FloorStyled numberOfFloors={numberOfFloors} floorColor={floorColor}>
             {role === "enter-floor" ? (
                 <>
-                    <button
-                        style={noCar ? { background: "red" } : {}}
-                        data-floor-number={floorNumber}
-                        onClick={call}
-                    >
-                        {!noCar ? "Call car" : "No available cars"}
-                    </button>
+                    <>
+                        <button
+                            data-floor-number={floorNumber}
+                            onClick={onClickHandler}
+                        >
+                            create stickman
+                        </button>
+                        <p style={noCar ? { background: "red" } : {}}>
+                            {!noCar ? "" : "No available cars"}
+                        </p>
+                        <StickMan />
+                    </>
                     {waitingForCar ? (
                         <>
                             <CarLight></CarLight>
