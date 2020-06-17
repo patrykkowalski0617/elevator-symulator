@@ -2,40 +2,40 @@
 
 exports[`Floors - render and match snapshot 1`] = `
 <div
-  className="sc-AxhCb gsBIpG"
+  className="sc-AxgMl fqQfYR"
 >
   <div
-    className="sc-AxjAm ghBzSx"
+    className="sc-AxiKw kABDHj"
   />
   <div
-    className="sc-AxjAm DgnVW"
+    className="sc-AxiKw mSMcy"
   />
   <div
-    className="sc-AxjAm euAsXx"
+    className="sc-AxiKw kiYTmr"
   />
   <div
-    className="sc-AxjAm ljETuG"
+    className="sc-AxiKw iDJVhy"
   />
   <div
-    className="sc-AxjAm hIZreI"
+    className="sc-AxiKw jTzsQE"
   />
   <div
-    className="sc-AxjAm gQikiy"
+    className="sc-AxiKw eovMFH"
   />
   <div
-    className="sc-AxjAm eYjwYl"
+    className="sc-AxiKw hhVuIp"
   />
   <div
-    className="sc-AxjAm hKmDaX"
+    className="sc-AxiKw gkCjGL"
   />
   <div
-    className="sc-AxjAm kdccyK"
+    className="sc-AxiKw beBYDA"
   />
   <div
-    className="sc-AxjAm fwPPRP"
+    className="sc-AxiKw jEQIX"
   />
   <div
-    className="sc-AxjAm hOHeui"
+    className="sc-AxiKw gcBlZw"
   />
 </div>
 `;

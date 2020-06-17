@@ -30,7 +30,9 @@ const Building: React.FC = () => {
 
     return (
         <>
-            {creatingStickMan ? <StickManForm floorNumber={0} /> : null}
+            {creatingStickMan ? (
+                <StickManForm floorNumber={creatingStickMan} />
+            ) : null}
             <BuildingStyled>
                 <Floors role={"enter-floor"} floorWidth={floorWidth}></Floors>
                 <Shaft

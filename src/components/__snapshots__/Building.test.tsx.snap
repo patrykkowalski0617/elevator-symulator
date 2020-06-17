@@ -2,139 +2,183 @@
 
 exports[`Building - render and match snapshot 1`] = `
 <div
-  className="sc-AxmLO cQCEIO"
+  className="sc-fznKkj bECOPl"
 >
   <div
-    className="sc-AxhCb hJpnPK"
+    className="sc-AxgMl gZCLeh"
     role="enter-floor"
   >
     <div
-      className="sc-AxjAm ghBzSx"
+      className="sc-AxiKw kABDHj"
     >
       <button
         data-floor-number={10}
         onClick={[Function]}
+      >
+        create stickman
+      </button>
+      <p
         style={Object {}}
       >
-        Call car
-      </button>
+        
+      </p>
     </div>
     <div
-      className="sc-AxjAm DgnVW"
+      className="sc-AxiKw mSMcy"
     >
       <button
         data-floor-number={9}
         onClick={[Function]}
+      >
+        create stickman
+      </button>
+      <p
         style={Object {}}
       >
-        Call car
-      </button>
+        
+      </p>
     </div>
     <div
-      className="sc-AxjAm euAsXx"
+      className="sc-AxiKw kiYTmr"
     >
       <button
         data-floor-number={8}
         onClick={[Function]}
+      >
+        create stickman
+      </button>
+      <p
         style={Object {}}
       >
-        Call car
-      </button>
+        
+      </p>
     </div>
     <div
-      className="sc-AxjAm ljETuG"
+      className="sc-AxiKw iDJVhy"
     >
       <button
         data-floor-number={7}
         onClick={[Function]}
+      >
+        create stickman
+      </button>
+      <p
         style={Object {}}
       >
-        Call car
-      </button>
+        
+      </p>
     </div>
     <div
-      className="sc-AxjAm hIZreI"
+      className="sc-AxiKw jTzsQE"
     >
       <button
         data-floor-number={6}
         onClick={[Function]}
+      >
+        create stickman
+      </button>
+      <p
         style={Object {}}
       >
-        Call car
-      </button>
+        
+      </p>
     </div>
     <div
-      className="sc-AxjAm gQikiy"
+      className="sc-AxiKw eovMFH"
     >
       <button
         data-floor-number={5}
         onClick={[Function]}
+      >
+        create stickman
+      </button>
+      <p
         style={Object {}}
       >
-        Call car
-      </button>
+        
+      </p>
     </div>
     <div
-      className="sc-AxjAm eYjwYl"
+      className="sc-AxiKw hhVuIp"
     >
       <button
         data-floor-number={4}
         onClick={[Function]}
+      >
+        create stickman
+      </button>
+      <p
         style={Object {}}
       >
-        Call car
-      </button>
+        
+      </p>
     </div>
     <div
-      className="sc-AxjAm hKmDaX"
+      className="sc-AxiKw gkCjGL"
     >
       <button
         data-floor-number={3}
         onClick={[Function]}
+      >
+        create stickman
+      </button>
+      <p
         style={Object {}}
       >
-        Call car
-      </button>
+        
+      </p>
     </div>
     <div
-      className="sc-AxjAm kdccyK"
+      className="sc-AxiKw beBYDA"
     >
       <button
         data-floor-number={2}
         onClick={[Function]}
+      >
+        create stickman
+      </button>
+      <p
         style={Object {}}
       >
-        Call car
-      </button>
+        
+      </p>
     </div>
     <div
-      className="sc-AxjAm fwPPRP"
+      className="sc-AxiKw jEQIX"
     >
       <button
         data-floor-number={1}
         onClick={[Function]}
+      >
+        create stickman
+      </button>
+      <p
         style={Object {}}
       >
-        Call car
-      </button>
+        
+      </p>
     </div>
     <div
-      className="sc-AxjAm hOHeui"
+      className="sc-AxiKw gcBlZw"
     >
       <button
         data-floor-number={0}
         onClick={[Function]}
+      >
+        create stickman
+      </button>
+      <p
         style={Object {}}
       >
-        Call car
-      </button>
+        
+      </p>
     </div>
   </div>
   <div
-    className="sc-Axmtr bKgxpp"
+    className="sc-fzozJi fLAgcR"
   >
     <div
-      className="sc-AxhUy gqHuyY"
+      className="sc-AxheI jXSeTU"
       style={
         Object {
           "transform": "translateY(calc(-0%))",
@@ -142,25 +186,25 @@ exports[`Building - render and match snapshot 1`] = `
       }
     >
       <p
-        className="sc-AxgMl bJzgAf"
+        className="sc-Axmtr gUEXOW"
       >
         C: 
         0
         , T: 
       </p>
       <div
-        className="sc-AxheI bBMfsN"
+        className="sc-AxmLO knaBfg"
       />
       <div
-        className="sc-AxheI iIQMNt"
+        className="sc-AxmLO brFbYc"
       />
     </div>
   </div>
   <div
-    className="sc-Axmtr bKgxpp"
+    className="sc-fzozJi fLAgcR"
   >
     <div
-      className="sc-AxhUy gqHuyY"
+      className="sc-AxheI jXSeTU"
       style={
         Object {
           "transform": "translateY(calc(-0%))",
@@ -168,96 +212,96 @@ exports[`Building - render and match snapshot 1`] = `
       }
     >
       <p
-        className="sc-AxgMl bJzgAf"
+        className="sc-Axmtr gUEXOW"
       >
         C: 
         1
         , T: 
       </p>
       <div
-        className="sc-AxheI bBMfsN"
+        className="sc-AxmLO knaBfg"
       />
       <div
-        className="sc-AxheI iIQMNt"
+        className="sc-AxmLO brFbYc"
       />
     </div>
   </div>
   <div
-    className="sc-AxhCb hJpnPK"
+    className="sc-AxgMl gZCLeh"
     role="exit-floor"
   >
     <div
-      className="sc-AxjAm ghBzSx"
+      className="sc-AxiKw kABDHj"
     >
       <p>
         10
       </p>
     </div>
     <div
-      className="sc-AxjAm DgnVW"
+      className="sc-AxiKw mSMcy"
     >
       <p>
         9
       </p>
     </div>
     <div
-      className="sc-AxjAm euAsXx"
+      className="sc-AxiKw kiYTmr"
     >
       <p>
         8
       </p>
     </div>
     <div
-      className="sc-AxjAm ljETuG"
+      className="sc-AxiKw iDJVhy"
     >
       <p>
         7
       </p>
     </div>
     <div
-      className="sc-AxjAm hIZreI"
+      className="sc-AxiKw jTzsQE"
     >
       <p>
         6
       </p>
     </div>
     <div
-      className="sc-AxjAm gQikiy"
+      className="sc-AxiKw eovMFH"
     >
       <p>
         5
       </p>
     </div>
     <div
-      className="sc-AxjAm eYjwYl"
+      className="sc-AxiKw hhVuIp"
     >
       <p>
         4
       </p>
     </div>
     <div
-      className="sc-AxjAm hKmDaX"
+      className="sc-AxiKw gkCjGL"
     >
       <p>
         3
       </p>
     </div>
     <div
-      className="sc-AxjAm kdccyK"
+      className="sc-AxiKw beBYDA"
     >
       <p>
         2
       </p>
     </div>
     <div
-      className="sc-AxjAm fwPPRP"
+      className="sc-AxiKw jEQIX"
     >
       <p>
         1
       </p>
     </div>
     <div
-      className="sc-AxjAm hOHeui"
+      className="sc-AxiKw gcBlZw"
     >
       <p>
         0

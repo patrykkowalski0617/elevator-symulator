@@ -2,6 +2,12 @@
 
 exports[`StickMan - render and match snapshot 1`] = `
 <div
-  className="sc-AxjAm hvJXFA"
-/>
+  className="sc-AxjAm kiazaN"
+>
+  <p />
+  <div
+    className="sc-AxirZ dKhGXU"
+    color="hsl(NaN, 30%, 30%)"
+  />
+</div>
 `;

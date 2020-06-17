@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { BuildingContext } from "../context/BuildingContext";
+import { FloorsContext } from "../context/FloorsContext";
 
 const Container = styled.div`
     display: flex;
@@ -36,7 +37,7 @@ const Form = styled.form`
         border: none;
         input {
             font-size: 20px;
-            max-width: 100px;
+            width: 100px;
             text-align: right;
         }
     }
@@ -68,10 +69,23 @@ type StickManFormProps = {
 };
 
 const StickManForm = ({ floorNumber }: StickManFormProps) => {
-    const { setCreatingStickMan } = useContext(BuildingContext);
+    const { setCreatingStickMan, numberOfFloors } = useContext(BuildingContext);
+    const { addAllStickMansDestinations } = useContext(FloorsContext);
+
+    const [howMany, setHowMany] = useState<number>(1);
+    const [destination, setDestination] = useState<number>(0);
+
     const closeHandler = (e: any) => {
         e.preventDefault();
-        setCreatingStickMan(false);
+        setCreatingStickMan(null);
+    };
+
+    const submitHandler = (e: any) => {
+        e.preventDefault();
+        if (floorNumber !== destination) {
+            addAllStickMansDestinations(floorNumber, howMany, destination);
+            setCreatingStickMan(null);
+        }
     };
 
     return (
@@ -81,11 +95,39 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
                 <h3>Create Stickman on floor {floorNumber}</h3>
                 <fieldset>
                     <label htmlFor="how-many">How many:</label>
-                    <input type="number" id="how-many"></input>
+                    <input
+                        type="number"
+                        id="how-many"
+                        min={1}
+                        max={5}
+                        value={howMany}
+                        onChange={e => {
+                            setHowMany(Number(e.target.value));
+                        }}
+                    ></input>
                     <label htmlFor="destination">Destiantion:</label>
-                    <input type="number" id="destination"></input>
+                    <input
+                        type="number"
+                        id="destination"
+                        min={0}
+                        max={numberOfFloors - 1}
+                        style={
+                            floorNumber === destination
+                                ? { backgroundColor: "red" }
+                                : {}
+                        }
+                        value={destination}
+                        onChange={e => {
+                            setDestination(Number(e.target.value));
+                        }}
+                    ></input>
                 </fieldset>
-                <Submit>Submit</Submit>
+                <Submit
+                    onClick={submitHandler}
+                    disabled={floorNumber === destination}
+                >
+                    Submit
+                </Submit>
             </Form>
         </Container>
     );

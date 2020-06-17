@@ -48,32 +48,30 @@ const Floor = ({
         addCarFloorAssignment,
         allCarsFloorAssignments
     } = useContext(ShaftContext);
-    const { floorsWaitingForCar, addFloorWaitingForCar } = useContext(
-        FloorsContext
-    );
+    const {
+        floorsWaitingForCar,
+        addFloorWaitingForCar,
+        allStickMansDestinations
+    } = useContext(FloorsContext);
+    const stickMansDestinations: number[] =
+        allStickMansDestinations[floorNumber];
     const { setCreatingStickMan } = useContext(BuildingContext);
 
     const waitingForCar = floorsWaitingForCar[floorNumber];
 
     const [noCar, setNoCar] = useState<boolean>(false);
     const [assignedCar, setAssignedCar] = useState<number | null>(null);
-    const [stickManDestinations, setStickManDestinations] = useState<number[]>(
-        []
-    );
+
+    const stickMans = stickMansDestinations.map((item, index) => (
+        <StickMan key={index} stickId={index} destination={item} />
+    ));
 
     const call = () => {
         addFloorWaitingForCar(floorNumber);
     };
 
-    const createStickman = (destination: number, howMany: number) => {
-        setStickManDestinations([...stickManDestinations, destination]);
-    };
-
     const onClickHandler = () => {
-        // const destination = 1;
-        // const howMany = 1;
-        // createStickman(destination, howMany);
-        setCreatingStickMan(true);
+        setCreatingStickMan(floorNumber);
     };
 
     useEffect(() => {
@@ -108,7 +106,7 @@ const Floor = ({
                         <p style={noCar ? { background: "red" } : {}}>
                             {!noCar ? "" : "No available cars"}
                         </p>
-                        <StickMan />
+                        {stickMans}
                     </>
                     {waitingForCar ? (
                         <>

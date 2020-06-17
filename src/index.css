@@ -6,6 +6,16 @@
     /* border: none !important; */
 }
 
+*::before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*::after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 body {
     background-color: #333333;
 }

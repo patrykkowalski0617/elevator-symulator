@@ -5,7 +5,7 @@ exports[`StickManForm - render and match snapshot 1`] = `
   className="sc-AxjAm jBaJjh"
 >
   <form
-    className="sc-AxirZ eKZeFp"
+    className="sc-AxirZ lkjmCs"
   >
     <button
       className="sc-AxhCb fUpRBs"
@@ -24,7 +24,11 @@ exports[`StickManForm - render and match snapshot 1`] = `
       </label>
       <input
         id="how-many"
+        max={5}
+        min={1}
+        onChange={[Function]}
         type="number"
+        value={1}
       />
       <label
         htmlFor="destination"
@@ -33,11 +37,18 @@ exports[`StickManForm - render and match snapshot 1`] = `
       </label>
       <input
         id="destination"
+        max={10}
+        min={0}
+        onChange={[Function]}
+        style={Object {}}
         type="number"
+        value={0}
       />
     </fieldset>
     <button
       className="sc-AxiKw hcdXEi"
+      disabled={false}
+      onClick={[Function]}
     >
       Submit
     </button>

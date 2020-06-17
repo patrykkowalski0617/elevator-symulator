@@ -73,7 +73,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
     const [carPosition, setCarPosition] = useState<number>(currentFloor * 100);
     const [intervalId, setIntervalId] = useState<number | null>(null);
     const [carColor, setCarColor] = useState<string>(
-        floorColor(numberOfFloors, numberOfFloors - currentFloor - 1)
+        floorColor(numberOfFloors, currentFloor)
     );
     const [carState, setCarState] = useState<string>(allCarsState[carId]);
 
@@ -85,9 +85,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
     };
     const getCurrentFloor = (currentFloor: number) => {
         updateCarCurrentFloor(carId, currentFloor);
-        setCarColor(
-            floorColor(numberOfFloors, numberOfFloors - currentFloor - 1)
-        );
+        setCarColor(floorColor(numberOfFloors, currentFloor));
     };
     const currentPosition: number = carPosition;
     const targetFloor: number | undefined = carTarget(

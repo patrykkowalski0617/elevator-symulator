@@ -5,6 +5,12 @@ interface IContextProps {
     floorsWaitingForCar: boolean[];
     addFloorWaitingForCar: (floorNumber: number) => void;
     setFloorsWaitingForCar: (arr: boolean[]) => void;
+    allStickMansDestinations: number[][];
+    addAllStickMansDestinations: (
+        floorNumber: number,
+        howMany: number,
+        destination: number
+    ) => void;
 }
 
 export const FloorsContext = createContext({} as IContextProps);
@@ -16,10 +22,36 @@ const FloorsContextProvider = (props: { children: React.ReactNode }) => {
         Array(numberOfFloors).fill(false)
     );
 
+    const [allStickMansDestinations, setallStickMansDestinations] = useState<
+        number[][]
+    >(Array(numberOfFloors).fill([]));
+
     const addFloorWaitingForCar = (floorNumber: number) => {
         const _floorsWaitingForCar = [...floorsWaitingForCar];
         _floorsWaitingForCar.splice(floorNumber, 1, true);
         setFloorsWaitingForCar([..._floorsWaitingForCar]);
+    };
+
+    const addAllStickMansDestinations = (
+        floorNumber: number,
+        howMany: number,
+        destination: number
+    ) => {
+        const _allStickMansDestinations: number[][] = [
+            ...allStickMansDestinations
+        ];
+        const newStickMans: number[] = [];
+        // push number of destinations for each new StickMan
+        for (let i = 0; i < howMany; i++) {
+            newStickMans.push(destination);
+        }
+
+        const replaceStickMans = newStickMans.concat(
+            _allStickMansDestinations[floorNumber]
+        );
+        _allStickMansDestinations.splice(floorNumber, 1, replaceStickMans);
+
+        setallStickMansDestinations([..._allStickMansDestinations]);
     };
 
     return (
@@ -27,7 +59,9 @@ const FloorsContextProvider = (props: { children: React.ReactNode }) => {
             value={{
                 floorsWaitingForCar,
                 addFloorWaitingForCar,
-                setFloorsWaitingForCar
+                setFloorsWaitingForCar,
+                allStickMansDestinations,
+                addAllStickMansDestinations
             }}
         >
             {props.children}

@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Floor - render and match snapshot 1`] = `
-<div
-  className="sc-AxjAm fAYTwu"
-/>
-`;
