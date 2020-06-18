@@ -19,29 +19,32 @@ const Container = styled.div`
 const Form = styled.form`
     background-color: #445;
     padding: 30px;
-    width: 320px;
+    width: 250px;
     border: 5px solid #000;
     color: #eee;
     text-align: center;
     position: relative;
-    label,
-    input {
+    label {
         display: block;
-        margin: 15px auto 0;
         font-size: 15px;
     }
     button {
         cursor: pointer;
     }
     fieldset {
-        padding: 30px;
+        padding: 30px 0 15px;
         border: none;
-        input {
-            font-size: 20px;
-            width: 100px;
-            text-align: right;
-        }
     }
+`;
+
+const Input = styled.input<{ wrongData?: boolean }>`
+    display: block;
+    font-size: 15px;
+    font-size: 20px;
+    width: 100px;
+    text-align: right;
+    margin: 5px auto 0;
+    background-color: ${props => (props.wrongData ? "#f40" : "")};
 `;
 
 const Submit = styled.button`
@@ -66,8 +69,14 @@ const Close = styled.button`
 `;
 
 const ValidationInfo = styled.p`
-    font-size: 12px;
-    margin-top: 10px;
+    font-size: 10px;
+    position: absolute;
+    bottom: 5px;
+`;
+
+const Item = styled.div`
+    position: relative;
+    padding-bottom: 30px;
 `;
 
 type StickManFormProps = {
@@ -100,39 +109,39 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
                 <Close onClick={closeHandler}>x</Close>
                 <h3>Create Stickman on floor {floorNumber}</h3>
                 <fieldset>
-                    <label htmlFor="how-many">How many:</label>
-                    <input
-                        type="number"
-                        id="how-many"
-                        min={1}
-                        max={5}
-                        value={howMany}
-                        onChange={e => {
-                            setHowMany(Number(e.target.value));
-                        }}
-                    ></input>
-                    <label htmlFor="destination">Destiantion:</label>
-                    <input
-                        type="number"
-                        id="destination"
-                        min={0}
-                        max={numberOfFloors - 1}
-                        style={
-                            floorNumber === destination
-                                ? { backgroundColor: "red" }
-                                : {}
-                        }
-                        value={destination}
-                        onChange={e => {
-                            setDestination(Number(e.target.value));
-                        }}
-                    ></input>
-                    {floorNumber === destination ? (
-                        <ValidationInfo>
-                            Destiantion should be different than floor you
-                            create StickMan
-                        </ValidationInfo>
-                    ) : null}
+                    <Item>
+                        <label htmlFor="how-many">How many:</label>
+                        <Input
+                            type="number"
+                            id="how-many"
+                            min={1}
+                            max={5}
+                            value={howMany}
+                            onChange={e => {
+                                setHowMany(Number(e.target.value));
+                            }}
+                        ></Input>
+                    </Item>
+                    <Item>
+                        <label htmlFor="destination">Destiantion:</label>
+                        <Input
+                            type="number"
+                            id="destination"
+                            min={0}
+                            max={numberOfFloors - 1}
+                            wrongData={floorNumber === destination}
+                            value={destination}
+                            onChange={e => {
+                                setDestination(Number(e.target.value));
+                            }}
+                        ></Input>
+                        {floorNumber === destination ? (
+                            <ValidationInfo>
+                                Destiantion should be different than floor you
+                                create Stickman
+                            </ValidationInfo>
+                        ) : null}
+                    </Item>
                 </fieldset>
                 <Submit
                     onClick={submitHandler}

@@ -4,8 +4,8 @@ import styled from "styled-components";
 import Floor from "./Floor";
 import { floorColor } from "../style_mixin";
 
-const FloorWrapper = styled.div<{ floorWidth: number }>`
-    width: ${props => props.floorWidth}%;
+const FloorWrapper = styled.div<{ floorWidth: string }>`
+    width: ${props => props.floorWidth};
     border-style: solid;
     background: #555;
     border-width: 0 2px;
@@ -13,7 +13,7 @@ const FloorWrapper = styled.div<{ floorWidth: number }>`
 
 type FloorsProps = {
     role: string;
-    floorWidth: number;
+    floorWidth: string;
 };
 
 const Floors = ({ role, floorWidth }: FloorsProps) => {

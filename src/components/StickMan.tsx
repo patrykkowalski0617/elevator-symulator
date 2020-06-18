@@ -3,11 +3,24 @@ import styled from "styled-components";
 import { BuildingContext } from "../context/BuildingContext";
 import { floorColor } from "../style_mixin";
 
-const Container = styled.div<{ stickId: number }>`
+const Container = styled.div<{
+    stickId: number;
+    getIn: boolean;
+    numberOfPassengers: number;
+}>`
     position: absolute;
     bottom: 0;
     z-index: 1;
-    left: ${props => props.stickId * 20 + 10}px;
+    transition: 0.8s
+        ${props => {
+            console.log(props.stickId);
+            return `calc(0.2s * ${props.numberOfPassengers - props.stickId})`;
+        }}
+        ease-in-out left;
+    left: ${props =>
+        props.getIn
+            ? `calc(100% + 11px + 12 * ${props.stickId}px)`
+            : `${props.stickId * 20 + 10}px`};
     &:hover {
         bottom: 1px;
     }
@@ -39,15 +52,28 @@ const StickManStyled = styled.div<{ color: string }>`
 type StickManProps = {
     stickId: number;
     destination: number;
+    getIn: boolean;
+    numberOfPassengers: number;
 };
 
-const StickMan = ({ stickId, destination }: StickManProps) => {
+const StickMan = ({
+    stickId,
+    destination,
+    getIn,
+    numberOfPassengers
+}: StickManProps) => {
     const { numberOfFloors } = useContext(BuildingContext);
 
     const color = floorColor(numberOfFloors, destination);
 
     return (
-        <Container stickId={stickId}>
+        <Container
+            stickId={stickId}
+            getIn={getIn}
+            numberOfPassengers={numberOfPassengers}
+            // numberOfCars={numberOfCars}
+            // carWidth={carWidth}
+        >
             <p>{destination}</p>
             <StickManStyled color={color}></StickManStyled>
         </Container>

@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import Car from "./Car";
 
-export const ShaftStyled = styled.div<{ carWidth: number }>`
+export const ShaftStyled = styled.div<{ carWidth: string }>`
     background-color: #778;
-    width: ${props => props.carWidth}%;
+    width: ${props => props.carWidth};
     position: relative;
     display: flex;
     align-items: flex-end;
@@ -27,7 +27,7 @@ export const ShaftStyled = styled.div<{ carWidth: number }>`
 
 type ShaftProps = {
     numberOfCars: number;
-    carWidth: number;
+    carWidth: string;
     numberOfFloors: number;
 };
 

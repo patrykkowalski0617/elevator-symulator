@@ -25,8 +25,8 @@ const Building: React.FC = () => {
     );
 
     // Sizes
-    const carWidth: number = 10;
-    const floorWidth: number = (100 - carWidth * numberOfCars) / 2;
+    const carWidth: string = "64px";
+    const floorWidth: string = ` calc((100% - ${carWidth} * ${numberOfCars}) / 2)`;
 
     return (
         <>

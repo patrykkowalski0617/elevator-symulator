@@ -44,7 +44,7 @@ const Data = styled.p`
 `;
 
 const Door = styled.div<{ carState: string; carColor: string; left?: boolean }>`
-    width: ${props => (props.carState.includes("door-open") ? "10%; " : "50%")};
+    width: ${props => (props.carState.includes("door-open") ? "5px; " : "50%")};
     height: 100%;
     transition: 1s 0.2s ease-in-out width, 0.8s linear background-color;
     background-color: ${props => props.carColor};

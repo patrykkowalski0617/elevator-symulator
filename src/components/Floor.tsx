@@ -44,6 +44,14 @@ const CreateBtn = styled.button<{ waitingForCar: boolean }>`
     }
 `;
 
+const NoCarInfo = styled.p`
+    background-color: #f40;
+    height: 25px;
+    padding: 5px;
+    font-size: 15px;
+    line-height: 15px;
+`;
+
 type FloorProps = {
     floorNumber: number;
     numberOfFloors: number;
@@ -76,9 +84,17 @@ const Floor = ({
 
     const [noCar, setNoCar] = useState<boolean>(false);
     const [assignedCar, setAssignedCar] = useState<number | null>(null);
+    const [getIn, setGetIn] = useState<boolean>(false);
+    const [numberOfPassengers, setNumberOfPassengers] = useState<number>(1);
 
     const stickMans = stickMansDestinations.map((item, index) => (
-        <StickMan key={index} stickId={index} destination={item} />
+        <StickMan
+            key={index}
+            stickId={index}
+            destination={item}
+            getIn={getIn}
+            numberOfPassengers={numberOfPassengers}
+        />
     ));
 
     useEffect(() => {
@@ -114,13 +130,27 @@ const Floor = ({
         <FloorStyled numberOfFloors={numberOfFloors} floorColor={floorColor}>
             {role === "enter-floor" ? (
                 <>
+                    <button
+                        onClick={() => {
+                            setGetIn(true);
+                        }}
+                    >
+                        get in
+                    </button>
+                    <input
+                        style={{ width: "30px" }}
+                        type="number"
+                        onChange={e => {
+                            setNumberOfPassengers(Number(e.target.value));
+                        }}
+                        value={numberOfPassengers}
+                    ></input>
                     <CarInfo>
-                        {waitingForCar ? (
-                            <AssignedCar>
-                                {assignedCar !== null
-                                    ? `Car: ${assignedCar}`
-                                    : ""}
-                            </AssignedCar>
+                        {waitingForCar && assignedCar !== null ? (
+                            <AssignedCar>Car: {assignedCar}</AssignedCar>
+                        ) : null}
+                        {noCar ? (
+                            <NoCarInfo>No available cars</NoCarInfo>
                         ) : null}
                         <CreateBtn
                             data-floor-number={floorNumber}
@@ -130,13 +160,7 @@ const Floor = ({
                             +
                         </CreateBtn>
                     </CarInfo>
-
-                    <>
-                        <p style={noCar ? { background: "red" } : {}}>
-                            {!noCar ? "" : "No available cars"}
-                        </p>
-                        {stickMans}
-                    </>
+                    <>{stickMans}</>
                 </>
             ) : null}
 
