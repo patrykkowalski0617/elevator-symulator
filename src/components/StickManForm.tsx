@@ -17,8 +17,9 @@ const Container = styled.div`
 `;
 
 const Form = styled.form`
-    background-color: #333339;
+    background-color: #445;
     padding: 30px;
+    width: 320px;
     border: 5px solid #000;
     color: #eee;
     text-align: center;
@@ -50,7 +51,7 @@ const Submit = styled.button`
 
 const Close = styled.button`
     position: absolute;
-    background-color: #333339;
+    background-color: #445;
     color: #ccc;
     font-family: sans-serif;
     font-weight: bolder;
@@ -58,10 +59,15 @@ const Close = styled.button`
     height: 40px;
     font-size: 20px;
     border-radius: 100%;
-    border: 3px solid;
+    border: 2px solid;
     top: -20px;
     right: -20px;
     outline: none;
+`;
+
+const ValidationInfo = styled.p`
+    font-size: 12px;
+    margin-top: 10px;
 `;
 
 type StickManFormProps = {
@@ -121,6 +127,12 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
                             setDestination(Number(e.target.value));
                         }}
                     ></input>
+                    {floorNumber === destination ? (
+                        <ValidationInfo>
+                            Destiantion should be different than floor you
+                            create StickMan
+                        </ValidationInfo>
+                    ) : null}
                 </fieldset>
                 <Submit
                     onClick={submitHandler}

@@ -15,18 +15,33 @@ const FloorStyled = styled.div<{ numberOfFloors: number; floorColor: string }>`
     position: relative;
 `;
 
-const CarLight = styled.div`
-    background: orange;
-    width: 7px;
-    height: 7px;
-    margin: 7px 7px auto auto;
-    float: right;
-    border-radius: 100%;
+const AssignedCar = styled.div`
+    margin: 2px 7px;
 `;
 
-const AssignedCar = styled.div`
-    float: right;
-    margin: 2px 7px;
+const CarInfo = styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-wrap: wrap;
+`;
+
+const CreateBtn = styled.button<{ waitingForCar: boolean }>`
+    background-color: rgba(0, 0, 0, 0.5);
+    color: ${props => (props.waitingForCar ? "orange" : "#eee")};
+    font-weight: ${props => (props.waitingForCar ? "bold" : "normal")};
+    opacity: 0.6;
+    border: none;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 20px;
+    cursor: pointer;
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.15);
+        opacity: 0.8;
+    }
 `;
 
 type FloorProps = {
@@ -66,9 +81,12 @@ const Floor = ({
         <StickMan key={index} stickId={index} destination={item} />
     ));
 
-    const call = () => {
-        addFloorWaitingForCar(floorNumber);
-    };
+    useEffect(() => {
+        console.log(stickMansDestinations);
+        if (!waitingForCar && stickMansDestinations.length) {
+            addFloorWaitingForCar(floorNumber);
+        }
+    }, [stickMansDestinations]);
 
     const onClickHandler = () => {
         setCreatingStickMan(floorNumber);
@@ -96,28 +114,29 @@ const Floor = ({
         <FloorStyled numberOfFloors={numberOfFloors} floorColor={floorColor}>
             {role === "enter-floor" ? (
                 <>
-                    <>
-                        <button
-                            data-floor-number={floorNumber}
-                            onClick={onClickHandler}
-                        >
-                            create stickman
-                        </button>
-                        <p style={noCar ? { background: "red" } : {}}>
-                            {!noCar ? "" : "No available cars"}
-                        </p>
-                        {stickMans}
-                    </>
-                    {waitingForCar ? (
-                        <>
-                            <CarLight></CarLight>
+                    <CarInfo>
+                        {waitingForCar ? (
                             <AssignedCar>
                                 {assignedCar !== null
                                     ? `Car: ${assignedCar}`
                                     : ""}
                             </AssignedCar>
-                        </>
-                    ) : null}
+                        ) : null}
+                        <CreateBtn
+                            data-floor-number={floorNumber}
+                            onClick={onClickHandler}
+                            waitingForCar={waitingForCar}
+                        >
+                            +
+                        </CreateBtn>
+                    </CarInfo>
+
+                    <>
+                        <p style={noCar ? { background: "red" } : {}}>
+                            {!noCar ? "" : "No available cars"}
+                        </p>
+                        {stickMans}
+                    </>
                 </>
             ) : null}
 

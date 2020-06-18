@@ -6,6 +6,7 @@ import { floorColor } from "../style_mixin";
 const Container = styled.div<{ stickId: number }>`
     position: absolute;
     bottom: 0;
+    z-index: 1;
     left: ${props => props.stickId * 20 + 10}px;
     &:hover {
         bottom: 1px;

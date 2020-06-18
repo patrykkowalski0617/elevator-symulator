@@ -30,7 +30,7 @@ const Building: React.FC = () => {
 
     return (
         <>
-            {creatingStickMan ? (
+            {typeof creatingStickMan === "number" ? (
                 <StickManForm floorNumber={creatingStickMan} />
             ) : null}
             <BuildingStyled>

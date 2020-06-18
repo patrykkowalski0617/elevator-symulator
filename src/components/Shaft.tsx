@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Car from "./Car";
 
 export const ShaftStyled = styled.div<{ carWidth: number }>`
-    background: #777;
+    background-color: #778;
     width: ${props => props.carWidth}%;
     position: relative;
     display: flex;
