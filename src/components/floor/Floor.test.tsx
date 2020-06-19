@@ -1,19 +1,20 @@
 import React from "react";
-import Building from "./Building";
+import Floor from "./Floor";
 import renderer from "react-test-renderer";
-import ShaftContext from "../context/ShaftContext";
-import BuildingContext from "../context/BuildingContext";
-import FloorsContext from "../context/FloorsContext";
+import ShaftContext from "../../context/ShaftContext";
+import BuildingContext from "../../context/BuildingContext";
+import FloorsContext from "../../context/FloorsContext";
 
-test("Building - render and match snapshot", () => {
+test("Floor - render and match snapshot", () => {
     const tree = renderer.create(
         <BuildingContext>
             <ShaftContext>
                 <FloorsContext>
-                    <Building></Building>
+                    <Floor></Floor>
                 </FloorsContext>
             </ShaftContext>
         </BuildingContext>
     );
+
     expect(tree.toJSON()).toMatchSnapshot();
 });

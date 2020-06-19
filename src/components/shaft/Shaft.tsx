@@ -1,29 +1,6 @@
 import React from "react";
-import styled from "styled-components";
-import Car from "./Car";
-
-export const ShaftStyled = styled.div<{ carWidth: string }>`
-    background-color: #778;
-    width: ${props => props.carWidth};
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    &::before,
-    &::after {
-        display: block;
-        position: absolute;
-        height: 2px;
-        width: 100%;
-        background: #222;
-        content: "";
-    }
-    &::after {
-        bottom: 0;
-    }
-    &::before {
-        top: 0;
-    }
-`;
+import { ShaftStyled } from "./ShaftStyled";
+import Car from "../car/Car";
 
 type ShaftProps = {
     numberOfCars: number;

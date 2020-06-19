@@ -1,15 +1,8 @@
 import React, { useContext } from "react";
-import { BuildingContext } from "../context/BuildingContext";
-import styled from "styled-components";
-import Floor from "./Floor";
-import { floorColor } from "../style_mixin";
-
-const FloorWrapper = styled.div<{ floorWidth: string }>`
-    width: ${props => props.floorWidth};
-    border-style: solid;
-    background: #555;
-    border-width: 0 2px;
-`;
+import { BuildingContext } from "../../context/BuildingContext";
+import Floor from "../floor/Floor";
+import { floorColor } from "../../style_mixin";
+import { FloorWrapper } from "./FloorsStyled";
 
 type FloorsProps = {
     role: string;

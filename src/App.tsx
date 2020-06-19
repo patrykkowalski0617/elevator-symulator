@@ -1,5 +1,5 @@
 import React from "react";
-import Building from "./components/Building";
+import Building from "./components/building/Building";
 import BuildingContext from "./context/BuildingContext";
 import ShaftContext from "./context/ShaftContext";
 import FloorsContext from "./context/FloorsContext";

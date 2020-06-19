@@ -1,5 +1,6 @@
 import React from "react";
-import Shaft, { ShaftStyled } from "./Shaft";
+import Shaft from "./Shaft";
+import { ShaftStyled } from "./ShaftStyled";
 import renderer from "react-test-renderer";
 import { render, cleanup } from "@testing-library/react";
 

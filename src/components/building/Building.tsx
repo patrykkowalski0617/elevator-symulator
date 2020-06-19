@@ -1,23 +1,10 @@
 import React, { useContext } from "react";
-import { BuildingContext } from "../context/BuildingContext";
-import Floors from "./Floors";
-import styled from "styled-components";
-import Shaft from "./Shaft";
-import StickManForm from "./StickManForm";
+import { BuildingContext } from "../../context/BuildingContext";
+import Floors from "../floors/Floors";
+import { BuildingStyled } from "./BuildingStyled";
+import Shaft from "../shaft/Shaft";
+import StickManForm from "../stickman_form/StickManForm";
 
-const BuildingStyled = styled.div`
-    height: 90vh;
-    width: 70vw;
-    max-width: 600px;
-    min-width: 320px;
-    margin: 5vh auto;
-    background: #000;
-    position: relative;
-    display: flex;
-    flex-flow: row wrap;
-    border-style: solid;
-    border-width: 6px 4px;
-`;
 /**
  * TO DO
  * @Sizes to be removed and used from BuildingContext
