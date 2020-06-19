@@ -27,10 +27,9 @@ const CarInfo = styled.div`
     flex-wrap: wrap;
 `;
 
-const CreateBtn = styled.button<{ waitingForCar: boolean }>`
+const CreateBtn = styled.button`
     background-color: rgba(0, 0, 0, 0.5);
-    color: ${props => (props.waitingForCar ? "orange" : "#eee")};
-    font-weight: ${props => (props.waitingForCar ? "bold" : "normal")};
+    color: #eee;
     opacity: 0.6;
     border: none;
     width: 25px;
@@ -50,6 +49,32 @@ const NoCarInfo = styled.p`
     padding: 5px;
     font-size: 15px;
     line-height: 15px;
+`;
+
+const Light = styled.div<{ waitingForCar: boolean }>`
+    position: relative;
+    width: 25px;
+    height: 25px;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0.6;
+    &::before,
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        border: 7px solid;
+        left: 5.5px;
+    }
+    &::before {
+        border-color: transparent transparent orange transparent;
+        top: -3px;
+        opacity: ${props => (props.waitingForCar ? "1" : "0.2")};
+    }
+    &::after {
+        border-color: orange transparent transparent transparent;
+        bottom: -3px;
+        opacity: ${props => (false ? "1" : "0.2")};
+    }
 `;
 
 type FloorProps = {
@@ -94,11 +119,11 @@ const Floor = ({
             destination={item}
             getIn={getIn}
             numberOfPassengers={numberOfPassengers}
+            assignedCar={assignedCar}
         />
     ));
 
     useEffect(() => {
-        console.log(stickMansDestinations);
         if (!waitingForCar && stickMansDestinations.length) {
             addFloorWaitingForCar(floorNumber);
         }
@@ -152,10 +177,10 @@ const Floor = ({
                         {noCar ? (
                             <NoCarInfo>No available cars</NoCarInfo>
                         ) : null}
+                        <Light waitingForCar={waitingForCar}></Light>
                         <CreateBtn
                             data-floor-number={floorNumber}
                             onClick={onClickHandler}
-                            waitingForCar={waitingForCar}
                         >
                             +
                         </CreateBtn>

@@ -7,6 +7,8 @@ const Container = styled.div<{
     stickId: number;
     getIn: boolean;
     numberOfPassengers: number;
+    assignedCar: number | null;
+    carWidth: string;
 }>`
     position: absolute;
     bottom: 0;
@@ -19,7 +21,7 @@ const Container = styled.div<{
         ease-in-out left;
     left: ${props =>
         props.getIn
-            ? `calc(100% + 11px + 12 * ${props.stickId}px)`
+            ? `calc(100% + ${props.assignedCar} * ${props.carWidth} + 11px + 12 * ${props.stickId}px)`
             : `${props.stickId * 20 + 10}px`};
     &:hover {
         bottom: 1px;
@@ -54,25 +56,27 @@ type StickManProps = {
     destination: number;
     getIn: boolean;
     numberOfPassengers: number;
+    assignedCar: number | null;
 };
 
 const StickMan = ({
     stickId,
     destination,
     getIn,
-    numberOfPassengers
+    numberOfPassengers,
+    assignedCar
 }: StickManProps) => {
-    const { numberOfFloors } = useContext(BuildingContext);
+    const { numberOfFloors, carWidth } = useContext(BuildingContext);
 
-    const color = floorColor(numberOfFloors, destination);
+    const color = floorColor({ numberOfFloors, floorNumber: destination });
 
     return (
         <Container
             stickId={stickId}
             getIn={getIn}
             numberOfPassengers={numberOfPassengers}
-            // numberOfCars={numberOfCars}
-            // carWidth={carWidth}
+            assignedCar={assignedCar}
+            carWidth={carWidth}
         >
             <p>{destination}</p>
             <StickManStyled color={color}></StickManStyled>

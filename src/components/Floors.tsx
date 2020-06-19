@@ -28,10 +28,10 @@ const Floors = ({ role, floorWidth }: FloorsProps) => {
                     role={role}
                     floorNumber={numberOfFloors - i - 1}
                     numberOfFloors={numberOfFloors}
-                    floorColor={floorColor(
+                    floorColor={floorColor({
                         numberOfFloors,
-                        numberOfFloors - i - 1
-                    )}
+                        floorNumber: numberOfFloors - i - 1
+                    })}
                 ></Floor>
             );
         }

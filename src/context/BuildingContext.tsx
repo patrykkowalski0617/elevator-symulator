@@ -9,6 +9,8 @@ interface IContextProps {
     setAutomotion: (b: boolean) => void;
     creatingStickMan: number | null;
     setCreatingStickMan: (floorNumber: number | null) => void;
+    carWidth: string;
+    floorWidth: string;
 }
 
 export const BuildingContext = createContext({} as IContextProps);
@@ -18,7 +20,12 @@ const BuildingContextProvider = (props: { children: React.ReactNode }) => {
     const howManyCars = Math.floor(numberOfFloors / 5);
     const [numberOfCars, setNnmberOfCars] = useState(howManyCars);
     const [automotion, setAutomotion] = useState(false);
-    const [creatingStickMan, setCreatingStickMan] = useState<number | null>(null);
+    const [creatingStickMan, setCreatingStickMan] = useState<number | null>(
+        null
+    );
+
+    const carWidth: string = "64px";
+    const floorWidth: string = ` calc((100% - ${carWidth} * ${numberOfCars}) / 2)`;
 
     return (
         <BuildingContext.Provider
@@ -30,7 +37,9 @@ const BuildingContextProvider = (props: { children: React.ReactNode }) => {
                 automotion,
                 setAutomotion,
                 creatingStickMan,
-                setCreatingStickMan
+                setCreatingStickMan,
+                carWidth,
+                floorWidth
             }}
         >
             {props.children}

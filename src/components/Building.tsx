@@ -18,7 +18,10 @@ const BuildingStyled = styled.div`
     border-style: solid;
     border-width: 6px 4px;
 `;
-
+/**
+ * TO DO
+ * @Sizes to be removed and used from BuildingContext
+ */
 const Building: React.FC = () => {
     const { numberOfFloors, numberOfCars, creatingStickMan } = useContext(
         BuildingContext

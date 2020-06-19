@@ -1,6 +1,11 @@
 // This part of code is supposed to be run
 // before ShaftContext is updating allCarsFloorAssignments by addCarFloorAssignment
 
+/**
+ * TO DO:
+ * @tolerance 0 when car is not moving
+ */
+
 interface IParam {
     floorNumber: number;
     allCarsCurrentFloor: number[];
