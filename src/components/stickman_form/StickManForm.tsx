@@ -35,25 +35,21 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
         }
     };
 
+    // mange form using keyboard
+    window.addEventListener("keydown", e => {
+        if (e.key === "Escape") {
+            setCreatingStickMan(null);
+        } else if (e.key === "Enter") {
+            submitHandler(e);
+        }
+    });
+
     return (
         <Container>
             <Form>
                 <Close onClick={closeHandler}>x</Close>
                 <h3>Create Stickman on floor {floorNumber}</h3>
                 <fieldset>
-                    <Item>
-                        <label htmlFor="how-many">How many:</label>
-                        <Input
-                            type="number"
-                            id="how-many"
-                            min={1}
-                            max={5}
-                            value={howMany}
-                            onChange={e => {
-                                setHowMany(Number(e.target.value));
-                            }}
-                        ></Input>
-                    </Item>
                     <Item>
                         <label htmlFor="destination">Destiantion:</label>
                         <Input
@@ -66,6 +62,7 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
                             onChange={e => {
                                 setDestination(Number(e.target.value));
                             }}
+                            autoFocus={true}
                         ></Input>
                         {floorNumber === destination ? (
                             <ValidationInfo>
@@ -73,6 +70,19 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
                                 create Stickman
                             </ValidationInfo>
                         ) : null}
+                    </Item>
+                    <Item>
+                        <label htmlFor="how-many">How many:</label>
+                        <Input
+                            type="number"
+                            id="how-many"
+                            min={1}
+                            max={5}
+                            value={howMany}
+                            onChange={e => {
+                                setHowMany(Number(e.target.value));
+                            }}
+                        ></Input>
                     </Item>
                 </fieldset>
                 <Submit
