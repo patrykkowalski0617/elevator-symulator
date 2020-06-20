@@ -1,13 +1,11 @@
 const floorColor = ({
     numberOfFloors,
-    floorNumber,
-    s = 30,
-    l = 30
+    floorNumber
 }: {
     numberOfFloors: number;
     floorNumber: number;
     s?: number | undefined;
     l?: number | undefined;
-}) => `hsl(${(360 / numberOfFloors) * floorNumber}, ${s}%, ${l}%)`;
+}) => `hsla(${(360 / numberOfFloors) * floorNumber}, 50%, 30%, 0.5)`;
 
 export default floorColor;

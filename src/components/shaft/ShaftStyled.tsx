@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ShaftStyled = styled.div<{ carWidth: string }>`
-    background-color: #778;
+    background-color: #444449;
     width: ${props => props.carWidth};
     position: relative;
     display: flex;

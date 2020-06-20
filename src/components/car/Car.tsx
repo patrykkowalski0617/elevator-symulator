@@ -3,6 +3,7 @@ import { CarStyled, Data, Door } from "./CarStyled";
 import { ShaftContext } from "../../context/ShaftContext";
 import { carTarget, move } from "./logic";
 import { floorColor } from "../../style_mixin";
+import StickMan from "../stickman/StickMan";
 
 type CarProps = { numberOfFloors: number; carId: number };
 
@@ -20,7 +21,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
     const [carPosition, setCarPosition] = useState<number>(currentFloor * 100);
     const [intervalId, setIntervalId] = useState<number | null>(null);
     const [carColor, setCarColor] = useState<string>(
-        floorColor({ numberOfFloors, floorNumber: currentFloor, s: 36, l: 29 })
+        floorColor({ numberOfFloors, floorNumber: currentFloor })
     );
     const [carState, setCarState] = useState<string>(allCarsState[carId]);
 
@@ -83,6 +84,13 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
             <Data>
                 C: {carId}, T: {floorAssignments ? floorAssignments[0] : ""}
             </Data>
+            {/* <StickMan
+                stickId={0}
+                destination={0}
+                getIn={false}
+                numberOfPassengers={0}
+                assignedCar={0}
+            /> */}
             <Door left={true} carColor={carColor} carState={carState}></Door>
             <Door carColor={carColor} carState={carState}></Door>
         </CarStyled>

@@ -59,17 +59,17 @@ export const Light = styled.div<{ waitingForCar: boolean }>`
         content: "";
         display: block;
         position: absolute;
-        border: 7px solid;
-        left: 5.5px;
+        border: 6px solid;
+        left: 6.5px;
     }
     &::before {
-        border-color: transparent transparent orange transparent;
-        top: -3px;
+        border-color: transparent transparent #eee transparent;
+        top: -1px;
         opacity: ${props => (props.waitingForCar ? "1" : "0.2")};
     }
     &::after {
-        border-color: orange transparent transparent transparent;
-        bottom: -3px;
+        border-color: #eee transparent transparent transparent;
+        bottom: -1px;
         opacity: ${props => (false ? "1" : "0.2")};
     }
 `;

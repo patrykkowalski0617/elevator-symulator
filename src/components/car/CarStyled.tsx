@@ -4,7 +4,7 @@ export const CarStyled = styled.div<{ numberOfFloors: number }>`
     text-align: center;
     width: 100%;
     height: ${props => 100 / props.numberOfFloors}%;
-    background-color: #999;
+    background-color: #555;
     border-style: solid;
     border-color: #222;
     border-width: 2px 1px;
@@ -54,5 +54,5 @@ export const Door = styled.div<{
     border-left-width: ${props => (props.left ? "" : "0.5px")};
     border-right-width: ${props => (props.left ? "0.5px" : "")};
     position: absolute;
-    opacity: 0.9;
+    z-index: 1;
 `;
