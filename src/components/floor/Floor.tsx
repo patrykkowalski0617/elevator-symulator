@@ -42,7 +42,6 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     const [noCar, setNoCar] = useState<boolean>(false);
     const [assignedCars, setAssignedCars] = useState<number[]>([]);
     const [getIn, setGetIn] = useState<boolean>(false);
-    const [numberOfPassengers, setNumberOfPassengers] = useState<number>(1);
     const [carsOnFloor, setCarsOnFloor] = useState<number[]>([]);
 
     // when some car reach floor it suppose to share data beetween cars and floor
@@ -57,7 +56,13 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
                 !carsOnFloor.includes(i)
             ) {
                 console.log("car " + i + " came");
-                setCarsOnFloor([...carsOnFloor, i]);
+                setTimeout(() => {
+                    setGetIn(true);
+                    setTimeout(() => {
+                        addPassengers(i, 0);
+                    }, 1000);
+                    setCarsOnFloor([...carsOnFloor, i]);
+                }, 1000);
             }
         }
     }, [allCarsState]);
@@ -126,48 +131,25 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
 
     return (
         <FloorStyled numberOfFloors={numberOfFloors} floorColor={floorColor}>
-            <>
-                <button
-                    onClick={() => {
-                        setGetIn(true);
-                        addPassengers(carsOnFloor[0], 0);
-                    }}
-                >
-                    get in
-                </button>
-                <input
-                    style={{ width: "30px" }}
-                    type="number"
-                    onChange={e => {
-                        setNumberOfPassengers(Number(e.target.value));
-                    }}
-                    value={numberOfPassengers}
-                ></input>
-                <CarInfo>
-                    {waitingForCar.up ||
-                    (waitingForCar.down && assignedCars.length) ? (
-                        <AssignedCars>
-                            Cars: {assignedCars.join(", ")}
-                        </AssignedCars>
-                    ) : null}
-                    {noCar ? <NoCarInfo>No available cars</NoCarInfo> : null}
-                    <CarInfoItem>
-                        <Light
-                            waitingForCar={waitingForCar}
-                            noCar={noCar}
-                        ></Light>
-                    </CarInfoItem>
-                    <CarInfoItem>
-                        <CreateBtn
-                            data-floor-number={floorNumber}
-                            onClick={createStickmanHandler}
-                        >
-                            +
-                        </CreateBtn>
-                    </CarInfoItem>
-                </CarInfo>
-                {stickMans}
-            </>
+            <CarInfo>
+                {waitingForCar.up ||
+                (waitingForCar.down && assignedCars.length) ? (
+                    <AssignedCars>Cars: {assignedCars.join(", ")}</AssignedCars>
+                ) : null}
+                {noCar ? <NoCarInfo>No available cars</NoCarInfo> : null}
+                <CarInfoItem>
+                    <Light waitingForCar={waitingForCar} noCar={noCar}></Light>
+                </CarInfoItem>
+                <CarInfoItem>
+                    <CreateBtn
+                        data-floor-number={floorNumber}
+                        onClick={createStickmanHandler}
+                    >
+                        +
+                    </CreateBtn>
+                </CarInfoItem>
+            </CarInfo>
+            {stickMans}
         </FloorStyled>
     );
 };
