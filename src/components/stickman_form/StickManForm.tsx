@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { BuildingContext } from "../../context/BuildingContext";
 import { FloorsContext } from "../../context/FloorsContext";
 import {
@@ -36,12 +36,20 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
     };
 
     // mange form using keyboard
-    window.addEventListener("keydown", e => {
-        if (e.key === "Escape") {
-            setCreatingStickMan(null);
-        } else if (e.key === "Enter") {
-            submitHandler(e);
-        }
+    useEffect(() => {
+        const manageKeyboard = (e: any) => {
+            if (e.key === "Escape") {
+                setCreatingStickMan(null);
+            } else if (e.key === "Enter" || e.key === " ") {
+                submitHandler(e);
+            }
+        };
+
+        window.addEventListener("keydown", manageKeyboard);
+
+        return () => {
+            window.removeEventListener("keydown", manageKeyboard);
+        };
     });
 
     return (
