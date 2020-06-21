@@ -12,7 +12,7 @@ export const FloorStyled = styled.div<{
     position: relative;
 `;
 
-export const AssignedCar = styled.div`
+export const AssignedCars = styled.div`
     margin: 2px 7px;
 `;
 
@@ -24,16 +24,27 @@ export const CarInfo = styled.div`
     flex-wrap: wrap;
 `;
 
-export const CreateBtn = styled.button`
-    background-color: rgba(0, 0, 0, 0.5);
+export const CarInfoItem = styled.div`
+    margin: 1px;
     color: #eee;
-    opacity: 0.6;
     border: none;
-    width: 25px;
+    width: 26px;
     height: 25px;
     line-height: 25px;
     font-size: 20px;
+    > * {
+        width: 100%;
+        height: 100%;
+        font-size: inherit;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0.6;
+        color: inherit;
+    }
+`;
+
+export const CreateBtn = styled.button`
     cursor: pointer;
+    border: none;
     &:hover {
         background-color: rgba(0, 0, 0, 0.15);
         opacity: 0.8;
@@ -48,11 +59,15 @@ export const NoCarInfo = styled.p`
     line-height: 15px;
 `;
 
-export const Light = styled.div<{ waitingForCar: boolean }>`
+export const Light = styled.div<{
+    waitingForCar: { up: boolean; down: boolean };
+    noCar: boolean;
+}>`
     position: relative;
-    width: 25px;
-    height: 25px;
-    background-color: rgba(0, 0, 0, 0.5);
+    ${props =>
+        props.noCar
+            ? "box-shadow: #f40 1px 1px 0px inset, #f40 -1px -1px 0px inset;"
+            : ""}
     opacity: 0.6;
     &::before,
     &::after {
@@ -60,16 +75,16 @@ export const Light = styled.div<{ waitingForCar: boolean }>`
         display: block;
         position: absolute;
         border: 6px solid;
-        left: 6.5px;
+        left: 7px;
     }
     &::before {
         border-color: transparent transparent #eee transparent;
         top: -1px;
-        opacity: ${props => (props.waitingForCar ? "1" : "0.2")};
+        opacity: ${props => (props.waitingForCar.up ? "1" : "0.2")};
     }
     &::after {
         border-color: #eee transparent transparent transparent;
         bottom: -1px;
-        opacity: ${props => (false ? "1" : "0.2")};
+        opacity: ${props => (props.waitingForCar.down ? "1" : "0.2")};
     }
 `;

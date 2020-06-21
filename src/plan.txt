@@ -1,32 +1,6 @@
-Floor.js call 
--> theNearestCar (distanceToAvailableCars -> theNearestCar)
--> ShaftContext (addCarFloorAssignment)
--> detect carFloorAssignment changed
--> Car.js (carTarget (theNearestFloors -> carTarget))
+floor - które stickmany do której windy
 
-ShaftContext
-    Variables 
-        allCarsMoveMode // ready, go-up, go-down, door-open
-        allCarsFloorAssignments // arrays with assigned floors
-        allCarsCurrentFloor // arrays with present floors
+winda - informacja o wolnych miejscach, wsiadanie stickmana połączone z zawołaniem 
+windy na piętrze na które jedzie, ale bez zapalania lampki
 
-Car
-    Variables passed
-        floorHeight
-        carId
-    Variables in 
-        carTarget // return floor number
-        isMoveContinuation // true, false
-        moveContinuationData
-        speedLevel // from 0 (minimum speed) to 1 (maximum speed)
-
-Floor
-    Variables passed
-        floorHeight, floorNumber, role
-    Variables in 
-
-
-Logic modules
-    moveFrame(allCarsMoveMode, isMoveContinuation) // call by interval
-    assignFloorToCar
-    intervalSetter // sets and clear interval depends on states
+// first Stickman wich get in determinate car direction and main target floor

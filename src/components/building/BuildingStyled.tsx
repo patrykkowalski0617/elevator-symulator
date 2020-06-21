@@ -6,10 +6,11 @@ export const BuildingStyled = styled.div`
     max-width: 600px;
     min-width: 320px;
     margin: 5vh auto;
-    background: #000;
+    background: #222;
     position: relative;
     display: flex;
     flex-flow: row wrap;
     border-style: solid;
+    border-color: #222;
     border-width: 6px 4px;
 `;

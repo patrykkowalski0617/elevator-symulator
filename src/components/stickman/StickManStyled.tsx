@@ -6,20 +6,22 @@ export const Container = styled.div<{
     numberOfPassengers: number;
     assignedCar: number | null;
     carWidth: string;
+    place: string;
 }>`
     position: absolute;
     bottom: 0;
     z-index: 1;
     transition: 0.8s
         ${props => {
-            console.log(props.stickId);
             return `calc(0.2s * ${props.numberOfPassengers - props.stickId})`;
         }}
         ease-in-out left;
     left: ${props =>
-        props.getIn
+        props.getIn && props.place === "floor"
             ? `calc(100% + ${props.assignedCar} * ${props.carWidth} + 11px + 12 * ${props.stickId}px)`
             : `${props.stickId * 20 + 10}px`};
+    left: ${props =>
+        props.place === "car" ? `${7 + 12 * props.stickId}px` : ""};
     &:hover {
         bottom: 1px;
     }

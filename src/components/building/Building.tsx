@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { BuildingContext } from "../../context/BuildingContext";
-import Floors from "../floors/Floors";
+import FloorsStack from "../floors_stack/FloorsStack";
 import { BuildingStyled } from "./BuildingStyled";
 import Shaft from "../shaft/Shaft";
 import StickManForm from "../stickman_form/StickManForm";
@@ -24,13 +24,19 @@ const Building: React.FC = () => {
                 <StickManForm floorNumber={creatingStickMan} />
             ) : null}
             <BuildingStyled>
-                <Floors role={"enter-floor"} floorWidth={floorWidth}></Floors>
+                <FloorsStack
+                    role={"enter-floor"}
+                    floorWidth={floorWidth}
+                ></FloorsStack>
                 <Shaft
                     numberOfCars={numberOfCars}
                     carWidth={carWidth}
                     numberOfFloors={numberOfFloors}
                 ></Shaft>
-                <Floors role={"exit-floor"} floorWidth={floorWidth}></Floors>
+                <FloorsStack
+                    role={"exit-floor"}
+                    floorWidth={floorWidth}
+                ></FloorsStack>
             </BuildingStyled>
         </>
     );

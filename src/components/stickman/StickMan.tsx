@@ -9,6 +9,7 @@ type StickManProps = {
     getIn: boolean;
     numberOfPassengers: number;
     assignedCar: number | null;
+    place: string;
 };
 
 const StickMan = ({
@@ -16,7 +17,8 @@ const StickMan = ({
     destination,
     getIn,
     numberOfPassengers,
-    assignedCar
+    assignedCar,
+    place
 }: StickManProps) => {
     const { numberOfFloors, carWidth } = useContext(BuildingContext);
 
@@ -29,6 +31,7 @@ const StickMan = ({
             numberOfPassengers={numberOfPassengers}
             assignedCar={assignedCar}
             carWidth={carWidth}
+            place={place}
         >
             <p>{destination}</p>
             <StickManStyled color={color}></StickManStyled>

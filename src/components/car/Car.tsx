@@ -13,15 +13,17 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         updateCarState,
         allCarsCurrentFloor,
         allCarsFloorAssignments,
-        allCarsState
+        allCarsState,
+        allCarsStickMansDestinations
     } = useContext(ShaftContext);
     const floorAssignments: number[] = allCarsFloorAssignments[carId];
     const currentFloor: number = allCarsCurrentFloor[carId];
+    const stickMansDestinations: number[] = allCarsStickMansDestinations[carId];
 
     const [carPosition, setCarPosition] = useState<number>(currentFloor * 100);
     const [intervalId, setIntervalId] = useState<number | null>(null);
     const [carColor, setCarColor] = useState<string>(
-        floorColor({ numberOfFloors, floorNumber: currentFloor })
+        floorColor({ numberOfFloors, floorNumber: carPosition })
     );
     const [carState, setCarState] = useState<string>(allCarsState[carId]);
 
@@ -36,9 +38,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         setCarColor(
             floorColor({
                 numberOfFloors,
-                floorNumber: currentFloor,
-                s: 36,
-                l: 29
+                floorNumber: currentFloor
             })
         );
     };
@@ -74,6 +74,23 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         // eslint-disable-next-line
     }, [floorAssignments]);
 
+    const stickMans = stickMansDestinations.map(
+        (item: number, index: number) => {
+            const assignedCar = null;
+            return (
+                <StickMan
+                    key={index}
+                    stickId={index}
+                    destination={item}
+                    getIn={false}
+                    numberOfPassengers={1}
+                    assignedCar={0}
+                    place={"car"}
+                />
+            );
+        }
+    );
+
     return (
         <CarStyled
             numberOfFloors={numberOfFloors}
@@ -84,13 +101,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
             <Data>
                 C: {carId}, T: {floorAssignments ? floorAssignments[0] : ""}
             </Data>
-            {/* <StickMan
-                stickId={0}
-                destination={0}
-                getIn={false}
-                numberOfPassengers={0}
-                assignedCar={0}
-            /> */}
+            {stickMans}
             <Door left={true} carColor={carColor} carState={carState}></Door>
             <Door carColor={carColor} carState={carState}></Door>
         </CarStyled>

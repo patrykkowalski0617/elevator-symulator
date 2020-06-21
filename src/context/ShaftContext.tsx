@@ -9,6 +9,8 @@ interface IContextProps {
     removeCarFloorAssignment: (carId: number, floorNumber: number) => void;
     allCarsState: string[];
     updateCarState: (carId: number, state: string) => void;
+    allCarsStickMansDestinations: number[][];
+    addPassengers: (carId: number, destination: number) => void;
 }
 
 export const ShaftContext = createContext({} as IContextProps);
@@ -24,6 +26,10 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
     const [allCarsFloorAssignments, setAllCarsFloorAssignments] = useState(
         initArr([])
     );
+    const [
+        allCarsStickMansDestinations,
+        setAllCarsStickMansDestinations
+    ] = useState(initArr([]));
 
     const updateCarCurrentFloor = (carId: number, currentFloor: number) => {
         const _allCarsCurrentFloor = [...allCarsCurrentFloor];
@@ -54,6 +60,28 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
         }
     };
 
+    const addPassengers = (carId: number, destination: number) => {
+        if (allCarsStickMansDestinations[carId].length < 4) {
+            if (carId !== null) {
+                const _allCarsStickMansDestinations = [
+                    ...allCarsStickMansDestinations
+                ];
+                const carPassengers = [..._allCarsStickMansDestinations[carId]];
+                const carPassengersUpdated = [...carPassengers, destination];
+                _allCarsStickMansDestinations.splice(
+                    carId,
+                    1,
+                    carPassengersUpdated
+                );
+                setAllCarsStickMansDestinations([
+                    ..._allCarsStickMansDestinations
+                ]);
+            }
+        } else {
+            console.warn("car is full!");
+        }
+    };
+
     const removeCarFloorAssignment = (carId: number, floorNumber: number) => {
         const _allCarsFloorAssignments = [...allCarsFloorAssignments];
         const carFloorAssignment = [..._allCarsFloorAssignments[carId]];
@@ -73,7 +101,9 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
                 addCarFloorAssignment,
                 removeCarFloorAssignment,
                 allCarsState,
-                updateCarState
+                updateCarState,
+                allCarsStickMansDestinations,
+                addPassengers
             }}
         >
             {props.children}

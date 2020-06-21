@@ -2,9 +2,11 @@ import React, { createContext, useState, useContext } from "react";
 import { BuildingContext } from "./BuildingContext";
 
 interface IContextProps {
-    floorsWaitingForCar: boolean[];
-    addFloorWaitingForCar: (floorNumber: number) => void;
-    setFloorsWaitingForCar: (arr: boolean[]) => void;
+    floorsWaitingForCar: { up: boolean; down: boolean }[];
+    addFloorWaitingForCar: (
+        floorNumber: number,
+        data: { up: boolean; down: boolean }
+    ) => void;
     allStickMansDestinations: number[][];
     addAllStickMansDestinations: (
         floorNumber: number,
@@ -19,16 +21,18 @@ const FloorsContextProvider = (props: { children: React.ReactNode }) => {
     const { numberOfFloors } = useContext(BuildingContext);
 
     const [floorsWaitingForCar, setFloorsWaitingForCar] = useState(
-        Array(numberOfFloors).fill(false)
+        Array(numberOfFloors).fill({ up: false, down: false })
     );
-
     const [allStickMansDestinations, setallStickMansDestinations] = useState<
         number[][]
     >(Array(numberOfFloors).fill([]));
 
-    const addFloorWaitingForCar = (floorNumber: number) => {
+    const addFloorWaitingForCar = (
+        floorNumber: number,
+        data: { up: boolean; down: boolean }
+    ) => {
         const _floorsWaitingForCar = [...floorsWaitingForCar];
-        _floorsWaitingForCar.splice(floorNumber, 1, true);
+        _floorsWaitingForCar.splice(floorNumber, 1, data);
         setFloorsWaitingForCar([..._floorsWaitingForCar]);
     };
 
@@ -59,7 +63,6 @@ const FloorsContextProvider = (props: { children: React.ReactNode }) => {
             value={{
                 floorsWaitingForCar,
                 addFloorWaitingForCar,
-                setFloorsWaitingForCar,
                 allStickMansDestinations,
                 addAllStickMansDestinations
             }}
