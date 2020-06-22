@@ -38,62 +38,73 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
         allFloorsStickMansDestinations[floorNumber];
     const waitingForCar: { up: boolean; down: boolean } =
         floorsWaitingForCar[floorNumber];
-    const { setCreatingStickMan } = useContext(BuildingContext);
+    const { setCreatingStickMan, numberOfCars } = useContext(BuildingContext);
 
     const [noCar, setNoCar] = useState<boolean>(false);
     const [assignedCars, setAssignedCars] = useState<number[]>([]);
     const [carsOnFloor, setCarsOnFloor] = useState<number[]>([]);
-    const [indexesForGetIn, setIndexesForGetIn] = useState<number[]>([]);
+    const [indexesForGetIn, setIndexesForGetIn] = useState<number[][]>(
+        Array(numberOfCars).fill([])
+    );
 
     useEffect(() => {
+        let assignedCar: number;
+        let stickmans: number[];
+        let direction: string | null;
+        let freePlacesInCar: number;
+        let firstInQueue: number;
+
         for (let i = 0; i < allCarsState.length; i++) {
             const state = allCarsState[i];
             const currentFloor = allCarsCurrentFloor[i];
-
             if (
                 floorNumber === currentFloor &&
                 state.includes("door-open") &&
                 !carsOnFloor.includes(i)
             ) {
-                console.log("car " + i + " came");
+                assignedCar = i;
+                // console.log("car " + i + " came");
                 setTimeout(() => {
-                    const freePlacesInCar: number =
-                        4 - allCarsStickMansDestinations[i].length;
-                    const stickmans = stickMansDestinations;
-                    const firstInQueue =
+                    freePlacesInCar =
+                        4 - allCarsStickMansDestinations[assignedCar].length;
+                    stickmans = stickMansDestinations;
+                    firstInQueue =
                         stickMansDestinations[stickMansDestinations.length - 1];
-                    const direction = allCarsDirection[i]
-                        ? allCarsDirection[i]
+                    direction = allCarsDirection[assignedCar]
+                        ? allCarsDirection[assignedCar]
                         : firstInQueue > floorNumber
                         ? "up"
                         : firstInQueue < floorNumber
                         ? "down"
                         : null;
-                    const indexesForGetIn: number[] = [];
-                    for (let i = 0; i < stickmans.length; i++) {
-                        const stickman = stickmans[i];
-                        if (indexesForGetIn.length < freePlacesInCar) {
+                    const indexesGetIn: number[] = [];
+                    for (let j = 0; j < stickmans.length; j++) {
+                        const stickman = stickmans[j];
+                        if (indexesGetIn.length < freePlacesInCar) {
                             if (direction === "up" && stickman > floorNumber) {
-                                indexesForGetIn.push(i);
+                                indexesGetIn.push(j);
                             } else if (
                                 direction === "down" &&
                                 stickman < floorNumber
                             ) {
-                                indexesForGetIn.push(i);
+                                indexesGetIn.push(j);
                             }
                         }
                     }
-                    setIndexesForGetIn(indexesForGetIn);
-                    console.log("get in", {
-                        freePlacesInCar,
-                        stickmans,
-                        firstInQueue,
-                        indexesForGetIn,
-                        direction
-                    });
+                    const _indexesForGetIn = indexesForGetIn;
+                    _indexesForGetIn.splice(assignedCar, 1, indexesGetIn);
+                    setIndexesForGetIn([..._indexesForGetIn]);
+                    // console.log("get in", {
+                    //     freePlacesInCar,
+                    //     stickmans,
+                    //     firstInQueue,
+                    //     indexesForGetIn,
+                    //     direction,
+                    //     assignedCar
+                    // });
                     setTimeout(() => {
                         // addPassengers(i, 0);
-                        console.log("replace stickmans");
+                        // console.log("replace stickmans");
                     }, 1000);
                     setCarsOnFloor([...carsOnFloor, i]);
                 }, 1000);
@@ -142,8 +153,12 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     const stickMans = stickMansDestinations.map(
         (item: number, index: number) => {
             let getIn: boolean = false;
-            if (indexesForGetIn.includes(index)) {
-                getIn = true;
+            let assignedCar: number | null = null;
+            for (let i = 0; i < indexesForGetIn.length; i++) {
+                if (indexesForGetIn[i].includes(index)) {
+                    getIn = true;
+                    assignedCar = i;
+                }
             }
 
             return (
@@ -153,7 +168,7 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
                     destination={item}
                     getIn={getIn}
                     numberOfPassengers={indexesForGetIn.length}
-                    assignedCar={0}
+                    assignedCar={assignedCar}
                     place={"floor"}
                 />
             );
