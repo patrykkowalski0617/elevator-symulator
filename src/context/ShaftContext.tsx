@@ -11,6 +11,8 @@ interface IContextProps {
     updateCarState: (carId: number, state: string) => void;
     allCarsStickMansDestinations: number[][];
     addPassengers: (carId: number, destination: number) => void;
+    allCarsDirection: string | null[];
+    updateCarDirection: (carId: number, direction: string) => void;
 }
 
 export const ShaftContext = createContext({} as IContextProps);
@@ -30,6 +32,7 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
         allCarsStickMansDestinations,
         setAllCarsStickMansDestinations
     ] = useState(initArr([]));
+    const [allCarsDirection, setAllCarsDirection] = useState(initArr(null));
 
     const updateCarCurrentFloor = (carId: number, currentFloor: number) => {
         const _allCarsCurrentFloor = [...allCarsCurrentFloor];
@@ -92,6 +95,12 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
         setAllCarsFloorAssignments([..._allCarsFloorAssignments]);
     };
 
+    const updateCarDirection = (carId: number, direction: string) => {
+        const _allCarsDirection = allCarsDirection;
+        _allCarsDirection.splice(carId, 1, direction);
+        setAllCarsDirection([..._allCarsDirection]);
+    };
+
     return (
         <ShaftContext.Provider
             value={{
@@ -103,7 +112,9 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
                 allCarsState,
                 updateCarState,
                 allCarsStickMansDestinations,
-                addPassengers
+                addPassengers,
+                allCarsDirection,
+                updateCarDirection
             }}
         >
             {props.children}

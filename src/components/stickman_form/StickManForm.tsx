@@ -17,7 +17,7 @@ type StickManFormProps = {
 
 const StickManForm = ({ floorNumber }: StickManFormProps) => {
     const { setCreatingStickMan, numberOfFloors } = useContext(BuildingContext);
-    const { addAllStickMansDestinations } = useContext(FloorsContext);
+    const { addAllFloorsStickMansDestinations } = useContext(FloorsContext);
 
     const [howMany, setHowMany] = useState<number>(1);
     const [destination, setDestination] = useState<number>(0);
@@ -30,7 +30,11 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
     const submitHandler = (e: any) => {
         e.preventDefault();
         if (floorNumber !== destination) {
-            addAllStickMansDestinations(floorNumber, howMany, destination);
+            addAllFloorsStickMansDestinations(
+                floorNumber,
+                howMany,
+                destination
+            );
             setCreatingStickMan(null);
         }
     };
@@ -56,7 +60,11 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
         <Container>
             <Form>
                 <Close onClick={closeHandler}>x</Close>
-                <h3>Create Stickman on floor {floorNumber}</h3>
+                <h3>
+                    Create Stickmans
+                    <br />
+                    on floor {floorNumber}
+                </h3>
                 <fieldset>
                     <Item>
                         <label htmlFor="destination">Destiantion:</label>

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 export const FloorStyled = styled.div<{
     numberOfFloors: number;
@@ -51,12 +51,21 @@ export const CreateBtn = styled.button`
     }
 `;
 
-export const NoCarInfo = styled.p`
-    background-color: #f40;
-    height: 25px;
-    padding: 5px;
-    font-size: 15px;
-    line-height: 15px;
+const waitingAnimationColor = "#999";
+const waitingForCarAnimationFrames = keyframes`
+  0% {
+    box-shadow: 1px 1px 0px  ${waitingAnimationColor}, -1px -1px 0px  ${waitingAnimationColor};
+  }
+  50% {
+    box-shadow: 0px 0px 0px  ${waitingAnimationColor}, 0px 0px 0px  ${waitingAnimationColor};
+  }
+  100% {
+    box-shadow: 1px 1px 0px  ${waitingAnimationColor}, -1px -1px 0px  ${waitingAnimationColor};
+  }
+`;
+
+const waitingForCarAnimation = css`
+    animation: ${waitingForCarAnimationFrames} 2s ease-in-out infinite;
 `;
 
 export const Light = styled.div<{
@@ -64,10 +73,7 @@ export const Light = styled.div<{
     noCar: boolean;
 }>`
     position: relative;
-    ${props =>
-        props.noCar
-            ? "box-shadow: #f40 1px 1px 0px inset, #f40 -1px -1px 0px inset;"
-            : ""}
+    ${props => (props.noCar ? waitingForCarAnimation : "")}
     opacity: 0.6;
     &::before,
     &::after {

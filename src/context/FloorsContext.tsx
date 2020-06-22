@@ -7,8 +7,8 @@ interface IContextProps {
         floorNumber: number,
         data: { up: boolean; down: boolean }
     ) => void;
-    allStickMansDestinations: number[][];
-    addAllStickMansDestinations: (
+    allFloorsStickMansDestinations: number[][];
+    addAllFloorsStickMansDestinations: (
         floorNumber: number,
         howMany: number,
         destination: number
@@ -23,9 +23,10 @@ const FloorsContextProvider = (props: { children: React.ReactNode }) => {
     const [floorsWaitingForCar, setFloorsWaitingForCar] = useState(
         Array(numberOfFloors).fill({ up: false, down: false })
     );
-    const [allStickMansDestinations, setallStickMansDestinations] = useState<
-        number[][]
-    >(Array(numberOfFloors).fill([]));
+    const [
+        allFloorsStickMansDestinations,
+        setAllFloorsStickMansDestinations
+    ] = useState<number[][]>(Array(numberOfFloors).fill([]));
 
     const addFloorWaitingForCar = (
         floorNumber: number,
@@ -36,13 +37,13 @@ const FloorsContextProvider = (props: { children: React.ReactNode }) => {
         setFloorsWaitingForCar([..._floorsWaitingForCar]);
     };
 
-    const addAllStickMansDestinations = (
+    const addAllFloorsStickMansDestinations = (
         floorNumber: number,
         howMany: number,
         destination: number
     ) => {
-        const _allStickMansDestinations: number[][] = [
-            ...allStickMansDestinations
+        const _allFloorsStickMansDestinations: number[][] = [
+            ...allFloorsStickMansDestinations
         ];
         const newStickMans: number[] = [];
         // push number of destinations for each new StickMan
@@ -51,11 +52,15 @@ const FloorsContextProvider = (props: { children: React.ReactNode }) => {
         }
 
         const replaceStickMans = newStickMans.concat(
-            _allStickMansDestinations[floorNumber]
+            _allFloorsStickMansDestinations[floorNumber]
         );
-        _allStickMansDestinations.splice(floorNumber, 1, replaceStickMans);
+        _allFloorsStickMansDestinations.splice(
+            floorNumber,
+            1,
+            replaceStickMans
+        );
 
-        setallStickMansDestinations([..._allStickMansDestinations]);
+        setAllFloorsStickMansDestinations([..._allFloorsStickMansDestinations]);
     };
 
     return (
@@ -63,8 +68,8 @@ const FloorsContextProvider = (props: { children: React.ReactNode }) => {
             value={{
                 floorsWaitingForCar,
                 addFloorWaitingForCar,
-                allStickMansDestinations,
-                addAllStickMansDestinations
+                allFloorsStickMansDestinations,
+                addAllFloorsStickMansDestinations
             }}
         >
             {props.children}
