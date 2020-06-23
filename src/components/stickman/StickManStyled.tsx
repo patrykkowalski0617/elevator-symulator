@@ -18,7 +18,7 @@ export const Container = styled.div<{
         ease-in-out left;
     left: ${props =>
         props.getIn && props.place === "floor"
-            ? `calc(100% + ${props.assignedCar} * ${props.carWidth} + 11px + 12 * ${props.stickId}px)`
+            ? `calc(100% + ${props.assignedCar} * ${props.carWidth} - 1px + 12 * ${props.stickId}px)`
             : `${props.stickId * 20 + 10}px`};
     left: ${props =>
         props.place === "car" ? `${7 + 12 * props.stickId}px` : ""};

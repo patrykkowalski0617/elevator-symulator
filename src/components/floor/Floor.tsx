@@ -32,7 +32,8 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     const {
         floorsWaitingForCar,
         addFloorWaitingForCar,
-        allFloorsStickMansDestinations
+        allFloorsStickMansDestinations,
+        removeStickMansDestinations
     } = useContext(FloorsContext);
     const stickMansDestinations: number[] =
         allFloorsStickMansDestinations[floorNumber];
@@ -63,7 +64,7 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
                 !carsOnFloor.includes(i)
             ) {
                 assignedCar = i;
-                // console.log("car " + i + " came");
+                console.log("car " + i + " came");
                 setTimeout(() => {
                     freePlacesInCar =
                         4 - allCarsStickMansDestinations[assignedCar].length;
@@ -78,7 +79,8 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
                         ? "down"
                         : null;
                     const indexesGetIn: number[] = [];
-                    for (let j = 0; j < stickmans.length; j++) {
+                    // for (let j = 0; j < stickmans.length; j++) {
+                    for (let j = stickmans.length; j >= 0; j--) {
                         const stickman = stickmans[j];
                         if (indexesGetIn.length < freePlacesInCar) {
                             if (direction === "up" && stickman > floorNumber) {
@@ -94,17 +96,25 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
                     const _indexesForGetIn = indexesForGetIn;
                     _indexesForGetIn.splice(assignedCar, 1, indexesGetIn);
                     setIndexesForGetIn([..._indexesForGetIn]);
-                    // console.log("get in", {
-                    //     freePlacesInCar,
-                    //     stickmans,
-                    //     firstInQueue,
-                    //     indexesForGetIn,
-                    //     direction,
-                    //     assignedCar
-                    // });
+                    console.log("get in", {
+                        freePlacesInCar,
+                        stickmans,
+                        firstInQueue,
+                        indexesForGetIn,
+                        direction,
+                        assignedCar
+                    });
                     setTimeout(() => {
                         // addPassengers(i, 0);
-                        // console.log("replace stickmans");
+                        // removeStickMansDestinations(
+                        //     floorNumber,
+                        //     indexesForGetIn[0]
+                        // );
+                        console.log(
+                            "replace stickmans",
+                            stickMansDestinations,
+                            indexesForGetIn
+                        );
                     }, 1000);
                     setCarsOnFloor([...carsOnFloor, i]);
                 }, 1000);

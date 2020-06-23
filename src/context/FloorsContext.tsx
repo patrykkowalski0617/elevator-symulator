@@ -8,10 +8,14 @@ interface IContextProps {
         data: { up: boolean; down: boolean }
     ) => void;
     allFloorsStickMansDestinations: number[][];
-    addAllFloorsStickMansDestinations: (
+    addStickMansDestinations: (
         floorNumber: number,
         howMany: number,
         destination: number
+    ) => void;
+    removeStickMansDestinations: (
+        floorNumber: number,
+        indexes: number[]
     ) => void;
 }
 
@@ -37,7 +41,7 @@ const FloorsContextProvider = (props: { children: React.ReactNode }) => {
         setFloorsWaitingForCar([..._floorsWaitingForCar]);
     };
 
-    const addAllFloorsStickMansDestinations = (
+    const addStickMansDestinations = (
         floorNumber: number,
         howMany: number,
         destination: number
@@ -63,13 +67,41 @@ const FloorsContextProvider = (props: { children: React.ReactNode }) => {
         setAllFloorsStickMansDestinations([..._allFloorsStickMansDestinations]);
     };
 
+    const removeStickMansDestinations = (
+        floorNumber: number,
+        indexes: number[]
+    ) => {
+        const _allFloorsStickMansDestinations: number[][] = [
+            ...allFloorsStickMansDestinations
+        ];
+        const stickMansDestinations: number[] =
+            _allFloorsStickMansDestinations[floorNumber];
+
+        const newStickMansDestinations: number[] = [];
+
+        for (let i = 0; i < stickMansDestinations.length; i++) {
+            if (!indexes.includes(i)) {
+                newStickMansDestinations.push(stickMansDestinations[i]);
+            }
+        }
+
+        _allFloorsStickMansDestinations.splice(
+            floorNumber,
+            1,
+            newStickMansDestinations
+        );
+
+        setAllFloorsStickMansDestinations([..._allFloorsStickMansDestinations]);
+    };
+
     return (
         <FloorsContext.Provider
             value={{
                 floorsWaitingForCar,
                 addFloorWaitingForCar,
                 allFloorsStickMansDestinations,
-                addAllFloorsStickMansDestinations
+                addStickMansDestinations,
+                removeStickMansDestinations
             }}
         >
             {props.children}
