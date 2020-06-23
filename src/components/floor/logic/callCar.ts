@@ -25,9 +25,9 @@ const callCar = ({
         allCarsState,
         allCarsCurrentFloor,
         allCarsFloorAssignments,
-        floorNumber
+        floorNumber,
+        assignedCars
     });
-    console.log(carId);
     if (carId !== null && carId !== undefined && carId >= 0) {
         addCarFloorAssignment(carId, floorNumber);
         setAssignedCars([...assignedCars, carId]);

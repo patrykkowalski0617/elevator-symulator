@@ -11,6 +11,7 @@ interface IParam {
     allCarsCurrentFloor: number[];
     allCarsState: string[];
     allCarsFloorAssignments: { length: number; [index: number]: number[] };
+    assignedCars: number[];
     tolerance?: number;
 }
 
@@ -19,6 +20,7 @@ export const distanceToAvailableCars = ({
     allCarsCurrentFloor,
     allCarsState,
     allCarsFloorAssignments,
+    assignedCars,
     tolerance = 1 // number of floors between floorNumber and carCurrentFloor that is acceptable to asign car to floor
 }: IParam) => {
     let distanceToAvailableCarsArr: {
@@ -49,15 +51,16 @@ export const distanceToAvailableCars = ({
                     : floorNumber;
 
             if (
-                carState === "ready" ||
-                (carState.includes("go-up") &&
-                    mainCarTarget &&
-                    floorNumber <= mainCarTarget &&
-                    carCurrentFloor + tolerance < floorNumber) ||
-                (carState.includes("go-down") &&
-                    mainCarTarget &&
-                    floorNumber >= mainCarTarget &&
-                    carCurrentFloor - tolerance > floorNumber)
+                !assignedCars.includes(carId) && // prevent assign assigend car
+                (carState === "ready" ||
+                    (carState.includes("go-up") &&
+                        mainCarTarget &&
+                        floorNumber <= mainCarTarget &&
+                        carCurrentFloor + tolerance < floorNumber) ||
+                    (carState.includes("go-down") &&
+                        mainCarTarget &&
+                        floorNumber >= mainCarTarget &&
+                        carCurrentFloor - tolerance > floorNumber))
             ) {
                 distanceToAvailableCarsArr.push({ carId, distance });
             }
@@ -73,6 +76,7 @@ const theNearestCar = ({
     allCarsCurrentFloor,
     allCarsState,
     allCarsFloorAssignments,
+    assignedCars,
     tolerance
 }: IParam) => {
     if (
@@ -88,6 +92,7 @@ const theNearestCar = ({
             allCarsCurrentFloor,
             allCarsState,
             allCarsFloorAssignments,
+            assignedCars,
             tolerance
         });
 
