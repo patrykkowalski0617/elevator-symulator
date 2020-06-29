@@ -16,10 +16,13 @@ export const Container = styled.div<{
             return `calc(0.2s * ${props.numberOfPassengers - props.stickId})`;
         }}
         ease-in-out left;
-    left: ${props =>
-        props.getIn && props.place === "floor"
-            ? `calc(100% + ${props.assignedCar} * ${props.carWidth} - 1px + 12 * ${props.stickId}px)`
-            : `${props.stickId * 20 + 10}px`};
+    left: ${props => {
+        const carPostion = `100% + ${props.assignedCar} * ${props.carWidth}`;
+        const firstStickmanInCarPos = `12px`;
+        return props.getIn && props.place === "floor"
+            ? `calc(${carPostion} + ${firstStickmanInCarPos})`
+            : `${props.stickId * 20 + 10}px`;
+    }};
     left: ${props =>
         props.place === "car" ? `${7 + 12 * props.stickId}px` : ""};
     &:hover {

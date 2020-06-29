@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import { BuildingContext } from "./BuildingContext";
 
 interface IContextProps {
@@ -35,11 +35,18 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
     const [allCarsDirection, setAllCarsDirection] = useState(initArr(null));
 
     const updateCarCurrentFloor = (carId: number, currentFloor: number) => {
-        const _allCarsCurrentFloor = [...allCarsCurrentFloor];
-        _allCarsCurrentFloor.splice(carId, 1, currentFloor);
-        setAllCarsCurrentFloor([..._allCarsCurrentFloor]);
+        setAllCarsCurrentFloor(() => {
+            const _allCarsCurrentFloor = [...allCarsCurrentFloor];
+            _allCarsCurrentFloor.splice(carId, 1, currentFloor);
+            return [..._allCarsCurrentFloor];
+        });
     };
 
+    // const updateCarCurrentFloor = (carId: number, currentFloor: number) => {
+    //     const _allCarsCurrentFloor = [...allCarsCurrentFloor];
+    //     _allCarsCurrentFloor.splice(carId, 1, currentFloor);
+    //     setAllCarsCurrentFloor([..._allCarsCurrentFloor]);
+    // };
     const updateCarState = (carId: number, state: string) => {
         const _allCarsState = [...allCarsState];
         _allCarsState.splice(carId, 1, state);

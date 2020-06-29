@@ -9,7 +9,7 @@ import {
     Close,
     ValidationInfo,
     Item
-} from "./StickManFormStyled";
+} from "./FormStickManStyled";
 
 type StickManFormProps = {
     floorNumber: number;

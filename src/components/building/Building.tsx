@@ -3,7 +3,7 @@ import { BuildingContext } from "../../context/BuildingContext";
 import FloorsStack from "../floors_stack/FloorsStack";
 import { BuildingStyled } from "./BuildingStyled";
 import Shaft from "../shaft/Shaft";
-import StickManForm from "../stickman_form/StickManForm";
+import StickManForm from "../form_stickman/FormStickMan";
 
 /**
  * TO DO

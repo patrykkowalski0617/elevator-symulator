@@ -1,16 +1,16 @@
 import React from "react";
-import StickManForm from "./StickManForm";
+import FormStickMan from "./FormStickMan";
 import renderer from "react-test-renderer";
 import ShaftContext from "../../context/ShaftContext";
 import BuildingContext from "../../context/BuildingContext";
 import FloorsContext from "../../context/FloorsContext";
 
-test("StickManForm - render and match snapshot", () => {
+test("FormStickMan - render and match snapshot", () => {
     const tree = renderer.create(
         <BuildingContext>
             <ShaftContext>
                 <FloorsContext>
-                    <StickManForm></StickManForm>
+                    <FormStickMan></FormStickMan>
                 </FloorsContext>
             </ShaftContext>
         </BuildingContext>

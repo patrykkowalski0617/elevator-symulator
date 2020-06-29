@@ -26,6 +26,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         floorColor({ numberOfFloors, floorNumber: carPosition })
     );
     const [carState, setCarState] = useState<string>(allCarsState[carId]);
+    const [carCurrentFloor, setCarCurrentFloor] = useState<number>(0);
 
     const getPosition = (position: number) => {
         setCarPosition(position);
@@ -34,7 +35,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         setCarState(state);
     };
     const getCurrentFloor = (currentFloor: number) => {
-        updateCarCurrentFloor(carId, currentFloor);
+        setCarCurrentFloor(currentFloor);
         setCarColor(
             floorColor({
                 numberOfFloors,
@@ -42,6 +43,11 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
             })
         );
     };
+
+    useEffect(() => {
+        updateCarCurrentFloor(carId, carCurrentFloor);
+    }, [carCurrentFloor]);
+
     const currentPosition: number = carPosition;
     const targetFloor: number | undefined = carTarget(
         floorAssignments,
@@ -56,7 +62,6 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
 
     useEffect(() => {
         updateCarState(carId, carState);
-        // eslint-disable-next-line
     }, [carState]);
 
     useEffect(() => {
@@ -71,7 +76,6 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
                 isContinuation
             );
         }
-        // eslint-disable-next-line
     }, [floorAssignments]);
 
     const stickMans = stickMansDestinations.map(
