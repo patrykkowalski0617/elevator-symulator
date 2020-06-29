@@ -35,18 +35,11 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
     const [allCarsDirection, setAllCarsDirection] = useState(initArr(null));
 
     const updateCarCurrentFloor = (carId: number, currentFloor: number) => {
-        setAllCarsCurrentFloor(() => {
-            const _allCarsCurrentFloor = [...allCarsCurrentFloor];
-            _allCarsCurrentFloor.splice(carId, 1, currentFloor);
-            return [..._allCarsCurrentFloor];
-        });
+        const _allCarsCurrentFloor = [...allCarsCurrentFloor];
+        _allCarsCurrentFloor.splice(carId, 1, currentFloor);
+        setAllCarsCurrentFloor([..._allCarsCurrentFloor]);
     };
 
-    // const updateCarCurrentFloor = (carId: number, currentFloor: number) => {
-    //     const _allCarsCurrentFloor = [...allCarsCurrentFloor];
-    //     _allCarsCurrentFloor.splice(carId, 1, currentFloor);
-    //     setAllCarsCurrentFloor([..._allCarsCurrentFloor]);
-    // };
     const updateCarState = (carId: number, state: string) => {
         const _allCarsState = [...allCarsState];
         _allCarsState.splice(carId, 1, state);

@@ -42,15 +42,17 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     const [carsOnFloor, setCarsOnFloor] = useState<number[]>([]);
 
     useEffect(() => {
-        const carId = carCame({
+        const callback = (carId: number) => {
+            console.log("car " + carId + " came");
+        };
+
+        carCame({
             assignedCars,
             allCarsState,
             carsOnFloor,
-            setCarsOnFloor
+            setCarsOnFloor,
+            callback
         });
-        if (carId) {
-            console.log("car " + carId + " came");
-        }
     }, [allCarsState]);
 
     useEffect(() => {

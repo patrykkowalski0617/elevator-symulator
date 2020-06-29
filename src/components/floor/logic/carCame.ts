@@ -3,31 +3,29 @@ type Props = {
     allCarsState: string[];
     carsOnFloor: number[];
     setCarsOnFloor: (carsOnFloor: number[]) => void;
+    callback: (carId: number) => void;
 };
-
-let carId: number;
 
 const carCame = ({
     assignedCars,
     allCarsState,
     carsOnFloor,
-    setCarsOnFloor
+    setCarsOnFloor,
+    callback
 }: Props) => {
     if (assignedCars.length) {
         for (let i = 0; i < assignedCars.length; i++) {
-            const _carId = assignedCars[i];
-            const carState = allCarsState[_carId];
+            const carId = assignedCars[i];
+            const carState = allCarsState[carId];
             if (
                 carState.includes("door-open") &&
-                !carsOnFloor.includes(_carId)
+                !carsOnFloor.includes(carId)
             ) {
-                carId = _carId;
-                setCarsOnFloor([...carsOnFloor, _carId]);
+                setCarsOnFloor([...carsOnFloor, carId]);
+                callback(carId);
             }
         }
     }
-
-    return carId;
 };
 
 export default carCame;
