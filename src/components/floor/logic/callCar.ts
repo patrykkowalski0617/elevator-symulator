@@ -1,4 +1,4 @@
-import { theNearestCar } from "../../car/logic";
+import { theNearestCar } from "./";
 
 type Props = {
     allCarsState: string[];

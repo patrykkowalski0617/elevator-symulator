@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { CarStyled, Data, Door } from "./CarStyled";
 import { ShaftContext } from "../../context/ShaftContext";
+import { FloorsContext } from "../../context/FloorsContext";
 import { carTarget, move } from "./logic";
 import { floorColor } from "../../style_mixin";
 import StickMan from "../stickman/StickMan";
@@ -14,8 +15,10 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         allCarsCurrentFloor,
         allCarsFloorAssignments,
         allCarsState,
-        allCarsStickMansDestinations
+        allCarsStickMansDestinations,
+        updateCarDirection
     } = useContext(ShaftContext);
+    const { floorsWaitingForCar } = useContext(FloorsContext);
     const floorAssignments: number[] = allCarsFloorAssignments[carId];
     const currentFloor: number = allCarsCurrentFloor[carId];
     const stickMansDestinations: number[] = allCarsStickMansDestinations[carId];
@@ -27,6 +30,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
     );
     const [carState, setCarState] = useState<string>(allCarsState[carId]);
     const [carCurrentFloor, setCarCurrentFloor] = useState<number>(0);
+    const [direction, setDirection] = useState<string | null>(null);
 
     const getPosition = (position: number) => {
         setCarPosition(position);
@@ -76,11 +80,32 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
                 isContinuation
             );
         }
+
+        for (
+            let floorNumber = 0;
+            floorNumber < floorsWaitingForCar.length;
+            floorNumber++
+        ) {
+            const { up, down } = floorsWaitingForCar[floorNumber];
+            if (floorNumber === targetFloor) {
+                if (up && !down) {
+                    setDirection("up");
+                } else if (down) {
+                    setDirection("down");
+                }
+            }
+        }
     }, [floorAssignments]);
+
+    useEffect(() => {
+        console.log(direction);
+        if (direction) {
+            updateCarDirection(carId, direction);
+        }
+    }, [direction]);
 
     const stickMans = stickMansDestinations.map(
         (item: number, index: number) => {
-            const assignedCar = null;
             return (
                 <StickMan
                     key={index}

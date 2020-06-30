@@ -24,7 +24,8 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
         allCarsState,
         allCarsCurrentFloor,
         addCarFloorAssignment,
-        allCarsFloorAssignments
+        allCarsFloorAssignments,
+        allCarsDirection
     } = useContext(ShaftContext);
     const {
         floorsWaitingForCar,
@@ -43,7 +44,7 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
 
     useEffect(() => {
         const callback = (carId: number) => {
-            console.log("car " + carId + " came");
+            console.log("car " + carId + " came on floor " + floorNumber);
         };
 
         carCame({
@@ -54,6 +55,10 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
             callback
         });
     }, [allCarsState]);
+
+    // useEffect(() => {
+    //     console.log(allCarsDirection);
+    // }, [allCarsDirection]);
 
     useEffect(() => {
         waitingForCarUpdate({
@@ -87,6 +92,21 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
         }
     }, [waitingForCar.down]);
 
+    // useEffect(() => {
+    //     console.log(allCarsDirection);
+    //     for (let i = 0; i < assignedCars.length; i++) {
+    // if (allCarsDirection[i] === null) {
+    //     if (waitingForCar.up) {
+    //         updateCarDirection(i, "up");
+    //     } else if (waitingForCar.down) {
+    //         updateCarDirection(i, "down");
+    //     }
+    // }
+    //     }
+    // }, [assignedCars]);
+    // useEffect(() => {
+    //     console.log(allCarsDirection);
+    // }, [allCarsDirection]);
     const createStickmanHandler = () => {
         setCreatingStickMan(floorNumber);
     };
