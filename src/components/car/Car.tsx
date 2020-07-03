@@ -115,6 +115,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
             <StickManSet
                 lifeState={[`in-car-${carId}`]}
                 stickMansDestinations={stickMansDestinations}
+                carId={[null]}
             />
         </CarStyled>
     );

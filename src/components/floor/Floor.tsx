@@ -47,7 +47,7 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
             destination: number;
             direction: string | null;
             lifeState: string;
-            asignedCar: number | null;
+            carId: number | null;
             placeInCar: number | null;
         }[]
     >([]);
@@ -64,7 +64,7 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
                             ? "down"
                             : null,
                     lifeState: "wait-for-car",
-                    asignedCar: null,
+                    carId: null,
                     placeInCar: null
                 }))
             );
@@ -73,23 +73,27 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
 
     useEffect(() => {
         const callback = (carId: number) => {
-            const direction = allCarsDirection[carId];
+            const carDirection = allCarsDirection[carId];
             const freePlaces = 4 - allCarsStickMansDestinations[carId].length;
-            console.log(carId, direction, freePlaces, stickMans);
-            // setStickMans(
-            //     stickMansDestinations.map(item => ({
-            //         destination: item,
-            //         direction:
-            //             item > floorNumber
-            //                 ? "up"
-            //                 : item < floorNumber
-            //                 ? "down"
-            //                 : null,
-            //         lifeState: "get-into-car-0",
-            //         asignedCar: null,
-            //         placeInCar: null
-            //     }))
-            // );
+            console.log(carId, carDirection, freePlaces, stickMans);
+
+            const _stickMans = stickMansDestinations.map(item => {
+                const stickManDirection =
+                    item > floorNumber
+                        ? "up"
+                        : item < floorNumber
+                        ? "down"
+                        : null;
+                return {
+                    destination: item,
+                    direction: stickManDirection,
+                    lifeState: "get-into-car",
+                    carId: carDirection === stickManDirection ? carId : null,
+                    placeInCar: null
+                };
+            });
+            console.log(_stickMans);
+            setStickMans(_stickMans);
         };
 
         carCame({
@@ -153,6 +157,7 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
             <StickManSet
                 lifeState={stickMans.map(item => item.lifeState)}
                 stickMansDestinations={stickMans.map(item => item.destination)}
+                carId={stickMans.map(item => item.carId)}
             />
         </FloorStyled>
     );

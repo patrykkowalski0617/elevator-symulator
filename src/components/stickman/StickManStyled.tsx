@@ -1,25 +1,19 @@
 import styled, { css } from "styled-components";
 
-const getCarId = (lifeState: string) => {
-    const i = lifeState.lastIndexOf("-") + 1;
-
-    return Number(lifeState.slice(i));
-};
-
 const waitForCarCass = ({ index }: { index: number }) => css`
     left: calc(5px + 15px * ${index});
 `;
 
 const getIntoCss = ({
     index,
-    lifeState,
-    carWidth
+    carWidth,
+    carId
 }: {
     index: number;
     lifeState: string;
     carWidth: string;
+    carId: number | null;
 }) => {
-    const carId = getCarId(lifeState);
     const floorW = "100%";
     const carStartPos = "11px";
     const calcVal = `${floorW} + ${carStartPos} + ${carWidth} * ${carId} + 12px * ${index}`;
@@ -53,6 +47,7 @@ export const Container = styled.div<{
     lifeState: string;
     index: number;
     carWidth: string;
+    carId: number | null;
 }>`
     position: absolute;
     bottom: 0;
@@ -63,14 +58,14 @@ export const Container = styled.div<{
         bottom: 1px;
     }
     ${props => {
-        const { index, lifeState, carWidth } = props;
+        const { index, lifeState, carWidth, carId } = props;
         return lifeState === "wait-for-car"
             ? waitForCarCass({ index })
-            : lifeState.includes("get-into-car-")
-            ? getIntoCss({ index, lifeState, carWidth })
-            : lifeState.includes("in-car-")
+            : lifeState === "get-into-car"
+            ? getIntoCss({ index, lifeState, carWidth, carId })
+            : lifeState === "in-car"
             ? inCarCss({ index, lifeState })
-            : lifeState.includes("get-off-car-")
+            : lifeState === "get-off-car"
             ? getOffCss({ index, lifeState })
             : lifeState === "wait-for-dead"
             ? waitForDead({ index })
