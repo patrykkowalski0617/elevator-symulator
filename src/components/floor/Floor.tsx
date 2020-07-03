@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import {
     FloorStyled,
-    AssignedCars,
     CarInfo,
     CarInfoItem,
     CreateBtn,
@@ -25,7 +24,8 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
         allCarsCurrentFloor,
         addCarFloorAssignment,
         allCarsFloorAssignments,
-        allCarsDirection
+        allCarsDirection,
+        allCarsStickMansDestinations
     } = useContext(ShaftContext);
     const {
         floorsWaitingForCar,
@@ -42,9 +42,54 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     const [assignedCars, setAssignedCars] = useState<number[]>([]);
     const [carsOnFloor, setCarsOnFloor] = useState<number[]>([]);
 
+    const [stickMans, setStickMans] = useState<
+        {
+            destination: number;
+            direction: string | null;
+            lifeState: string;
+            asignedCar: number | null;
+            placeInCar: number | null;
+        }[]
+    >([]);
+
+    useEffect(() => {
+        if (stickMansDestinations.length) {
+            setStickMans(
+                stickMansDestinations.map(item => ({
+                    destination: item,
+                    direction:
+                        item > floorNumber
+                            ? "up"
+                            : item < floorNumber
+                            ? "down"
+                            : null,
+                    lifeState: "wait-for-car",
+                    asignedCar: null,
+                    placeInCar: null
+                }))
+            );
+        }
+    }, [stickMansDestinations]);
+
     useEffect(() => {
         const callback = (carId: number) => {
-            console.log("car " + carId + " came on floor " + floorNumber);
+            const direction = allCarsDirection[carId];
+            const freePlaces = 4 - allCarsStickMansDestinations[carId].length;
+            console.log(carId, direction, freePlaces, stickMans);
+            // setStickMans(
+            //     stickMansDestinations.map(item => ({
+            //         destination: item,
+            //         direction:
+            //             item > floorNumber
+            //                 ? "up"
+            //                 : item < floorNumber
+            //                 ? "down"
+            //                 : null,
+            //         lifeState: "get-into-car-0",
+            //         asignedCar: null,
+            //         placeInCar: null
+            //     }))
+            // );
         };
 
         carCame({
@@ -56,18 +101,17 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
         });
     }, [allCarsState]);
 
-    // useEffect(() => {
-    //     console.log(allCarsDirection);
-    // }, [allCarsDirection]);
-
     useEffect(() => {
+        const stickMansDestination = stickMans.map(
+            (item: { destination: number }) => item.destination
+        );
         waitingForCarUpdate({
             waitingForCar,
-            stickMansDestinations,
+            stickMansDestination,
             addFloorWaitingForCar,
             floorNumber
         });
-    }, [stickMansDestinations]);
+    }, [stickMans]);
 
     const _callCar = callCar({
         allCarsState,
@@ -92,21 +136,6 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
         }
     }, [waitingForCar.down]);
 
-    // useEffect(() => {
-    //     console.log(allCarsDirection);
-    //     for (let i = 0; i < assignedCars.length; i++) {
-    // if (allCarsDirection[i] === null) {
-    //     if (waitingForCar.up) {
-    //         updateCarDirection(i, "up");
-    //     } else if (waitingForCar.down) {
-    //         updateCarDirection(i, "down");
-    //     }
-    // }
-    //     }
-    // }, [assignedCars]);
-    // useEffect(() => {
-    //     console.log(allCarsDirection);
-    // }, [allCarsDirection]);
     const createStickmanHandler = () => {
         setCreatingStickMan(floorNumber);
     };
@@ -114,10 +143,6 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     return (
         <FloorStyled numberOfFloors={numberOfFloors} floorColor={floorColor}>
             <CarInfo>
-                {waitingForCar.up ||
-                (waitingForCar.down && assignedCars.length) ? (
-                    <AssignedCars>Cars: {assignedCars.join(", ")}</AssignedCars>
-                ) : null}
                 <CarInfoItem>
                     <Light waitingForCar={waitingForCar} noCar={noCar}></Light>
                 </CarInfoItem>
@@ -125,7 +150,10 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
                     <CreateBtn onClick={createStickmanHandler}>+</CreateBtn>
                 </CarInfoItem>
             </CarInfo>
-            <StickManSet />
+            <StickManSet
+                lifeState={stickMans.map(item => item.lifeState)}
+                stickMansDestinations={stickMans.map(item => item.destination)}
+            />
         </FloorStyled>
     );
 };

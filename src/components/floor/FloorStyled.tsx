@@ -12,10 +12,6 @@ export const FloorStyled = styled.div<{
     position: relative;
 `;
 
-export const AssignedCars = styled.div`
-    margin: 2px 7px;
-`;
-
 export const CarInfo = styled.div`
     position: absolute;
     top: 0;

@@ -29,16 +29,6 @@ export const CarStyled = styled.div<{ numberOfFloors: number }>`
     }
 `;
 
-export const Data = styled.p`
-    position: absolute;
-    text-align: center;
-    top: -20px;
-    height: 20px;
-    width: 100%;
-    font-size: 12px;
-    color: #fff;
-`;
-
 export const Door = styled.div<{
     carState: string;
     carColor: string;

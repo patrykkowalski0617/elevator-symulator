@@ -1,6 +1,6 @@
 type Props = {
     waitingForCar: { up: boolean; down: boolean };
-    stickMansDestinations: number[];
+    stickMansDestination: number[];
     addFloorWaitingForCar: (
         floorNumber: number,
         data: { up: boolean; down: boolean }
@@ -10,12 +10,12 @@ type Props = {
 
 const waitingForCarUpdate = ({
     waitingForCar,
-    stickMansDestinations,
+    stickMansDestination,
     addFloorWaitingForCar,
     floorNumber
 }: Props) => {
-    if (stickMansDestinations.length) {
-        const uniqFloorsSet = new Set(stickMansDestinations);
+    if (stickMansDestination.length) {
+        const uniqFloorsSet = new Set(stickMansDestination);
         const uniqFloors = Array.from(uniqFloorsSet);
         const up = uniqFloors.some((item: any) => item > floorNumber);
         const down = uniqFloors.some((item: any) => item < floorNumber);

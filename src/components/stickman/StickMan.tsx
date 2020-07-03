@@ -1,39 +1,22 @@
 import React, { useContext } from "react";
 import { BuildingContext } from "../../context/BuildingContext";
 import { floorColor } from "../../style_mixin";
-import { Container, StickManStyled } from "./StickManStyled";
+import { Container, StickManStyled, FloorInfo } from "./StickManStyled";
 
 type StickManProps = {
-    stickId: number;
+    index: number;
     destination: number;
-    getIn: boolean;
-    numberOfPassengers: number;
-    assignedCar: number | null;
-    place: string;
+    lifeState: string;
 };
 
-const StickMan = ({
-    stickId,
-    destination,
-    getIn,
-    numberOfPassengers,
-    assignedCar,
-    place
-}: StickManProps) => {
+const StickMan = ({ index, destination, lifeState }: StickManProps) => {
     const { numberOfFloors, carWidth } = useContext(BuildingContext);
 
     const color = floorColor({ numberOfFloors, floorNumber: destination });
 
     return (
-        <Container
-            stickId={stickId}
-            getIn={getIn}
-            numberOfPassengers={numberOfPassengers}
-            assignedCar={assignedCar}
-            carWidth={carWidth}
-            place={place}
-        >
-            <p>{destination}</p>
+        <Container index={index} lifeState={lifeState} carWidth={carWidth}>
+            <FloorInfo>{index}</FloorInfo>
             <StickManStyled color={color}></StickManStyled>
         </Container>
     );

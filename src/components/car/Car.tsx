@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import { CarStyled, Data, Door } from "./CarStyled";
+import { CarStyled, Door } from "./CarStyled";
 import { ShaftContext } from "../../context/ShaftContext";
 import { FloorsContext } from "../../context/FloorsContext";
 import { carTarget, move } from "./logic";
 import { floorColor } from "../../style_mixin";
-import StickMan from "../stickman/StickMan";
+import StickManSet from "../stickman_set/StickManSet";
 
 type CarProps = { numberOfFloors: number; carId: number };
 
@@ -98,27 +98,10 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
     }, [floorAssignments]);
 
     useEffect(() => {
-        console.log(direction);
         if (direction) {
             updateCarDirection(carId, direction);
         }
     }, [direction]);
-
-    const stickMans = stickMansDestinations.map(
-        (item: number, index: number) => {
-            return (
-                <StickMan
-                    key={index}
-                    stickId={index}
-                    destination={item}
-                    getIn={false}
-                    numberOfPassengers={1}
-                    assignedCar={0}
-                    place={"car"}
-                />
-            );
-        }
-    );
 
     return (
         <CarStyled
@@ -127,12 +110,12 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
                 transform: `translateY(calc(-${carPosition}%))`
             }}
         >
-            <Data>
-                C: {carId}, T: {floorAssignments ? floorAssignments[0] : ""}
-            </Data>
-            {stickMans}
             <Door left={true} carColor={carColor} carState={carState}></Door>
             <Door carColor={carColor} carState={carState}></Door>
+            <StickManSet
+                lifeState={[`in-car-${carId}`]}
+                stickMansDestinations={stickMansDestinations}
+            />
         </CarStyled>
     );
 };
