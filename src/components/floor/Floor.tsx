@@ -41,7 +41,6 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     const [noCar, setNoCar] = useState<boolean>(false);
     const [assignedCars, setAssignedCars] = useState<number[]>([]);
     const [carsOnFloor, setCarsOnFloor] = useState<number[]>([]);
-
     const [stickMans, setStickMans] = useState<
         {
             destination: number;
