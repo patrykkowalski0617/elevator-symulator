@@ -5,18 +5,19 @@ const waitForCarCass = ({ index }: { index: number }) => css`
 `;
 
 const getIntoCss = ({
-    index,
+    lifeState,
     carWidth,
-    carId
+    carId,
+    placeInCar
 }: {
-    index: number;
     lifeState: string;
     carWidth: string;
     carId: number | null;
+    placeInCar: number | null;
 }) => {
     const floorW = "100%";
     const carStartPos = "11px";
-    const calcVal = `${floorW} + ${carStartPos} + ${carWidth} * ${carId} + 12px * ${index}`;
+    const calcVal = `${floorW} + ${carStartPos} + ${carWidth} * ${carId} + 12px * ${placeInCar}`;
 
     return css`
         left: calc(${calcVal});
@@ -48,6 +49,7 @@ export const Container = styled.div<{
     index: number;
     carWidth: string;
     carId: number | null;
+    placeInCar: number | null;
 }>`
     position: absolute;
     bottom: 0;
@@ -58,11 +60,11 @@ export const Container = styled.div<{
         bottom: 1px;
     }
     ${props => {
-        const { index, lifeState, carWidth, carId } = props;
+        const { index, lifeState, carWidth, carId, placeInCar } = props;
         return lifeState === "wait-for-car"
             ? waitForCarCass({ index })
             : lifeState === "get-into-car"
-            ? getIntoCss({ index, lifeState, carWidth, carId })
+            ? getIntoCss({ lifeState, carWidth, carId, placeInCar })
             : lifeState === "in-car"
             ? inCarCss({ index, lifeState })
             : lifeState === "get-off-car"
@@ -77,27 +79,6 @@ export const FloorInfo = styled.p`
     margin-left: 50%;
     transform: translateX(-50%);
 `;
-
-// transition: 0.8s
-// ${
-//     props => {
-//         return `calc(0.2s * ${props.numberOfPassengers - props.stickId})`;
-//     }
-// }
-// ease -in -out left;
-// left: ${
-//     props => {
-//         const carPostion = `100% + ${props.assignedCar} * ${props.carWidth}`;
-//         const firstStickmanInCarPos = `12px`;
-//         return props.getIn && props.lifeState === "floor"
-//             ? `calc(${carPostion} + ${firstStickmanInCarPos})`
-//             : `${props.stickId * 20 + 10}px`;
-//     }
-// };
-// left: ${
-//     props =>
-//     props.lifeState === "car" ? `${7 + 12 * props.stickId}px` : ""
-// };
 
 export const StickManStyled = styled.div<{ color: string }>`
     width: 10px;

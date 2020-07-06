@@ -2,28 +2,21 @@ import React from "react";
 import StickMan from "../stickman/StickMan";
 
 type StickManSetProps = {
-    lifeState: string[];
-    stickMansDestinations: number[];
-    carId: (number | null)[];
+    data: {
+        lifeState: string;
+        destination: number;
+        carId: number | null;
+        placeInCar: number | null;
+    }[];
 };
 
-const StickManSet = ({
-    lifeState,
-    stickMansDestinations,
-    carId
-}: StickManSetProps) => {
+const StickManSet = ({ data }: StickManSetProps) => {
     // single stickman states: wait-for-car / get-into //// in-car-0 / get-off //// wait-for-dead
 
     return (
         <>
-            {stickMansDestinations.map((destination, index) => (
-                <StickMan
-                    key={index}
-                    index={index}
-                    lifeState={lifeState[index]}
-                    destination={destination}
-                    carId={carId[index]}
-                />
+            {data.map((item, index) => (
+                <StickMan key={index} data={item} index={index} />
             ))}
         </>
     );

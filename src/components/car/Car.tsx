@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { CarStyled, Door } from "./CarStyled";
-import { ShaftContext } from "../../context/ShaftContext";
-import { FloorsContext } from "../../context/FloorsContext";
+import { ShaftContext, FloorsContext } from "../../context";
 import { carTarget, move } from "./logic";
 import { floorColor } from "../../style_mixin";
 import StickManSet from "../stickman_set/StickManSet";
@@ -112,11 +111,11 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         >
             <Door left={true} carColor={carColor} carState={carState}></Door>
             <Door carColor={carColor} carState={carState}></Door>
-            <StickManSet
+            {/* <StickManSet
                 lifeState={[`in-car-${carId}`]}
                 stickMansDestinations={stickMansDestinations}
                 carId={[null]}
-            />
+            /> */}
         </CarStyled>
     );
 };

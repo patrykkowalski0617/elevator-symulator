@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BuildingContext } from "../../context/BuildingContext";
+import { BuildingContext } from "../../context";
 import FloorsStack from "../floors_stack/FloorsStack";
 import { BuildingStyled } from "./BuildingStyled";
 import Shaft from "../shaft/Shaft";

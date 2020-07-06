@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BuildingContext } from "../../context/BuildingContext";
+import { BuildingContext } from "../../context";
 import Floor from "../floor/Floor";
 import { FloorStyled } from "../floor/FloorStyled";
 import { floorColor } from "../../style_mixin";

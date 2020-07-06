@@ -1,9 +1,7 @@
 import React from "react";
 import FormStickMan from "./FormStickMan";
 import renderer from "react-test-renderer";
-import ShaftContext from "../../context/ShaftContext";
-import BuildingContext from "../../context/BuildingContext";
-import FloorsContext from "../../context/FloorsContext";
+import { ShaftContext, FloorsContext, BuildingContext } from "../../context";
 
 test("FormStickMan - render and match snapshot", () => {
     const tree = renderer.create(

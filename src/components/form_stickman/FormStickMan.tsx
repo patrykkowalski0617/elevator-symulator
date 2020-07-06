@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { BuildingContext } from "../../context/BuildingContext";
-import { FloorsContext } from "../../context/FloorsContext";
+import { FloorsContext, BuildingContext } from "../../context";
 import {
     Container,
     Form,

@@ -6,9 +6,7 @@ import {
     CreateBtn,
     Light
 } from "./FloorStyled";
-import { ShaftContext } from "../../context/ShaftContext";
-import { FloorsContext } from "../../context/FloorsContext";
-import { BuildingContext } from "../../context/BuildingContext";
+import { ShaftContext, FloorsContext, BuildingContext } from "../../context";
 import { waitingForCarUpdate, callCar, carCame } from "./logic";
 import StickManSet from "../stickman_set/StickManSet";
 
@@ -30,7 +28,8 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     const {
         floorsWaitingForCar,
         addFloorWaitingForCar,
-        allFloorsStickMansDestinations
+        allFloorsStickMansDestinations,
+        removeStickMansDestinations
     } = useContext(FloorsContext);
     const stickMansDestinations: number[] =
         allFloorsStickMansDestinations[floorNumber];
@@ -52,47 +51,70 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     >([]);
 
     useEffect(() => {
-        if (stickMansDestinations.length) {
-            setStickMans(
-                stickMansDestinations.map(item => ({
-                    destination: item,
-                    direction:
-                        item > floorNumber
-                            ? "up"
-                            : item < floorNumber
-                            ? "down"
-                            : null,
-                    lifeState: "wait-for-car",
-                    carId: null,
-                    placeInCar: null
-                }))
-            );
-        }
+        setStickMans(
+            stickMansDestinations.map(item => ({
+                destination: item,
+                direction:
+                    item > floorNumber
+                        ? "up"
+                        : item < floorNumber
+                        ? "down"
+                        : null,
+                lifeState: "wait-for-car",
+                carId: null,
+                placeInCar: null
+            }))
+        );
     }, [stickMansDestinations]);
 
     useEffect(() => {
         const callback = (carId: number) => {
             const carDirection = allCarsDirection[carId];
-            const freePlaces = 4 - allCarsStickMansDestinations[carId].length;
-            console.log(carId, carDirection, freePlaces, stickMans);
+            // console.log(carId, carDirection, freePlaces, stickMans);
 
-            const _stickMans = stickMansDestinations.map(item => {
-                const stickManDirection =
-                    item > floorNumber
-                        ? "up"
-                        : item < floorNumber
-                        ? "down"
-                        : null;
-                return {
-                    destination: item,
-                    direction: stickManDirection,
-                    lifeState: "get-into-car",
-                    carId: carDirection === stickManDirection ? carId : null,
-                    placeInCar: null
-                };
-            });
-            console.log(_stickMans);
-            setStickMans(_stickMans);
+            // split stickmans for two groups: get into the car and stay on floor
+            setTimeout(() => {
+                let freePlaces: number =
+                    4 - allCarsStickMansDestinations[carId].length;
+                const _stickMans = stickMansDestinations.map(item => {
+                    const stickManDirection =
+                        item > floorNumber
+                            ? "up"
+                            : item < floorNumber
+                            ? "down"
+                            : null;
+
+                    const lifeState =
+                        carDirection === stickManDirection && freePlaces > 0
+                            ? "get-into-car"
+                            : "wait-for-car";
+                    // update number of available places in car
+                    if (carDirection === stickManDirection) {
+                        freePlaces--;
+                    }
+                    const placeInCar =
+                        lifeState === "get-into-car" ? freePlaces : null;
+
+                    return {
+                        destination: item,
+                        direction: stickManDirection,
+                        lifeState,
+                        carId:
+                            carDirection === stickManDirection &&
+                            freePlaces >= 0
+                                ? carId
+                                : null,
+                        placeInCar
+                    };
+                });
+                console.log("stickmans for get into", _stickMans);
+                setStickMans(_stickMans.reverse());
+            }, 1000);
+
+            // search for stickmans for kill on floor and create in car
+            // setTimeout(() => {
+            //     removeStickMansDestinations(floorNumber, [0, 1]);
+            // }, 2000);
         };
 
         carCame({
@@ -154,9 +176,10 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
                 </CarInfoItem>
             </CarInfo>
             <StickManSet
-                lifeState={stickMans.map(item => item.lifeState)}
-                stickMansDestinations={stickMans.map(item => item.destination)}
-                carId={stickMans.map(item => item.carId)}
+                data={stickMans.map(item => {
+                    const { lifeState, destination, carId, placeInCar } = item;
+                    return { lifeState, destination, carId, placeInCar };
+                })}
             />
         </FloorStyled>
     );
