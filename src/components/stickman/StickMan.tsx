@@ -26,7 +26,7 @@ const StickMan = ({ data, index }: StickManProps) => {
             carId={carId}
             placeInCar={placeInCar}
         >
-            <FloorInfo>{}</FloorInfo>
+            <FloorInfo>{destination}</FloorInfo>
             <StickManStyled color={color}></StickManStyled>
         </Container>
     );

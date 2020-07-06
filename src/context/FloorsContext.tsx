@@ -90,7 +90,7 @@ const FloorsContextProvider = (props: { children: React.ReactNode }) => {
             1,
             newStickMansDestinations
         );
-
+        console.log(_allFloorsStickMansDestinations);
         setAllFloorsStickMansDestinations([..._allFloorsStickMansDestinations]);
     };
 

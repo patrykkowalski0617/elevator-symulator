@@ -74,6 +74,7 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
 
             // split stickmans for two groups: get into the car and stay on floor
             setTimeout(() => {
+                console.log("split");
                 let freePlaces: number =
                     4 - allCarsStickMansDestinations[carId].length;
                 const _stickMans = stickMansDestinations.map(item => {
@@ -107,14 +108,21 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
                         placeInCar
                     };
                 });
-                console.log("stickmans for get into", _stickMans);
+                // console.log("stickmans for get into", _stickMans);
                 setStickMans(_stickMans.reverse());
-            }, 1000);
 
-            // search for stickmans for kill on floor and create in car
-            // setTimeout(() => {
-            //     removeStickMansDestinations(floorNumber, [0, 1]);
-            // }, 2000);
+                // // search for stickmans for kill on floor and create in car
+                // setTimeout(() => {
+                //     console.log(_stickMans);
+                //     const indexes: number[] = [];
+                //     for (let i = 0; i < _stickMans.length; i++) {
+                //         if (_stickMans[i].lifeState === "get-into-car") {
+                //             indexes.push(i);
+                //         }
+                //     }
+                //     removeStickMansDestinations(floorNumber, indexes);
+                // }, 1000);
+            }, 1000);
         };
 
         carCame({
@@ -125,6 +133,13 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
             callback
         });
     }, [allCarsState]);
+
+    useEffect(() => {
+        // search for stickmans for kill on floor and create in car
+        setTimeout(() => {
+            console.log(stickMans);
+        }, 1000);
+    }, [stickMans]);
 
     useEffect(() => {
         const stickMansDestination = stickMans.map(
