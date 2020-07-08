@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { FloorsContext, BuildingContext } from "../../context";
+import { BuildingContext } from "../../context";
 import {
     Container,
     Form,
@@ -15,8 +15,11 @@ type StickManFormProps = {
 };
 
 const StickManForm = ({ floorNumber }: StickManFormProps) => {
-    const { setCreatingStickMan, numberOfFloors } = useContext(BuildingContext);
-    const { addStickMansDestinations } = useContext(FloorsContext);
+    const {
+        setCreatingStickMan,
+        setFormSickManData,
+        numberOfFloors
+    } = useContext(BuildingContext);
 
     const [howMany, setHowMany] = useState<number>(1);
     const [destination, setDestination] = useState<number>(0);
@@ -24,12 +27,13 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
     const closeHandler = (e: any) => {
         e.preventDefault();
         setCreatingStickMan(null);
+        setFormSickManData(null);
     };
 
     const submitHandler = (e: any) => {
         e.preventDefault();
         if (floorNumber !== destination) {
-            addStickMansDestinations(floorNumber, howMany, destination);
+            setFormSickManData({ floorNumber, howMany, destination });
             setCreatingStickMan(null);
         }
     };
