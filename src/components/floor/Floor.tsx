@@ -21,7 +21,9 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
         allCarsState,
         allCarsCurrentFloor,
         addCarFloorAssignment,
-        allCarsFloorAssignments
+        allCarsFloorAssignments,
+        allCarsDirection,
+        allCarsStickMans
     } = useContext(ShaftContext);
     const { floorsWaitingForCar, addFloorWaitingForCar } = useContext(
         FloorsContext
@@ -44,6 +46,8 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
             placeInCar: number | null;
         }[]
     >([]);
+
+    // add stickmans on floor
     useEffect(() => {
         if (formStickManData?.floorNumber === floorNumber) {
             const { destination, howMany } = formStickManData;
@@ -59,13 +63,61 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
                 carId: null,
                 placeInCar: null
             });
-            setStickMans([...newStickMans, ...stickMans]);
+
+            const insert = [...stickMans, ...newStickMans];
+            console.log(insert);
+            setStickMans(insert);
         }
     }, [formStickManData]);
 
+    // get stickmans into car
     useEffect(() => {
         const callback = (carId: number) => {
-            console.log(carId);
+            const carDirection = allCarsDirection[carId];
+            const carFreePlaces = 4 - allCarsStickMans[carId].length;
+            let freePlacesLeft = carFreePlaces;
+            const updatesStickMans = stickMans.map(item => {
+                const { destination, direction, lifeState } = item;
+
+                const _destination = destination;
+                const _direction =
+                    destination > floorNumber
+                        ? "up"
+                        : destination < floorNumber
+                        ? "down"
+                        : null;
+                const _carId =
+                    carDirection === direction && freePlacesLeft > 0
+                        ? carId
+                        : null;
+                const _lifeState =
+                    carDirection === direction && freePlacesLeft > 0
+                        ? "get-into-car"
+                        : lifeState;
+                const _placeInCar =
+                    _lifeState === "get-into-car" ? freePlacesLeft - 1 : null;
+
+                // update number of available places in car
+                if (carDirection === direction) {
+                    freePlacesLeft--;
+                }
+
+                return {
+                    destination: _destination,
+                    direction: _direction,
+                    lifeState: _lifeState,
+                    carId: _carId,
+                    placeInCar: _placeInCar
+                };
+            });
+            console.log(updatesStickMans);
+            setStickMans([...updatesStickMans].reverse());
+            setTimeout(() => {
+                console.log("remove stickmans on floor and let car go");
+                console.log(
+                    "do next action from floorEventsStack (to be implemented?): => create new stickmans => mange get into another car if necessary"
+                );
+            }, 1000);
         };
 
         carCame({

@@ -69,6 +69,9 @@ export const ValidationInfo = styled.p`
     font-size: 10px;
     position: absolute;
     bottom: 5px;
+    text-align: center;
+    width: 100%;
+    height: 20px;
 `;
 
 export const Item = styled.div`

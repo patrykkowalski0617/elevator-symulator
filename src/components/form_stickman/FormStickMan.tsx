@@ -21,8 +21,8 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
         numberOfFloors
     } = useContext(BuildingContext);
 
-    const [howMany, setHowMany] = useState<number>(1);
-    const [destination, setDestination] = useState<number>(0);
+    const [howMany, setHowMany] = useState<number | string>(5);
+    const [destination, setDestination] = useState<number | string>(0);
 
     const closeHandler = (e: any) => {
         e.preventDefault();
@@ -32,10 +32,12 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
 
     const submitHandler = (e: any) => {
         e.preventDefault();
-        if (floorNumber !== destination) {
-            setFormSickManData({ floorNumber, howMany, destination });
-            setCreatingStickMan(null);
-        }
+        setFormSickManData({
+            floorNumber,
+            howMany: Number(howMany),
+            destination: Number(destination)
+        });
+        setCreatingStickMan(null);
     };
 
     // mange form using keyboard
@@ -75,14 +77,19 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
                             wrongData={floorNumber === destination}
                             value={destination}
                             onChange={e => {
-                                setDestination(Number(e.target.value));
+                                setDestination(e.target.value);
                             }}
                             autoFocus={true}
                         ></Input>
-                        {floorNumber === destination ? (
+                        {floorNumber === Number(destination) ? (
                             <ValidationInfo>
                                 Destiantion should be different than floor you
                                 create Stickman
+                            </ValidationInfo>
+                        ) : null}
+                        {destination === "" ? (
+                            <ValidationInfo>
+                                This field is required
                             </ValidationInfo>
                         ) : null}
                     </Item>
@@ -95,14 +102,23 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
                             max={5}
                             value={howMany}
                             onChange={e => {
-                                setHowMany(Number(e.target.value));
+                                setHowMany(e.target.value);
                             }}
                         ></Input>
+                        {howMany === "" ? (
+                            <ValidationInfo>
+                                This field is required
+                            </ValidationInfo>
+                        ) : null}
                     </Item>
                 </fieldset>
                 <Submit
                     onClick={submitHandler}
-                    disabled={floorNumber === destination}
+                    disabled={
+                        floorNumber === Number(destination) ||
+                        destination === "" ||
+                        howMany === ""
+                    }
                 >
                     Submit
                 </Submit>

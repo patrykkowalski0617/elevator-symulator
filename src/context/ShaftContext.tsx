@@ -9,7 +9,7 @@ interface IContextProps {
     removeCarFloorAssignment: (carId: number, floorNumber: number) => void;
     allCarsState: string[];
     updateCarState: (carId: number, state: string) => void;
-    allCarsStickMansDestinations: number[][];
+    allCarsStickMans: number[][];
     addPassengers: (carId: number, destination: number) => void;
     allCarsDirection: string | null[];
     updateCarDirection: (carId: number, direction: string) => void;
@@ -28,10 +28,7 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
     const [allCarsFloorAssignments, setAllCarsFloorAssignments] = useState(
         initArr([])
     );
-    const [
-        allCarsStickMansDestinations,
-        setAllCarsStickMansDestinations
-    ] = useState(initArr([]));
+    const [allCarsStickMans, setallCarsStickMans] = useState(initArr([]));
     const [allCarsDirection, setAllCarsDirection] = useState(initArr(null));
 
     const updateCarCurrentFloor = (carId: number, currentFloor: number) => {
@@ -64,21 +61,13 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
     };
 
     const addPassengers = (carId: number, destination: number) => {
-        if (allCarsStickMansDestinations[carId].length < 4) {
+        if (allCarsStickMans[carId].length < 4) {
             if (carId !== null) {
-                const _allCarsStickMansDestinations = [
-                    ...allCarsStickMansDestinations
-                ];
-                const carPassengers = [..._allCarsStickMansDestinations[carId]];
+                const _allCarsStickMans = [...allCarsStickMans];
+                const carPassengers = [..._allCarsStickMans[carId]];
                 const carPassengersUpdated = [...carPassengers, destination];
-                _allCarsStickMansDestinations.splice(
-                    carId,
-                    1,
-                    carPassengersUpdated
-                );
-                setAllCarsStickMansDestinations([
-                    ..._allCarsStickMansDestinations
-                ]);
+                _allCarsStickMans.splice(carId, 1, carPassengersUpdated);
+                setallCarsStickMans([..._allCarsStickMans]);
             }
         } else {
             console.warn("car is full!");
@@ -111,7 +100,7 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
                 removeCarFloorAssignment,
                 allCarsState,
                 updateCarState,
-                allCarsStickMansDestinations,
+                allCarsStickMans,
                 addPassengers,
                 allCarsDirection,
                 updateCarDirection

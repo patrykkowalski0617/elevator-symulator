@@ -14,13 +14,13 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         allCarsCurrentFloor,
         allCarsFloorAssignments,
         allCarsState,
-        allCarsStickMansDestinations,
+        allCarsStickMans,
         updateCarDirection
     } = useContext(ShaftContext);
     const { floorsWaitingForCar } = useContext(FloorsContext);
     const floorAssignments: number[] = allCarsFloorAssignments[carId];
     const currentFloor: number = allCarsCurrentFloor[carId];
-    const stickMansDestinations: number[] = allCarsStickMansDestinations[carId];
+    const stickMansDestinations: number[] = allCarsStickMans[carId];
 
     const [carPosition, setCarPosition] = useState<number>(currentFloor * 100);
     const [intervalId, setIntervalId] = useState<number | null>(null);
