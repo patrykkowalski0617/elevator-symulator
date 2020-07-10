@@ -8,14 +8,12 @@ const getIntoCss = ({
     lifeState,
     carWidth,
     carId,
-    placeInCar,
-    index
+    placeInCar
 }: {
     lifeState: string;
     carWidth: string;
     carId: number | null;
     placeInCar: number | null;
-    index: number | null;
 }) => {
     const floorW = "100%";
     const carStartPos = "11px";
@@ -23,12 +21,7 @@ const getIntoCss = ({
 
     return css`
         left: calc(${calcVal});
-        background-color: red;
     `;
-    // return css`
-    //     left: calc(5px + 15px * ${index});
-    //     background-color: red;
-    // `;
 };
 
 const inCarCss = ({
@@ -71,7 +64,7 @@ export const Container = styled.div<{
         return lifeState === "wait-for-car"
             ? waitForCarCass({ index })
             : lifeState === "get-into-car"
-            ? getIntoCss({ lifeState, carWidth, carId, placeInCar, index })
+            ? getIntoCss({ lifeState, carWidth, carId, placeInCar })
             : lifeState === "in-car"
             ? inCarCss({ index, lifeState })
             : lifeState === "get-off-car"

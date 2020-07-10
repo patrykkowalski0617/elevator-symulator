@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { CarStyled, Door } from "./CarStyled";
-import { ShaftContext, FloorsContext } from "../../context";
+import { ShaftContext } from "../../context";
 import { carTarget, move } from "./logic";
 import { floorColor } from "../../style_mixin";
-import StickManSet from "../stickman_set/StickManSet";
 
 type CarProps = { numberOfFloors: number; carId: number };
 
@@ -14,13 +13,10 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         allCarsCurrentFloor,
         allCarsFloorAssignments,
         allCarsState,
-        allCarsStickMans,
-        updateCarDirection
+        allCarsDirection
     } = useContext(ShaftContext);
-    const { floorsWaitingForCar } = useContext(FloorsContext);
     const floorAssignments: number[] = allCarsFloorAssignments[carId];
     const currentFloor: number = allCarsCurrentFloor[carId];
-    const stickMansDestinations: number[] = allCarsStickMans[carId];
 
     const [carPosition, setCarPosition] = useState<number>(currentFloor * 100);
     const [intervalId, setIntervalId] = useState<number | null>(null);
@@ -29,7 +25,6 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
     );
     const [carState, setCarState] = useState<string>(allCarsState[carId]);
     const [carCurrentFloor, setCarCurrentFloor] = useState<number>(0);
-    const [direction, setDirection] = useState<string | null>(null);
 
     const getPosition = (position: number) => {
         setCarPosition(position);
@@ -79,28 +74,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
                 isContinuation
             );
         }
-
-        for (
-            let floorNumber = 0;
-            floorNumber < floorsWaitingForCar.length;
-            floorNumber++
-        ) {
-            const { up, down } = floorsWaitingForCar[floorNumber];
-            if (floorNumber === targetFloor) {
-                if (up && !down) {
-                    setDirection("up");
-                } else if (down) {
-                    setDirection("down");
-                }
-            }
-        }
     }, [floorAssignments]);
-
-    useEffect(() => {
-        if (direction) {
-            updateCarDirection(carId, direction);
-        }
-    }, [direction]);
 
     return (
         <CarStyled

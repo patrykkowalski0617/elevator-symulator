@@ -9,6 +9,7 @@ type Props = {
     setAssignedCars: (data: number[]) => void;
     assignedCars: number[];
     setNoCar: (data: boolean) => void;
+    updateCarDirection: (carId: number, direction: string) => void;
 };
 
 const callCar = ({
@@ -19,8 +20,9 @@ const callCar = ({
     addCarFloorAssignment,
     setAssignedCars,
     assignedCars,
-    setNoCar
-}: Props) => () => {
+    setNoCar,
+    updateCarDirection
+}: Props) => (direction: string) => {
     const carId = theNearestCar({
         allCarsState,
         allCarsCurrentFloor,
@@ -31,6 +33,7 @@ const callCar = ({
     if (carId !== null && carId !== undefined && carId >= 0) {
         addCarFloorAssignment(carId, floorNumber);
         setAssignedCars([...assignedCars, carId]);
+        updateCarDirection(carId, direction);
     } else {
         setNoCar(true);
     }

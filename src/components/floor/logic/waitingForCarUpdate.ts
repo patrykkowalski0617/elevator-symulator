@@ -1,26 +1,23 @@
 type Props = {
-    waitingForCar: { up: boolean; down: boolean };
+    _waitingForCar: { up: boolean; down: boolean };
     stickMansDestination: number[];
-    addFloorWaitingForCar: (
-        floorNumber: number,
-        data: { up: boolean; down: boolean }
-    ) => void;
     floorNumber: number;
+    _setWaitingForCar: (data: { up: boolean; down: boolean }) => void;
 };
 
 const waitingForCarUpdate = ({
-    waitingForCar,
+    _waitingForCar,
     stickMansDestination,
-    addFloorWaitingForCar,
-    floorNumber
+    floorNumber,
+    _setWaitingForCar
 }: Props) => {
     if (stickMansDestination.length) {
         const uniqFloorsSet = new Set(stickMansDestination);
         const uniqFloors = Array.from(uniqFloorsSet);
         const up = uniqFloors.some((item: any) => item > floorNumber);
         const down = uniqFloors.some((item: any) => item < floorNumber);
-        if (!waitingForCar.up || !waitingForCar.down) {
-            addFloorWaitingForCar(floorNumber, { up, down });
+        if (!_waitingForCar.up || !_waitingForCar.down) {
+            _setWaitingForCar({ up, down });
         }
     }
 };

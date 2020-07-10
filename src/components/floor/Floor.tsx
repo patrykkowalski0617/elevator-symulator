@@ -6,7 +6,7 @@ import {
     CreateBtn,
     Light
 } from "./FloorStyled";
-import { ShaftContext, FloorsContext, BuildingContext } from "../../context";
+import { ShaftContext, BuildingContext } from "../../context";
 import { waitingForCarUpdate, callCar, carCame } from "./logic";
 import StickManSet from "../stickman_set/StickManSet";
 
@@ -23,13 +23,9 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
         addCarFloorAssignment,
         allCarsFloorAssignments,
         allCarsDirection,
+        updateCarDirection,
         allCarsStickMans
     } = useContext(ShaftContext);
-    const { floorsWaitingForCar, addFloorWaitingForCar } = useContext(
-        FloorsContext
-    );
-    const waitingForCar: { up: boolean; down: boolean } =
-        floorsWaitingForCar[floorNumber];
     const { setCreatingStickMan, formStickManData } = useContext(
         BuildingContext
     );
@@ -46,6 +42,14 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
             placeInCar: number | null;
         }[]
     >([]);
+
+    const [_waitingForCar, _setWaitingForCar] = useState<{
+        up: boolean;
+        down: boolean;
+    }>({
+        up: false,
+        down: false
+    });
 
     // add stickmans on floor
     useEffect(() => {
@@ -65,7 +69,6 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
             });
 
             const insert = [...stickMans, ...newStickMans];
-            console.log(insert);
             setStickMans(insert);
         }
     }, [formStickManData]);
@@ -76,9 +79,8 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
             const carDirection = allCarsDirection[carId];
             const carFreePlaces = 4 - allCarsStickMans[carId].length;
             let freePlacesLeft = carFreePlaces;
-            const updatesStickMans = stickMans.map(item => {
+            const updatesStickMans = [...stickMans].reverse().map(item => {
                 const { destination, direction, lifeState } = item;
-
                 const _destination = destination;
                 const _direction =
                     destination > floorNumber
@@ -87,7 +89,9 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
                         ? "down"
                         : null;
                 const _carId =
-                    carDirection === direction && freePlacesLeft > 0
+                    typeof item.carId === "number"
+                        ? item.carId
+                        : carDirection === direction && freePlacesLeft > 0
                         ? carId
                         : null;
                 const _lifeState =
@@ -95,7 +99,11 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
                         ? "get-into-car"
                         : lifeState;
                 const _placeInCar =
-                    _lifeState === "get-into-car" ? freePlacesLeft - 1 : null;
+                    typeof item.placeInCar === "number"
+                        ? item.placeInCar
+                        : _lifeState === "get-into-car"
+                        ? freePlacesLeft - 1
+                        : null;
 
                 // update number of available places in car
                 if (carDirection === direction) {
@@ -110,13 +118,13 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
                     placeInCar: _placeInCar
                 };
             });
-            console.log(updatesStickMans);
+
             setStickMans([...updatesStickMans].reverse());
             setTimeout(() => {
-                console.log("remove stickmans on floor and let car go");
-                console.log(
-                    "do next action from floorEventsStack (to be implemented?): => create new stickmans => mange get into another car if necessary"
-                );
+                // console.log("remove stickmans on floor and let car go");
+                // console.log(
+                //     "do next action from floorEventsStack (to be implemented?): => create new stickmans => mange get into another car if necessary"
+                // );
             }, 1000);
         };
 
@@ -125,6 +133,8 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
             allCarsState,
             carsOnFloor,
             setCarsOnFloor,
+            allCarsCurrentFloor,
+            floorNumber,
             callback
         });
     }, [allCarsState]);
@@ -134,10 +144,11 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
             (item: { destination: number }) => item.destination
         );
         waitingForCarUpdate({
-            waitingForCar,
+            _waitingForCar,
             stickMansDestination,
-            addFloorWaitingForCar,
-            floorNumber
+            // addFloorWaitingForCar,
+            floorNumber,
+            _setWaitingForCar
         });
     }, [stickMans]);
 
@@ -149,20 +160,21 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
         addCarFloorAssignment,
         setAssignedCars,
         assignedCars,
-        setNoCar
+        setNoCar,
+        updateCarDirection
     });
 
     useEffect(() => {
-        if (waitingForCar.up) {
-            _callCar();
+        if (_waitingForCar.up) {
+            _callCar("up");
         }
-    }, [waitingForCar.up]);
+    }, [_waitingForCar.up]);
 
     useEffect(() => {
-        if (waitingForCar.down) {
-            _callCar();
+        if (_waitingForCar.down) {
+            _callCar("down");
         }
-    }, [waitingForCar.down]);
+    }, [_waitingForCar.down]);
 
     const createStickmanHandler = () => {
         setCreatingStickMan(floorNumber);
@@ -172,7 +184,7 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
         <FloorStyled numberOfFloors={numberOfFloors} floorColor={floorColor}>
             <CarInfo>
                 <CarInfoItem>
-                    <Light waitingForCar={waitingForCar} noCar={noCar}></Light>
+                    <Light waitingForCar={_waitingForCar} noCar={noCar}></Light>
                 </CarInfoItem>
                 <CarInfoItem>
                     <CreateBtn onClick={createStickmanHandler}>+</CreateBtn>
