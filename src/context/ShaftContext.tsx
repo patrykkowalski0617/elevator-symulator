@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import { BuildingContext } from "./BuildingContext";
 
 interface IContextProps {
@@ -9,8 +9,21 @@ interface IContextProps {
     removeCarFloorAssignment: (carId: number, floorNumber: number) => void;
     allCarsState: string[];
     updateCarState: (carId: number, state: string) => void;
-    allCarsStickMans: number[][];
-    addPassengers: (carId: number, destination: number) => void;
+    allCarsStickMans: {
+        lifeState: string;
+        destination: number;
+        carId: number | null;
+        placeInCar: number | null;
+    }[][];
+    addPassengers: (
+        data: {
+            destination: number;
+            direction: string | null;
+            lifeState: string;
+            carId: number | null;
+            placeInCar: number | null;
+        }[]
+    ) => void;
     allCarsDirection: string | null[];
     updateCarDirection: (carId: number, direction: string) => void;
 }
@@ -28,7 +41,7 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
     const [allCarsFloorAssignments, setAllCarsFloorAssignments] = useState(
         initArr([])
     );
-    const [allCarsStickMans, setallCarsStickMans] = useState(initArr([]));
+    const [allCarsStickMans, setAllCarsStickMans] = useState(initArr([]));
     const [allCarsDirection, setAllCarsDirection] = useState(initArr(null));
 
     const updateCarCurrentFloor = (carId: number, currentFloor: number) => {
@@ -60,15 +73,26 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
         }
     };
 
-    const addPassengers = (carId: number, destination: number) => {
+    const [_allCarsStickMans, set_allCarsStickMans] = useState(
+        allCarsStickMans
+    );
+    useEffect(() => {
+        set_allCarsStickMans(allCarsStickMans);
+    }, [allCarsStickMans]);
+    const addPassengers = (
+        data: {
+            destination: number;
+            direction: string | null;
+            lifeState: string;
+            carId: number | null;
+            placeInCar: number | null;
+        }[]
+    ) => {
+        const carId = typeof data[0].carId === "number" ? data[0].carId : -1;
         if (allCarsStickMans[carId].length < 4) {
-            if (carId !== null) {
-                const _allCarsStickMans = [...allCarsStickMans];
-                const carPassengers = [..._allCarsStickMans[carId]];
-                const carPassengersUpdated = [...carPassengers, destination];
-                _allCarsStickMans.splice(carId, 1, carPassengersUpdated);
-                setallCarsStickMans([..._allCarsStickMans]);
-            }
+            const carPassengers = [..._allCarsStickMans[carId], ...data];
+            _allCarsStickMans.splice(carId, 1, carPassengers);
+            setAllCarsStickMans([..._allCarsStickMans]);
         } else {
             console.warn("car is full!");
         }

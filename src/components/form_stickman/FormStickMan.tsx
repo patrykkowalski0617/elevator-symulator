@@ -32,12 +32,20 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
 
     const submitHandler = (e: any) => {
         e.preventDefault();
-        setFormSickManData({
-            floorNumber,
-            howMany: Number(howMany),
-            destination: Number(destination)
-        });
-        setCreatingStickMan(null);
+        if (
+            !(
+                floorNumber === Number(destination) ||
+                destination === "" ||
+                howMany === ""
+            )
+        ) {
+            setFormSickManData({
+                floorNumber,
+                howMany: Number(howMany),
+                destination: Number(destination)
+            });
+            setCreatingStickMan(null);
+        }
     };
 
     // mange form using keyboard

@@ -5,7 +5,7 @@ type Props = {
     setCarsOnFloor: (carsOnFloor: number[]) => void;
     allCarsCurrentFloor: number[];
     floorNumber: number;
-    callback: (carId: number) => void;
+    setWhichCarCame: (carId: number) => void;
 };
 
 const carCame = ({
@@ -15,7 +15,7 @@ const carCame = ({
     setCarsOnFloor,
     allCarsCurrentFloor,
     floorNumber,
-    callback
+    setWhichCarCame
 }: Props) => {
     if (assignedCars.length) {
         for (let i = 0; i < assignedCars.length; i++) {
@@ -28,7 +28,7 @@ const carCame = ({
                 carFloorNumber === floorNumber
             ) {
                 setCarsOnFloor([...carsOnFloor, carId]);
-                callback(carId);
+                setWhichCarCame(carId);
             }
         }
     }

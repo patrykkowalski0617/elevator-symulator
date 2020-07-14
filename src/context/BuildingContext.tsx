@@ -42,7 +42,7 @@ const BuildingContextProvider = (props: { children: React.ReactNode }) => {
     } | null>(null);
 
     const carWidth: string = "64px";
-    const floorWidth: string = ` calc((100% - ${carWidth} * ${numberOfCars}) / 2)`;
+    const floorWidth: string = `calc((100% - ${carWidth} * ${numberOfCars}) / 2)`;
 
     return (
         <BuildingContext.Provider

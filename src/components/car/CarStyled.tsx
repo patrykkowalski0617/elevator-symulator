@@ -44,5 +44,5 @@ export const Door = styled.div<{
     border-left-width: ${props => (props.left ? "" : "0.5px")};
     border-right-width: ${props => (props.left ? "0.5px" : "")};
     position: absolute;
-    z-index: 1;
+    z-index: 2;
 `;

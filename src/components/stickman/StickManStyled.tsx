@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 const waitForCarCass = ({ index }: { index: number }) => css`
-    left: calc(5px + 15px * ${index});
+    left: calc(60px + 15px * ${index});
 `;
 
 const getIntoCss = ({
@@ -21,6 +21,7 @@ const getIntoCss = ({
 
     return css`
         left: calc(${calcVal});
+        ${lifeState === "kill" ? "display: none" : ""}
     `;
 };
 
@@ -55,7 +56,7 @@ export const Container = styled.div<{
     bottom: 0;
     z-index: 1;
     width: 10px;
-    transition: 0.5s left, right;
+    transition: 0.5s 1.5s left, right;
     &:hover {
         bottom: 1px;
     }
@@ -63,7 +64,7 @@ export const Container = styled.div<{
         const { index, lifeState, carWidth, carId, placeInCar } = props;
         return lifeState === "wait-for-car"
             ? waitForCarCass({ index })
-            : lifeState === "get-into-car"
+            : lifeState === "get-into-car" || lifeState === "kill"
             ? getIntoCss({ lifeState, carWidth, carId, placeInCar })
             : lifeState === "in-car"
             ? inCarCss({ index, lifeState })
@@ -80,25 +81,34 @@ export const FloorInfo = styled.p`
     transform: translateX(-50%);
 `;
 
+export const StickManHead = styled.div`
+    background-color: #666;
+    border: 2px solid;
+    width: 100%;
+    display: block;
+    height: 10px;
+    border-radius: 100%;
+`;
+
 export const StickManStyled = styled.div<{ color: string }>`
     width: 10px;
     height: 35px;
-    &::before {
-        content: "";
-        width: 100%;
-        display: block;
-        height: 10px;
-        background-color: ${props => props.color};
-        border: 1px solid;
-        border-radius: 100%;
-    }
+    &::before,
     &::after {
         content: "";
-        background-color: #222;
         width: 100%;
-        display: block;
         height: 23px;
-        margin-top: 2px;
+        display: block;
         border-radius: 5px 5px 0 0;
+        border: 2px solid;
+    }
+    &::before {
+        position: absolute;
+        background-color: ${props => props.color};
+        bottom: 0;
+    }
+    &::after {
+        background-color: #555;
+        margin-top: 2px;
     }
 `;

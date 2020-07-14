@@ -1,7 +1,12 @@
 import React, { useContext } from "react";
 import { BuildingContext } from "../../context";
 import { floorColor } from "../../style_mixin";
-import { Container, StickManStyled, FloorInfo } from "./StickManStyled";
+import {
+    Container,
+    StickManStyled,
+    StickManHead,
+    FloorInfo
+} from "./StickManStyled";
 
 type StickManProps = {
     data: {
@@ -27,7 +32,9 @@ const StickMan = ({ data, index }: StickManProps) => {
             placeInCar={placeInCar}
         >
             <FloorInfo>{destination}</FloorInfo>
-            <StickManStyled color={color}></StickManStyled>
+            <StickManStyled color={color}>
+                <StickManHead />
+            </StickManStyled>
         </Container>
     );
 };

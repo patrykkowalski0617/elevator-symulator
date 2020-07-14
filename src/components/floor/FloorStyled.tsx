@@ -15,7 +15,6 @@ export const FloorStyled = styled.div<{
 export const CarInfo = styled.div`
     position: absolute;
     top: 0;
-    right: 0;
     display: flex;
     flex-wrap: wrap;
 `;

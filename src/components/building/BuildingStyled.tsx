@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const BuildingStyled = styled.div`
     height: 90vh;
-    width: 70vw;
     max-width: 600px;
     min-width: 320px;
     margin: 5vh auto;

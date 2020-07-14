@@ -3,6 +3,7 @@ import { CarStyled, Door } from "./CarStyled";
 import { ShaftContext } from "../../context";
 import { carTarget, move } from "./logic";
 import { floorColor } from "../../style_mixin";
+import StickManSet from "../stickman_set/StickManSet";
 
 type CarProps = { numberOfFloors: number; carId: number };
 
@@ -13,6 +14,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         allCarsCurrentFloor,
         allCarsFloorAssignments,
         allCarsState,
+        allCarsStickMans,
         allCarsDirection
     } = useContext(ShaftContext);
     const floorAssignments: number[] = allCarsFloorAssignments[carId];
@@ -85,11 +87,19 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         >
             <Door left={true} carColor={carColor} carState={carState}></Door>
             <Door carColor={carColor} carState={carState}></Door>
-            {/* <StickManSet
-                lifeState={[`in-car-${carId}`]}
-                stickMansDestinations={stickMansDestinations}
-                carId={[null]}
-            /> */}
+            {allCarsStickMans[carId].length ? (
+                <StickManSet
+                    data={allCarsStickMans[carId].map(item => {
+                        const {
+                            lifeState,
+                            destination,
+                            carId,
+                            placeInCar
+                        } = item;
+                        return { lifeState, destination, carId, placeInCar };
+                    })}
+                />
+            ) : null}
         </CarStyled>
     );
 };
