@@ -12,6 +12,7 @@ interface IParam {
     allCarsState: string[];
     allCarsFloorAssignments: { length: number; [index: number]: number[] };
     assignedCars: number[];
+    direction: string;
     tolerance?: number;
 }
 
@@ -21,6 +22,7 @@ export const distanceToAvailableCars = ({
     allCarsState,
     allCarsFloorAssignments,
     assignedCars,
+    direction,
     tolerance = 1 // number of floors between floorNumber and carCurrentFloor that is acceptable to asign car to floor
 }: IParam) => {
     let distanceToAvailableCarsArr: {
@@ -38,13 +40,13 @@ export const distanceToAvailableCars = ({
         for (let carId = 0; carId < allCarsState.length; carId++) {
             carState = allCarsState[carId];
             carCurrentFloor = allCarsCurrentFloor[carId];
-            distance = Math.abs(floorNumber - carCurrentFloor); // Math.abs - make number positive
 
             let mainCarTarget: number = Math.max.apply(
                 Math,
                 allCarsFloorAssignments[carId]
             );
 
+            console.log(direction);
             mainCarTarget =
                 mainCarTarget !== Infinity && mainCarTarget !== -Infinity
                     ? mainCarTarget
@@ -54,19 +56,22 @@ export const distanceToAvailableCars = ({
                 !assignedCars.includes(carId) && // prevent assign assigend car
                 (carState === "ready" ||
                     (carState.includes("go-up") &&
+                        direction === "up" &&
                         mainCarTarget &&
                         floorNumber <= mainCarTarget &&
                         carCurrentFloor + tolerance < floorNumber) ||
                     (carState.includes("go-down") &&
+                        direction === "down" &&
                         mainCarTarget &&
                         floorNumber >= mainCarTarget &&
                         carCurrentFloor - tolerance > floorNumber))
             ) {
+                distance = Math.abs(floorNumber - carCurrentFloor); // Math.abs - make number positive
                 distanceToAvailableCarsArr.push({ carId, distance });
             }
         }
     }
-
+    console.log("wynik ", distanceToAvailableCarsArr);
     return distanceToAvailableCarsArr;
 };
 
@@ -77,6 +82,7 @@ const theNearestCar = ({
     allCarsState,
     allCarsFloorAssignments,
     assignedCars,
+    direction,
     tolerance
 }: IParam) => {
     if (
@@ -93,6 +99,7 @@ const theNearestCar = ({
             allCarsState,
             allCarsFloorAssignments,
             assignedCars,
+            direction,
             tolerance
         });
 

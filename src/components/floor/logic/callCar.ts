@@ -28,7 +28,8 @@ const callCar = ({
         allCarsCurrentFloor,
         allCarsFloorAssignments,
         floorNumber,
-        assignedCars
+        assignedCars,
+        direction
     });
     if (carId !== null && carId !== undefined && carId >= 0) {
         addCarFloorAssignment(carId, floorNumber);
