@@ -14,7 +14,7 @@ import {
     disappearStickmans,
     getStickmansIntoCar,
     addStickmansOnFloor,
-    reorderStickmans
+    reorderStickmansAfterGetIn
 } from "./logic";
 import StickManSet from "../stickman_set/StickManSet";
 
@@ -118,7 +118,7 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
 
     const [carsReadyToGo, setCarsReadyToGo] = useState<number[]>([]);
     useEffect(() => {
-        reorderStickmans({
+        reorderStickmansAfterGetIn({
             carReadyToGo,
             carsReadyToGo,
             setCarsReadyToGo,

@@ -21,7 +21,7 @@ type Props = {
     ) => void;
 };
 
-const reorderStickmans = ({
+const reorderStickmansAfterGetIn = ({
     carReadyToGo,
     carsReadyToGo,
     setCarsReadyToGo,
@@ -47,4 +47,4 @@ const reorderStickmans = ({
     }
 };
 
-export default reorderStickmans;
+export default reorderStickmansAfterGetIn;
