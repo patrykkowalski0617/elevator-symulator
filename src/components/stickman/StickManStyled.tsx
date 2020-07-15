@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 const waitForCarCass = ({ index }: { index: number }) => css`
     left: calc(60px + 15px * ${index});
@@ -21,18 +21,22 @@ const getIntoCss = ({
 
     return css`
         left: calc(${calcVal});
-        ${lifeState === "kill" ? "display: none" : ""}
+        ${lifeState === "kill" ? "display: none" : ""};
     `;
 };
 
-const inCarCss = ({
-    index,
-    lifeState
-}: {
-    index: number;
-    lifeState: string;
-}) => css`
-    left: calc(7px + 12px * ${index});
+const getIntoFrame = keyframes`
+    from{
+        transform: scale(1);
+    }
+    to{
+        transform: scale(0.9);
+    }
+`;
+
+const inCarCss = ({ placeInCar }: { placeInCar: number | null }) => css`
+    left: calc(7px + 12px * ${placeInCar});
+    animation: 0.2s ${getIntoFrame} forwards;
 `;
 
 const getOffCss = ({
@@ -56,7 +60,7 @@ export const Container = styled.div<{
     bottom: 0;
     z-index: 1;
     width: 10px;
-    transition: 0.5s 1.5s left, right;
+    transition: 0.5s 1.5s;
     &:hover {
         bottom: 1px;
     }
@@ -67,7 +71,7 @@ export const Container = styled.div<{
             : lifeState === "get-into-car" || lifeState === "kill"
             ? getIntoCss({ lifeState, carWidth, carId, placeInCar })
             : lifeState === "in-car"
-            ? inCarCss({ index, lifeState })
+            ? inCarCss({ placeInCar })
             : lifeState === "get-off-car"
             ? getOffCss({ index, lifeState })
             : lifeState === "wait-for-dead"

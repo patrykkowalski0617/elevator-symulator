@@ -88,13 +88,20 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
             placeInCar: number | null;
         }[]
     ) => {
-        const carId = typeof data[0].carId === "number" ? data[0].carId : -1;
-        if (allCarsStickMans[carId].length < 4) {
-            const carPassengers = [..._allCarsStickMans[carId], ...data];
-            _allCarsStickMans.splice(carId, 1, carPassengers);
-            setAllCarsStickMans([..._allCarsStickMans]);
+        if (data[0]) {
+            const carId =
+                typeof data[0].carId === "number" ? data[0].carId : -1;
+            if (allCarsStickMans[carId].length < 4) {
+                const carPassengers = [..._allCarsStickMans[carId], ...data];
+                _allCarsStickMans.splice(carId, 1, carPassengers);
+                setAllCarsStickMans([..._allCarsStickMans]);
+            } else {
+                console.warn("car is full!");
+            }
         } else {
-            console.warn("car is full!");
+            console.warn(
+                "there are no stickmen on this floor who have the same direction as the car!"
+            );
         }
     };
 

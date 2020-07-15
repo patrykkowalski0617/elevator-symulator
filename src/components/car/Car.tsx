@@ -89,7 +89,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
             <Door carColor={carColor} carState={carState}></Door>
             {allCarsStickMans[carId].length ? (
                 <StickManSet
-                    data={allCarsStickMans[carId].map(item => {
+                    data={[...allCarsStickMans[carId]].map(item => {
                         const {
                             lifeState,
                             destination,
