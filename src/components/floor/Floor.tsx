@@ -29,7 +29,6 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
         allCarsState,
         allCarsCurrentFloor,
         addCarFloorAssignment,
-        removeCarFloorAssignment,
         allCarsFloorAssignments,
         allCarsDirection,
         updateCarDirection,
@@ -107,7 +106,6 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
             stickMans,
             setStickMans
         });
-        // removeCarFloorAssignment(0, floorNumber);
     }, [deleteStickMans]);
 
     useEffect(() => {

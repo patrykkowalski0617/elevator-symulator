@@ -21,7 +21,7 @@ const StickManForm = ({ floorNumber }: StickManFormProps) => {
         numberOfFloors
     } = useContext(BuildingContext);
 
-    const [howMany, setHowMany] = useState<number | string>(5);
+    const [howMany, setHowMany] = useState<number | string>(2);
     const [destination, setDestination] = useState<number | string>(0);
 
     const closeHandler = (e: any) => {

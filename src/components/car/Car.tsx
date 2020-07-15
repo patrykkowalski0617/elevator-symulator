@@ -15,11 +15,12 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         allCarsFloorAssignments,
         allCarsState,
         allCarsStickMans,
-        allCarsDirection
+        removeCarFloorAssignment,
+        addCarFloorAssignment
     } = useContext(ShaftContext);
     const floorAssignments: number[] = allCarsFloorAssignments[carId];
     const currentFloor: number = allCarsCurrentFloor[carId];
-
+    const stickMans = allCarsStickMans[carId];
     const [carPosition, setCarPosition] = useState<number>(currentFloor * 100);
     const [intervalId, setIntervalId] = useState<number | null>(null);
     const [carColor, setCarColor] = useState<string>(
@@ -43,6 +44,16 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
             })
         );
     };
+
+    // close door after some time
+    useEffect(() => {
+        if (allCarsState[carId].includes("door-open")) {
+            setTimeout(() => {
+                setCarState("ready");
+                removeCarFloorAssignment(carId, currentFloor);
+            }, 2500);
+        }
+    }, [allCarsState[carId]]);
 
     useEffect(() => {
         updateCarCurrentFloor(carId, carCurrentFloor);
@@ -78,6 +89,19 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         }
     }, [floorAssignments]);
 
+    useEffect(() => {
+        const _stickMansDestinations = new Set(
+            stickMans.map(item => item.destination)
+        );
+        const stickMansDestinations = Array.from(_stickMansDestinations);
+        setTimeout(() => {
+            for (let i = 0; i < stickMansDestinations.length; i++) {
+                const floorNumber = stickMansDestinations[i];
+                addCarFloorAssignment(carId, floorNumber);
+            }
+        }, 1500);
+    }, [stickMans]);
+
     return (
         <CarStyled
             numberOfFloors={numberOfFloors}
@@ -87,9 +111,9 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         >
             <Door left={true} carColor={carColor} carState={carState}></Door>
             <Door carColor={carColor} carState={carState}></Door>
-            {allCarsStickMans[carId].length ? (
+            {stickMans.length ? (
                 <StickManSet
-                    data={[...allCarsStickMans[carId]].map(item => {
+                    data={[...stickMans].map(item => {
                         const {
                             lifeState,
                             destination,
