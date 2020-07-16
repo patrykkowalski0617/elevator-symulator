@@ -6,7 +6,6 @@ type Props = {
     allCarsFloorAssignments: { [index: number]: number[]; length: number };
     floorNumber: number;
     addCarFloorAssignment: (carId: number, floorNumber: number) => void;
-    setAssignedCars: (data: number[]) => void;
     assignedCars: number[];
     setNoCar: (data: boolean) => void;
     updateCarDirection: (carId: number, direction: string) => void;
@@ -19,7 +18,6 @@ const callCar = ({
     allCarsFloorAssignments,
     floorNumber,
     addCarFloorAssignment,
-    setAssignedCars,
     assignedCars,
     setNoCar,
     updateCarDirection,
@@ -34,9 +32,8 @@ const callCar = ({
         direction,
         allCarsDirection
     });
-    if (carId !== null && carId !== undefined && carId >= 0) {
+    if (typeof carId === "number" && carId >= 0) {
         addCarFloorAssignment(carId, floorNumber);
-        setAssignedCars([...assignedCars, carId]);
         if (allCarsDirection[carId] === null) {
             updateCarDirection(carId, direction);
         }

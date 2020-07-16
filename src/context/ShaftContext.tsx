@@ -100,7 +100,7 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
             }
         } else {
             console.warn(
-                "there are no stickmen on this floor who have the same direction as the car!"
+                "there are no stickman on this floor who have the same direction as the car!"
             );
         }
     };

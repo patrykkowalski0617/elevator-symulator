@@ -14,7 +14,8 @@ import {
     disappearStickmans,
     getStickmansIntoCar,
     addStickmansOnFloor,
-    reorderStickmansAfterGetIn
+    reorderStickmansAfterGetIn,
+    assignCars
 } from "./logic";
 import StickManSet from "../stickman_set/StickManSet";
 
@@ -61,6 +62,9 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     const [whichCarCame, setWhichCarCame] = useState<number | null>(null);
     const [deleteStickMans, setDeleteStickMans] = useState<number | null>(null);
     const [carReadyToGo, setCarReadyToGo] = useState<number | null>(null);
+    const [carReadyForPassengers, setCarReadyForPassengers] = useState<boolean>(
+        false
+    );
     // add stickmans on floor
     useEffect(() => {
         addStickmansOnFloor({
@@ -85,19 +89,39 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     }, [allCarsState]);
 
     useEffect(() => {
-        getStickmansIntoCar({
-            whichCarCame,
-            allCarsDirection,
-            allCarsStickMans,
-            stickMans,
-            floorNumber,
-            setStickMans,
-            setDeleteStickMans,
-            addPassengers,
-            setWhichCarCame,
-            setCarReadyToGo
-        });
+        if (whichCarCame !== null) {
+            console.log("before get in, let current passegers leave");
+            document.body.style.background = "crimson";
+            setTimeout(() => {
+                document.body.style.background = "";
+                console.log(
+                    "after passegers leave, let new passangers get into"
+                );
+                setCarReadyForPassengers(true);
+                const assignedCarsUpdate = assignedCars.filter(
+                    item => item !== whichCarCame
+                );
+                setAssignedCars(assignedCarsUpdate);
+            }, 2000);
+        }
     }, [whichCarCame]);
+
+    useEffect(() => {
+        if (carReadyForPassengers) {
+            getStickmansIntoCar({
+                whichCarCame,
+                allCarsDirection,
+                allCarsStickMans,
+                stickMans,
+                floorNumber,
+                setStickMans,
+                setDeleteStickMans,
+                addPassengers,
+                setWhichCarCame,
+                setCarReadyToGo
+            });
+        }
+    }, [carReadyForPassengers]);
 
     useEffect(() => {
         disappearStickmans({
@@ -134,12 +158,20 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
         allCarsFloorAssignments,
         floorNumber,
         addCarFloorAssignment,
-        setAssignedCars,
         assignedCars,
         setNoCar,
         updateCarDirection,
         allCarsDirection
     });
+
+    useEffect(() => {
+        assignCars({
+            allCarsFloorAssignments,
+            floorNumber,
+            assignedCars,
+            setAssignedCars
+        });
+    }, [allCarsFloorAssignments]);
 
     useEffect(() => {
         if (waitingForCar.up) {

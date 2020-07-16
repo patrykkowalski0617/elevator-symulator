@@ -51,7 +51,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
             setTimeout(() => {
                 setCarState("ready");
                 removeCarFloorAssignment(carId, currentFloor);
-            }, 2500);
+            }, 4500);
         }
     }, [allCarsState[carId]]);
 

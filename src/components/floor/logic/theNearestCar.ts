@@ -72,7 +72,7 @@ export const distanceToAvailableCars = ({
             }
         }
     }
-
+    console.log(distanceToAvailableCarsArr);
     return distanceToAvailableCarsArr;
 };
 

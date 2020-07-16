@@ -36,7 +36,7 @@ const getIntoFrame = keyframes`
 
 const inCarCss = ({ placeInCar }: { placeInCar: number | null }) => css`
     left: calc(7px + 12px * ${placeInCar});
-    animation: 0.2s ${getIntoFrame} forwards;
+    /* animation: 0.2s ${getIntoFrame} forwards; */
 `;
 
 const getOffCss = ({
@@ -45,7 +45,9 @@ const getOffCss = ({
 }: {
     index: number;
     lifeState: string;
-}) => css``;
+}) => css`
+    background-color: green;
+`;
 
 const waitForDead = ({ index }: { index: number }) => css``;
 
