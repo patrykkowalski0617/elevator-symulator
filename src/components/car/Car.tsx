@@ -89,7 +89,6 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
                 isContinuation
             );
         }
-        console.log(floorAssignments);
     }, [floorAssignments]);
 
     useEffect(() => {
