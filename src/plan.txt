@@ -1,6 +1,0 @@
-floor - które stickmany do której windy
-
-winda - informacja o wolnych miejscach, wsiadanie stickmana połączone z zawołaniem 
-windy na piętrze na które jedzie, ale bez zapalania lampki
-
-// first Stickman wich get in determinate car direction and main target floor

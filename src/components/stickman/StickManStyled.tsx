@@ -62,7 +62,7 @@ export const Container = styled.div<{
     bottom: 0;
     z-index: 1;
     width: 10px;
-    transition: 0.5s 1.5s;
+    transition: 0.5s;
     &:hover {
         bottom: 1px;
     }

@@ -27,7 +27,9 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         floorColor({ numberOfFloors, floorNumber: carPosition })
     );
     const [carState, setCarState] = useState<string>(allCarsState[carId]);
-    const [carCurrentFloor, setCarCurrentFloor] = useState<number>(0);
+    const [carCurrentFloor, setCarCurrentFloor] = useState<number>(
+        allCarsCurrentFloor[carId]
+    );
 
     const getPosition = (position: number) => {
         setCarPosition(position);
@@ -51,7 +53,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
             setTimeout(() => {
                 setCarState("ready");
                 removeCarFloorAssignment(carId, currentFloor);
-            }, 4500);
+            }, 2000);
         }
     }, [allCarsState[carId]]);
 
@@ -87,6 +89,7 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
                 isContinuation
             );
         }
+        console.log(floorAssignments);
     }, [floorAssignments]);
 
     useEffect(() => {
@@ -94,12 +97,10 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
             stickMans.map(item => item.destination)
         );
         const stickMansDestinations = Array.from(_stickMansDestinations);
-        setTimeout(() => {
-            for (let i = 0; i < stickMansDestinations.length; i++) {
-                const floorNumber = stickMansDestinations[i];
-                addCarFloorAssignment(carId, floorNumber);
-            }
-        }, 1500);
+        for (let i = 0; i < stickMansDestinations.length; i++) {
+            const floorNumber = stickMansDestinations[i];
+            addCarFloorAssignment(carId, floorNumber);
+        }
     }, [stickMans]);
 
     return (

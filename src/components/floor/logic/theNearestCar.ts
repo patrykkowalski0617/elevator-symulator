@@ -67,12 +67,13 @@ export const distanceToAvailableCars = ({
                         floorNumber >= mainCarTarget &&
                         carCurrentFloor - tolerance > floorNumber))
             ) {
+                console.log(floorNumber, carCurrentFloor);
                 distance = Math.abs(floorNumber - carCurrentFloor); // Math.abs - make number positive
                 distanceToAvailableCarsArr.push({ carId, distance });
             }
         }
     }
-    console.log(distanceToAvailableCarsArr);
+
     return distanceToAvailableCarsArr;
 };
 

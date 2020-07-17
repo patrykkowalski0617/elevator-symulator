@@ -113,7 +113,7 @@ const getStickmansIntoCar = ({
             });
             setCarReadyToGo(whichCarCame);
             addPassengers(stickMansForCar);
-        }, 2500);
+        }, 1000);
         setWhichCarCame(null);
     }
 };

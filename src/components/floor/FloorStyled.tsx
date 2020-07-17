@@ -17,16 +17,16 @@ export const CarInfo = styled.div`
     top: 0;
     display: flex;
     flex-wrap: wrap;
+    align-content: center;
 `;
 
 export const CarInfoItem = styled.div`
     margin: 1px;
     color: #eee;
     border: none;
-    width: 26px;
-    height: 25px;
-    line-height: 25px;
-    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
     > * {
         width: 100%;
         height: 100%;
@@ -34,12 +34,17 @@ export const CarInfoItem = styled.div`
         background-color: rgba(0, 0, 0, 0.5);
         opacity: 0.6;
         color: inherit;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 `;
 
 export const CreateBtn = styled.button`
     cursor: pointer;
     border: none;
+    line-height: 1;
+    font-size: 18px;
     &:hover {
         background-color: rgba(0, 0, 0, 0.15);
         opacity: 0.8;
@@ -67,25 +72,23 @@ export const Light = styled.div<{
     waitingForCar: { up: boolean; down: boolean };
     noCar: boolean;
 }>`
-    position: relative;
     ${props => (props.noCar ? waitingForCarAnimation : "")}
     opacity: 0.6;
+    flex-direction: column-reverse;
     &::before,
     &::after {
         content: "";
         display: block;
-        position: absolute;
-        border: 6px solid;
-        left: 7px;
+        border: 5px solid;
     }
     &::before {
-        border-color: transparent transparent #eee transparent;
-        top: -1px;
-        opacity: ${props => (props.waitingForCar.up ? "1" : "0.2")};
+        border-color: #eee transparent transparent transparent;
+        opacity: ${props => (props.waitingForCar.down ? "1" : "0.2")};
     }
     &::after {
-        border-color: #eee transparent transparent transparent;
-        bottom: -1px;
-        opacity: ${props => (props.waitingForCar.down ? "1" : "0.2")};
+        border-color: transparent transparent #eee transparent;
+
+        margin-bottom: 2px;
+        opacity: ${props => (props.waitingForCar.up ? "1" : "0.2")};
     }
 `;

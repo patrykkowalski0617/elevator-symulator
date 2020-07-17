@@ -10,7 +10,7 @@ type Props = {
     setWaitingForCar: (data: { up: boolean; down: boolean }) => void;
 };
 
-const waitingForCarUpdate = ({
+const updateWaitingForCarInfo = ({
     stickMans,
     floorNumber,
     setWaitingForCar
@@ -25,4 +25,4 @@ const waitingForCarUpdate = ({
     setWaitingForCar({ up, down });
 };
 
-export default waitingForCarUpdate;
+export default updateWaitingForCarInfo;
