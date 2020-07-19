@@ -2,6 +2,7 @@
 // after ShaftContext update allCarsFloorAssignments by addCarFloorAssignment
 
 const carTarget = (floorAssignments: number[], carState: string) => {
+    // console.log("carTarget", { floorAssignments, carState });
     let target: number | undefined;
     if (floorAssignments.length === 1) {
         target = floorAssignments[0];
@@ -10,6 +11,8 @@ const carTarget = (floorAssignments: number[], carState: string) => {
     } else if (carState === "go-down") {
         target = Math.max.apply(Math, floorAssignments);
     }
+
+    console.log(target);
     if (target !== Infinity && target !== -Infinity) {
         return target;
     }

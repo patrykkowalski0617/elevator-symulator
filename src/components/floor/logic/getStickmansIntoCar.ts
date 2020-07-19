@@ -55,6 +55,7 @@ const getStickmansIntoCar = ({
         const carDirection = allCarsDirection[carId];
         const carFreePlaces = 4 - allCarsStickMans[carId].length;
         let freePlacesLeft = carFreePlaces;
+        console.log({ carDirection });
         const updatesStickMans = [...stickMans].reverse().map(item => {
             const { destination, direction, lifeState } = item;
             const _destination = destination;

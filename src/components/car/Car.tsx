@@ -98,7 +98,9 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         const stickMansDestinations = Array.from(_stickMansDestinations);
         for (let i = 0; i < stickMansDestinations.length; i++) {
             const floorNumber = stickMansDestinations[i];
-            addCarFloorAssignment(carId, floorNumber);
+            if (!floorAssignments.includes(floorNumber)) {
+                addCarFloorAssignment(carId, floorNumber);
+            }
         }
     }, [stickMans]);
 

@@ -140,7 +140,7 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     // let stickmans leave the car
     useEffect(() => {
         if (whichCarCame !== null) {
-            console.log("let current passegers leave");
+            // console.log("let current passegers leave");
             document.body.style.background = "crimson";
             const assignedCarsUpdate = assignedCars.filter(
                 item => item !== whichCarCame
@@ -156,7 +156,7 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     useEffect(() => {
         if (carReadyForPassengers) {
             document.body.style.background = "";
-            console.log("let new passangers get into");
+            // console.log("let new passangers get into");
             getStickmansIntoCar({
                 whichCarCame,
                 allCarsDirection,

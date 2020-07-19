@@ -44,7 +44,7 @@ export default function move(
             getCurrentFloor(floor);
         }
 
-        // set in each intrval
+        // set in each interval
         if (!state.includes("door-open")) {
             _intervalId = setInterval(() => {
                 // manage position
