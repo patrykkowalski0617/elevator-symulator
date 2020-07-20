@@ -23,6 +23,8 @@ interface IContextProps {
             floorNumber: number;
         } | null
     ) => void;
+    automationIsOn: boolean;
+    setAutomationIsOn: (automationIsOn: boolean) => void;
 }
 
 export const BuildingContext = createContext({} as IContextProps);
@@ -40,6 +42,7 @@ const BuildingContextProvider = (props: { children: React.ReactNode }) => {
         howMany: number;
         floorNumber: number;
     } | null>(null);
+    const [automationIsOn, setAutomationIsOn] = useState<boolean>(false);
 
     const carWidth: string = "64px";
     const floorWidth: string = `calc((100% - ${carWidth} * ${numberOfCars}) / 2)`;
@@ -58,7 +61,9 @@ const BuildingContextProvider = (props: { children: React.ReactNode }) => {
                 carWidth,
                 floorWidth,
                 formStickManData,
-                setFormSickManData
+                setFormSickManData,
+                automationIsOn,
+                setAutomationIsOn
             }}
         >
             {props.children}

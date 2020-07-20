@@ -4,6 +4,7 @@ import FloorsStack from "../floors_stack/FloorsStack";
 import { BuildingStyled } from "./BuildingStyled";
 import Shaft from "../shaft/Shaft";
 import StickManForm from "../form_stickman/FormStickMan";
+import Automation from "../automation/Automation";
 
 /**
  * TO DO
@@ -24,6 +25,7 @@ const Building: React.FC = () => {
                 <StickManForm floorNumber={creatingStickMan} />
             ) : null}
             <BuildingStyled>
+                <Automation />
                 <FloorsStack
                     role={"enter-floor"}
                     floorWidth={floorWidth}

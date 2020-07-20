@@ -36,9 +36,11 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
         allCarsStickMans,
         addPassengers
     } = useContext(ShaftContext);
-    const { setCreatingStickMan, formStickManData } = useContext(
-        BuildingContext
-    );
+    const {
+        setCreatingStickMan,
+        formStickManData,
+        automationIsOn
+    } = useContext(BuildingContext);
 
     const [noCar, setNoCar] = useState<boolean>(false);
     const [assignedCars, setAssignedCars] = useState<number[]>([]);
@@ -198,9 +200,11 @@ const Floor = ({ floorNumber, numberOfFloors, floorColor }: FloorProps) => {
     return (
         <FloorStyled numberOfFloors={numberOfFloors} floorColor={floorColor}>
             <CarInfo>
-                <CarInfoItem>
-                    <CreateBtn onClick={createStickmanHandler}>+</CreateBtn>
-                </CarInfoItem>
+                {!automationIsOn ? (
+                    <CarInfoItem>
+                        <CreateBtn onClick={createStickmanHandler}>+</CreateBtn>
+                    </CarInfoItem>
+                ) : null}
                 <CarInfoItem>
                     <Light waitingForCar={waitingForCar} noCar={noCar}></Light>
                 </CarInfoItem>
