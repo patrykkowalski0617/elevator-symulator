@@ -16,7 +16,8 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         allCarsState,
         allCarsStickMans,
         removeCarFloorAssignment,
-        addCarFloorAssignment
+        addCarFloorAssignment,
+        removePassengers
     } = useContext(ShaftContext);
     const floorAssignments: number[] = allCarsFloorAssignments[carId];
     const currentFloor: number = allCarsCurrentFloor[carId];
@@ -47,9 +48,12 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
         );
     };
 
-    // close door after some time
+    // let passangers leave and close door after some time
     useEffect(() => {
         if (allCarsState[carId].includes("door-open")) {
+            setTimeout(() => {
+                removePassengers(stickMans, currentFloor);
+            }, 800);
             setTimeout(() => {
                 setCarState("ready");
                 removeCarFloorAssignment(carId, currentFloor);
