@@ -64,7 +64,8 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
     const currentPosition: number = carPosition;
     const targetFloor: number | undefined = carTarget(
         floorAssignments,
-        carState
+        carState,
+        currentFloor
     );
     const start = move(
         getCarState,
