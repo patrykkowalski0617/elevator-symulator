@@ -66,8 +66,14 @@ export default function move(
                 }
 
                 // manage door
-                if (position === targetPosition) {
+                if (position === targetPosition && state !== "ready") {
                     getCarState(state + "-door-open");
+                }
+                // do not turn "ready" state to "ready-door-open". it couses bugs
+                // instead of that set state "door-open" and clear interval
+                else if (_intervalId !== null && state.includes("ready")) {
+                    getCarState("door-open");
+                    clearInterval(_intervalId);
                 }
 
                 // clear interval

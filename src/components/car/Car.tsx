@@ -90,13 +90,11 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
     useEffect(() => {
         if (floorAssignments.length) {
             const isContinuation = floorAssignments.length > 1 ? true : false;
-            // carState === "ready-door-open" ? "ready" : carState
-            // it is just workaround
             start(
                 targetFloor,
                 currentFloor,
                 currentPosition,
-                carState === "ready-door-open" ? "ready" : carState,
+                carState,
                 intervalId,
                 isContinuation
             );
