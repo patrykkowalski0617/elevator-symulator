@@ -1,4 +1,4 @@
-import React, { useContext,  useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { BuildingContext } from "../../context";
 import { AutomationStyled } from "./AutomationStyled";
 

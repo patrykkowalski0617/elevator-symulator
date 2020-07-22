@@ -32,7 +32,8 @@ type Props = {
             lifeState: string;
             carId: number | null;
             placeInCar: number | null;
-        }[]
+        }[],
+        carId: number
     ) => void;
     setWhichCarCame: (whichCarCame: number | null) => void;
     setCarReadyToGo: (carId: number) => void;
@@ -112,7 +113,7 @@ const getStickmansIntoCar = ({
                 };
             });
             setCarReadyToGo(whichCarCame);
-            addPassengers(stickMansForCar);
+            addPassengers(stickMansForCar, carId);
         }, 1000);
         setWhichCarCame(null);
     }

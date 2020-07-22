@@ -22,7 +22,8 @@ interface IContextProps {
             lifeState: string;
             carId: number | null;
             placeInCar: number | null;
-        }[]
+        }[],
+        carId: number
     ) => void;
 
     removePassengers: (
@@ -32,7 +33,8 @@ interface IContextProps {
             carId: number | null;
             placeInCar: number | null;
         }[],
-        currentFloor: number
+        currentFloor: number,
+        carId: number
     ) => void;
     allCarsDirection: string | null[];
     updateCarDirection: (carId: number, direction: string) => void;
@@ -90,11 +92,10 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
             lifeState: string;
             carId: number | null;
             placeInCar: number | null;
-        }[]
+        }[],
+        carId: number
     ) => {
         if (data[0]) {
-            const carId =
-                typeof data[0].carId === "number" ? data[0].carId : -1;
             if (allCarsStickMans[carId].length < 4) {
                 const _allCarsStickMans = [...allCarsStickMans];
                 const carPassengers = [..._allCarsStickMans[carId], ...data];
@@ -107,8 +108,10 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
             console.warn(
                 "there are no stickman on this floor who have the same direction as the car!"
             );
+            updateCarDirection(carId, null);
         }
     };
+
     const removePassengers = (
         data: {
             lifeState: string;
@@ -116,11 +119,10 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
             carId: number | null;
             placeInCar: number | null;
         }[],
-        currentFloor: number
+        currentFloor: number,
+        carId: number
     ) => {
         if (data[0]) {
-            const carId =
-                typeof data[0].carId === "number" ? data[0].carId : -1;
             const _data = data.filter(
                 item => item.destination !== currentFloor
             );
@@ -128,7 +130,7 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
             _allCarsStickMans.splice(carId, 1, _data);
             setAllCarsStickMans([..._allCarsStickMans]);
         } else {
-            console.warn("car is empty!");
+            console.warn("car " + carId + " is empty!");
         }
     };
 
@@ -142,7 +144,7 @@ const ShaftContextProvider = (props: { children: React.ReactNode }) => {
         setAllCarsFloorAssignments([..._allCarsFloorAssignments]);
     };
 
-    const updateCarDirection = (carId: number, direction: string) => {
+    const updateCarDirection = (carId: number, direction: string | null) => {
         const _allCarsDirection = allCarsDirection;
         _allCarsDirection.splice(carId, 1, direction);
         setAllCarsDirection([..._allCarsDirection]);

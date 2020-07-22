@@ -51,12 +51,17 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
     // let passangers leave and close door after some time
     useEffect(() => {
         if (allCarsState[carId].includes("door-open")) {
-            setTimeout(() => {
-                removePassengers(stickMans, currentFloor);
-            }, 800);
+            if (stickMans.length) {
+                setTimeout(() => {
+                    removePassengers(stickMans, currentFloor, carId);
+                }, 800);
+            }
+
             setTimeout(() => {
                 setCarState("ready");
-                removeCarFloorAssignment(carId, currentFloor);
+                if (floorAssignments.length) {
+                    removeCarFloorAssignment(carId, currentFloor);
+                }
             }, 2000);
         }
     }, [allCarsState[carId]]);
@@ -85,11 +90,13 @@ const Car = ({ numberOfFloors, carId }: CarProps) => {
     useEffect(() => {
         if (floorAssignments.length) {
             const isContinuation = floorAssignments.length > 1 ? true : false;
+            // carState === "ready-door-open" ? "ready" : carState
+            // it is just workaround
             start(
                 targetFloor,
                 currentFloor,
                 currentPosition,
-                carState,
+                carState === "ready-door-open" ? "ready" : carState,
                 intervalId,
                 isContinuation
             );
