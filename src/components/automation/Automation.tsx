@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { BuildingContext } from "../../context";
-import { AutomationStyled } from "./AutomationStyled";
+import { AutomationWrapper, Button, Select } from "./AutomationStyled";
 
 const Automation: React.FC = () => {
     const {
@@ -25,15 +25,26 @@ const Automation: React.FC = () => {
         time: number;
     } | null>(null);
 
+    const [storedAutomationData, setStoredAutomationData] = useState<
+        {
+            _data: {
+                floorNumber: number;
+                howMany: number;
+                destination: number;
+            };
+            time: number;
+        }[][]
+    >([]);
+    const [
+        selectedStoredAutomationData,
+        setSelectedStoredAutomationData
+    ] = useState<number | null>(null);
+
     useEffect(() => {
         if (dataToPush) {
             setDataHistory([...dataHistory, dataToPush]);
         }
     }, [dataToPush]);
-
-    useEffect(() => {
-        console.log(dataHistory);
-    }, [dataHistory]);
 
     useEffect(() => {
         let timeoutId: number;
@@ -70,11 +81,28 @@ const Automation: React.FC = () => {
                     startAutomation();
                 }, time);
             };
-            startAutomation();
+            if (selectedStoredAutomationData === null) {
+                startAutomation();
+                const _data = data();
+                setFormSickManData(_data);
+                setDataToPush({ _data, time: 0 });
+            } else if (storedAutomationData !== null) {
+                const storedData: {
+                    _data: {
+                        floorNumber: number;
+                        howMany: number;
+                        destination: number;
+                    };
+                    time: number;
+                }[] = storedAutomationData[selectedStoredAutomationData];
 
-            const _data = data();
-            setFormSickManData(_data);
-            setDataToPush({ _data, time: 0 });
+                for (let i = 0; i < storedData.length; i++) {
+                    const { _data, time } = storedData[i];
+                    setTimeout(() => {
+                        setFormSickManData(_data);
+                    }, time);
+                }
+            }
         }
 
         return () => {
@@ -82,14 +110,60 @@ const Automation: React.FC = () => {
         };
     }, [automationIsOn]);
 
+    useEffect(() => {
+        let storedData = window.localStorage.getItem("automationData");
+        if (storedData === null) {
+            window.localStorage.setItem("automationData", JSON.stringify([]));
+        }
+        storedData = window.localStorage.getItem("automationData");
+        if (storedData !== null) {
+            setStoredAutomationData(JSON.parse(storedData));
+        }
+    }, []);
+
+    const automationOnClickHandler = () => {
+        setAutomationIsOn(!automationIsOn);
+    };
+
+    const storeDataOnClickHandler = () => {
+        if (
+            dataHistory.length &&
+            storedAutomationData !== null &&
+            Array.isArray(storedAutomationData)
+        ) {
+            // set local storage
+            window.localStorage.setItem(
+                "automationData",
+                JSON.stringify([...storedAutomationData, dataHistory])
+            );
+            // set component state
+            const storedData = window.localStorage.getItem("automationData");
+            if (storedData !== null) {
+                setStoredAutomationData(JSON.parse(storedData));
+            }
+        }
+    };
+
     return (
-        <AutomationStyled
-            onClick={() => {
-                setAutomationIsOn(!automationIsOn);
-            }}
-        >
-            Automation is {automationIsOn ? "ON" : "OFF"}
-        </AutomationStyled>
+        <AutomationWrapper>
+            <Button onClick={automationOnClickHandler}>
+                Automation is {automationIsOn ? "ON" : "OFF"}
+            </Button>
+            <Button disabled={automationIsOn} onClick={storeDataOnClickHandler}>
+                Store
+            </Button>
+            <Select
+                onChange={e => {
+                    const val = Number(e.target.value);
+                    setSelectedStoredAutomationData(val !== NaN ? val : null);
+                }}
+            >
+                <option>Select stored sequence</option>
+                {storedAutomationData.map((item, index) => {
+                    return <option key={index}>{index}</option>;
+                })}
+            </Select>
+        </AutomationWrapper>
     );
 };
 

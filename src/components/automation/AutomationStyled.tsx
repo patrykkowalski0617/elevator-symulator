@@ -1,17 +1,11 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const AutomationStyled = styled.button`
-    position: absolute;
-    position: absolute;
-    top: -31px;
-    background-color: #222;
+const buttonCss = css`
     color: #eee;
     border: none;
-    padding: 5px 43px;
-    border-radius: 30px 30px 0px 0px;
-    border: 2px solid #222;
-    right: 50%;
-    transform: translateX(50%);
+    padding: 5px 20px;
+    background: inherit;
+    white-space: nowrap;
     cursor: pointer;
     &:hover {
         background-color: #272727;
@@ -20,4 +14,30 @@ export const AutomationStyled = styled.button`
     &:focus {
         outline: none;
     }
+    &:disabled {
+        background-color: #323232;
+        color: #666;
+    }
+`;
+
+export const AutomationWrapper = styled.div`
+    position: absolute;
+    background-color: #222;
+    top: -35px;
+    right: 50%;
+    transform: translateX(50%);
+    border: 2px solid #222;
+    display: flex;
+    border-radius: 30px 30px 0px 0px;
+    overflow: hidden;
+`;
+
+export const Button = styled.button`
+    ${buttonCss}
+`;
+
+export const Select = styled.select`
+    ${buttonCss}
+    margin-right: 20px;
+    padding-right: 0;
 `;
